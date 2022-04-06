@@ -54,14 +54,14 @@
     <p>
       衝突を処理するために，物体同士が衝突したかどうかを調べる必要がある．
       これを衝突検出と呼ぶ．
-      例えば，それぞれ<img src="eq/physics3a.eq1.gif" />,
-      <img src="eq/physics3a.eq2.gif" />の半径を持つ2つの球の衝突検出を考えてみる．
-      それぞれの中心座標を<img src="eq/physics3a.eq3.gif" />とすると，
-      中心座標間の距離は<img src="eq/physics3a.eq4.gif" />であり，
-      この距離が<img src="eq/physics3a.eq5.gif" />以下であれば物体同士は衝突しているといえる．
+      例えば，それぞれ<img src="../eq/physics3a.eq1.gif" />,
+      <img src="../eq/physics3a.eq2.gif" />の半径を持つ2つの球の衝突検出を考えてみる．
+      それぞれの中心座標を<img src="../eq/physics3a.eq3.gif" />とすると，
+      中心座標間の距離は<img src="../eq/physics3a.eq4.gif" />であり，
+      この距離が<img src="../eq/physics3a.eq5.gif" />以下であれば物体同士は衝突しているといえる．
       条件式にすると，
     </p>
-    <p align="center"><img src="eq/physics3a.eq6.gif" /></p>
+    <p align="center"><img src="../eq/physics3a.eq6.gif" /></p>
     <p>
       となる．左辺は平方根の計算が伴うので実際には2乗距離がよく用いられる．
     </p>
@@ -87,7 +87,7 @@
       下図にBulletにおける物理計算パイプラインを示す．
     </p>
     <p align="center">
-      <img src="fig/bullet_collision.jpg" alt="Bulletの物理計算パイプライン" /><br />
+      <img src="../fig/bullet_collision.jpg" alt="Bulletの物理計算パイプライン" /><br />
       Bulletの物理計算パイプライン(Bullet 2.80 Physics SDK Manual, p12より抜粋)
     </p>
     <p>
@@ -222,7 +222,7 @@ void Keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
       よく用いられる境界ボリュームを以下の図に示す．
     <p>
     <p align="center">
-      <img src="fig/bounding_volume.jpg" alt="境界ボリューム" /><br />
+      <img src="../fig/bounding_volume.jpg" alt="境界ボリューム" /><br />
       境界ボリューム：左から境界球，AABB，OOBB，凸包
     </p>
     <p>
@@ -242,7 +242,7 @@ void Keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
       下図のように単純な座標値の比較だけで判定することができる．
     </p>
     <p align="center">
-      <img src="fig/aabb_test.jpg" alt="AABBの重なり判定" /><br />
+      <img src="../fig/aabb_test.jpg" alt="AABBの重なり判定" /><br />
       AABBの重なり判定
     </p>
     <p>
@@ -269,7 +269,7 @@ struct AABB
       となる．ここで，Vec3は3次元の座標値(x,y,z)を格納する構造体とする．
     </p>
     <p align="center">
-      <img src="fig/aabb.jpg" alt="AABBの定義方法" /><br />
+      <img src="../fig/aabb.jpg" alt="AABBの定義方法" /><br />
       AABBの定義方法
     </p>
     <p>
@@ -302,11 +302,11 @@ struct AABB
       衝突判定するときはルートノードのAABBとの重なりを調べ，
       重なっていたら，子ノードのAABBとの重なりを調べ，
       重なっている子ノードがあれば，その孫ノードを調べとしていくと最終的に重なるリーフノードが得られる．
-      全探索だと<img src="eq/physics3a.eq7.gif" />のオーダで組み合わせ数が増えていくが，
-      この方法だと<img src="eq/physics3a.eq8.gif" />のオーダですむ．
+      全探索だと<img src="../eq/physics3a.eq7.gif" />のオーダで組み合わせ数が増えていくが，
+      この方法だと<img src="../eq/physics3a.eq8.gif" />のオーダですむ．
     </p>
     <p align="center">
-      <img src="fig/aabb-tree.jpg" alt="AABB木" /><br />
+      <img src="../fig/aabb-tree.jpg" alt="AABB木" /><br />
       AABB木
     </p>
     <p>
@@ -423,7 +423,7 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
 	  }
   }</pre>
       <p align="center">
-        <img src="fig/dispatcher.jpg" alt="Collision points" /><br />
+        <img src="../fig/dispatcher.jpg" alt="Collision points" /><br />
         衝突点を赤点で描画した例<br />
       </p>
 
@@ -459,7 +459,7 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
       特にとても速度の速い物体の場合，下図のようにすり抜けが発生してしまう．
     </p>
     <p align="center">
-      <img src="fig/ccd1.jpg" alt="すり抜け" /><br />
+      <img src="../fig/ccd1.jpg" alt="すり抜け" /><br />
       tとt+Δtどちらの時間でもオブジェクトは壁とは重なっていないので衝突検出されずすり抜けてしまう
     </p>
     <p>
@@ -476,7 +476,7 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
       Bulletでは下図のように球を用いてCCDを行っている(スイープ球:Swept Sphere)．
     </p>
     <p align="center">
-      <img src="fig/ccd2.jpg" alt="Swept Sphere" /><br />
+      <img src="../fig/ccd2.jpg" alt="Swept Sphere" /><br />
       スイープ球(Swept Sphere)は壁と衝突している
     </p>
     <p>
@@ -558,7 +558,7 @@ world->addRigidBody(body2, RX_COL_GROUP2, RX_COL_GROUND | RX_COL_GROUP2);</pre>
          衝突フィルタリングを使って追加する形状ごとに衝突の有無を設定してみよ．
       </p>
       <p align="center">
-        <img src="fig/collision_filtering.jpg" alt="Collision filtering" /><br />
+        <img src="../fig/collision_filtering.jpg" alt="Collision filtering" /><br />
         衝突フィルタリングで同じ形状同士のみ(+床)衝突するようにした例．球形状が立方体形状をすり抜けている<br />
       </p>
     </div>

@@ -76,7 +76,7 @@
     </p>
 
     <p align="center">
-    <img src="fig/physics_simulation.jpg" />　<img src="fig/particle_fluid.jpg" /><br />
+    <img src="../fig/physics_simulation.jpg" />　<img src="../fig/particle_fluid.jpg" /><br />
     剛体シミュレーションと流体シミュレーション<br />
     </p>
 
@@ -92,22 +92,22 @@
     <p>
     まず，球形状の剛体を考える(つまり，形状の重心を中心とした回転は考えない)．
     球の場合，その中心座標の変化だけを捉えればよい．
-    中心座標をベクトル表記で<img src="eq/physics1.eq1.gif" />とすると，その速度(Linear Velocity)<img src="eq/physics1.eq2.gif" />は時間<img src="eq/physics1.eq3.gif" />での微分，
+    中心座標をベクトル表記で<img src="../eq/physics1.eq1.gif" />とすると，その速度(Linear Velocity)<img src="../eq/physics1.eq2.gif" />は時間<img src="../eq/physics1.eq3.gif" />での微分，
     </p>
-    <p align="center"><img src="eq/physics1.eq4.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq4.gif" /></p>
     <p>
-    と計算される．いま，球がある時刻<img src="eq/physics1.eq5.gif" />での位置<img src="eq/physics1.eq6.gif" />から時間によって変化する速度<img src="eq/physics1.eq7.gif" />で移動するとすると，
-    <img src="eq/physics1.eq5.gif" />から<img src="eq/physics1.eq8.gif" />までの移動ベクトル<img src="eq/physics1.eq9.gif" />は積分で表される．
+    と計算される．いま，球がある時刻<img src="../eq/physics1.eq5.gif" />での位置<img src="../eq/physics1.eq6.gif" />から時間によって変化する速度<img src="../eq/physics1.eq7.gif" />で移動するとすると，
+    <img src="../eq/physics1.eq5.gif" />から<img src="../eq/physics1.eq8.gif" />までの移動ベクトル<img src="../eq/physics1.eq9.gif" />は積分で表される．
     </p>
-    <p align="center"><img src="eq/physics1.eq10.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq10.gif" /></p>
     <p>
-    これより，ある時刻での球の位置<img src="eq/physics1.eq11.gif" />から
-    離散時間<img src="eq/physics1.eq12.gif" />(これをタイムステップ幅と呼ぶ)後の位置<img src="eq/physics1.eq13.gif" />が求められる．
-    これを繰り返すことで，初期位置<img src="eq/physics1.eq14.gif" />からどのような軌跡で物体が変化するかを計算するのが，
+    これより，ある時刻での球の位置<img src="../eq/physics1.eq11.gif" />から
+    離散時間<img src="../eq/physics1.eq12.gif" />(これをタイムステップ幅と呼ぶ)後の位置<img src="../eq/physics1.eq13.gif" />が求められる．
+    これを繰り返すことで，初期位置<img src="../eq/physics1.eq14.gif" />からどのような軌跡で物体が変化するかを計算するのが，
     運動する物体のシミュレーションの基礎となる．
     </p>
     <p>
-    さて，ここで問題となるのは，<img src="eq/physics1.eq7.gif" />と<img src="eq/physics1.eq9.gif" />の積分をどうやって計算するのか？ ということである．
+    さて，ここで問題となるのは，<img src="../eq/physics1.eq7.gif" />と<img src="../eq/physics1.eq9.gif" />の積分をどうやって計算するのか？ ということである．
     それぞれ，運動方程式，時間積分の離散化と分けて説明する．
     </p>
 
@@ -115,70 +115,70 @@
     <h3>運動方程式</h3>
     <p>
     高校物理でニュートンの第二法則(ニュートンの運動方程式)というのを習ったのを思い出してほしい．
-    質量<img src="eq/physics1.eq15.gif" />の物体にかかる力<img src="eq/physics1.eq16.gif" />と加速度<img src="eq/physics1.eq17.gif" />の関係が以下の方程式で表される．
+    質量<img src="../eq/physics1.eq15.gif" />の物体にかかる力<img src="../eq/physics1.eq16.gif" />と加速度<img src="../eq/physics1.eq17.gif" />の関係が以下の方程式で表される．
     </p>
-    <p align="center"><img src="eq/physics1.eq18.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq18.gif" /></p>
     <p>
-    加速度(Acceleration)と力(Force)が比例する，もしくは，運動量<img src="eq/physics1.eq19.gif" />の時間微分<img src="eq/physics1.eq20.gif" />が力である
+    加速度(Acceleration)と力(Force)が比例する，もしくは，運動量<img src="../eq/physics1.eq19.gif" />の時間微分<img src="../eq/physics1.eq20.gif" />が力である
     (質量が一定なら上の式に一致することに注意)．
-    速度<img src="eq/physics1.eq2.gif" />は加速度の時間積分で表されるので，速度から位置を計算したときと同じように積分を使うとある時刻での速度が求められる．
+    速度<img src="../eq/physics1.eq2.gif" />は加速度の時間積分で表されるので，速度から位置を計算したときと同じように積分を使うとある時刻での速度が求められる．
     </p>
     <p>
-    剛体にかかる力<img src="eq/physics1.eq16.gif" />は重力や物体に当たったときの反力，ユーザが与えた力などである．
+    剛体にかかる力<img src="../eq/physics1.eq16.gif" />は重力や物体に当たったときの反力，ユーザが与えた力などである．
     ただし，力は大きさだけでなく，力が作用した時間も重要になる．
-    ニュートンの運動方程式を<img src="eq/physics1.eq12.gif" />の間で積分すると，
+    ニュートンの運動方程式を<img src="../eq/physics1.eq12.gif" />の間で積分すると，
     </p>
-    <p align="center"><img src="eq/physics1.eq22.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq22.gif" /></p>
     <p>
-    タイムステップ幅<img src="eq/physics1.eq12.gif" />の間(つまり，<img src="eq/physics1.eq3.gif" />から<img src="eq/physics1.eq23.gif" />の間)，<img src="eq/physics1.eq16.gif" />が一定だったとすると，
+    タイムステップ幅<img src="../eq/physics1.eq12.gif" />の間(つまり，<img src="../eq/physics1.eq3.gif" />から<img src="../eq/physics1.eq23.gif" />の間)，<img src="../eq/physics1.eq16.gif" />が一定だったとすると，
     </p>
-    <p align="center"><img src="eq/physics1.eq24.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq24.gif" /></p>
     <p>
-    で速度変化が求められる．このときの<img src="eq/physics1.eq25.gif" />を撃力という．
+    で速度変化が求められる．このときの<img src="../eq/physics1.eq25.gif" />を撃力という．
     </p>
 
 
     <h3>時間積分の離散化</h3>
     <p>
-    <img src="eq/physics1.eq9.gif" />の積分は，もし<img src="eq/physics1.eq2.gif" />が連続的に与えられる(あらゆる時刻で<img src="eq/physics1.eq2.gif" />の正確な値が与えられる)ならば，
+    <img src="../eq/physics1.eq9.gif" />の積分は，もし<img src="../eq/physics1.eq2.gif" />が連続的に与えられる(あらゆる時刻で<img src="../eq/physics1.eq2.gif" />の正確な値が与えられる)ならば，
     数値積分法とより細かなタイムステップ幅を使って高精度に計算できるが，
     これはあまり一般的ではない．
-    なぜかというと，<img src="eq/physics1.eq2.gif" />もやはり離散的に与えられることがほとんどであり，
+    なぜかというと，<img src="../eq/physics1.eq2.gif" />もやはり離散的に与えられることがほとんどであり，
     計算速度の点でも問題になるからである．
     ではどうするかというと，ある仮定をおいて式を単純化してしまう．
-    最も簡単なのは，速度が<img src="eq/physics1.eq3.gif" />から<img src="eq/physics1.eq23.gif" />の間<img src="eq/physics1.eq7.gif" />から変化せず一定であるとする仮定を置く方法である．
-    この仮定では<img src="eq/physics1.eq12.gif" />の間，位置が線形に変化する(直線的に移動する)とするのと同義である(下図参照)．
+    最も簡単なのは，速度が<img src="../eq/physics1.eq3.gif" />から<img src="../eq/physics1.eq23.gif" />の間<img src="../eq/physics1.eq7.gif" />から変化せず一定であるとする仮定を置く方法である．
+    この仮定では<img src="../eq/physics1.eq12.gif" />の間，位置が線形に変化する(直線的に移動する)とするのと同義である(下図参照)．
     </p>
 
     <p align="center">
-    <img src="fig/sphere_move.jpg" /><br />
+    <img src="../fig/sphere_move.jpg" /><br />
     離散化<br />
     </p>
 
     <p>
     そうすると，
     </p>
-    <p align="center"><img src="eq/physics1.eq26.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq26.gif" /></p>
     <p>
     と現在の速度のみを使って次のステップの速度を求めることができる．
     この方法は前進オイラー法(forward Euler method)と呼ばれる．
     速度ベクトルが一定の場合は，この方法でもよいが，
     いろいろな方向に動き回り，その速度も非線形に変化する運動の場合(ほとんどの運動がそう)は誤差が大きくなる．
-    下の図において，<img src="eq/physics1.eq23.gif" />のときの座標値が直線近似した場合と真値でかけ離れていることが分かる
-    しかし，前進オイラーは最も単純で分かりやすい方法であり，<img src="eq/physics1.eq12.gif" />を極限まで小さくすれば真値と一致する
+    下の図において，<img src="../eq/physics1.eq23.gif" />のときの座標値が直線近似した場合と真値でかけ離れていることが分かる
+    しかし，前進オイラーは最も単純で分かりやすい方法であり，<img src="../eq/physics1.eq12.gif" />を極限まで小さくすれば真値と一致する
     という特徴もあるため，広く用いられている．
     </p>
 
     <p align="center">
-    <img src="fig/forward_euler.jpg" /><br />
+    <img src="../fig/forward_euler.jpg" /><br />
     前進オイラー法<br />
     </p>
 
     <p>
-    前進オイラーでは<img src="eq/physics1.eq3.gif" />での速度のみを用いたが，
-    <img src="eq/physics1.eq23.gif" />での速度も用い，両者の平均を使って計算するとすると，
+    前進オイラーでは<img src="../eq/physics1.eq3.gif" />での速度のみを用いたが，
+    <img src="../eq/physics1.eq23.gif" />での速度も用い，両者の平均を使って計算するとすると，
     </p>
-    <p align="center"><img src="eq/physics1.eq27.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq27.gif" /></p>
     <p>
     となる．これは改良オイラー法(modified Euler method)と呼ばれる．
     このほかにもルンゲ・クッタ法，アダムス・バシュフォース法，完全陰解法などがある．
@@ -228,7 +228,7 @@
         なお，この際，反転した速度に反発係数([0,1])を掛けること．
       </p>
       <p align="center">
-        <img src="fig/bound.jpg" /><br />
+        <img src="../fig/bound.jpg" /><br />
         球の反発の例<br />
       </p>
       <h4>練習問題4(option)</h4>
@@ -251,40 +251,40 @@
     <h3>回転・姿勢の表現方法</h3>
     <p>
     物体が元の姿勢からどの程度回転したかを表す最も分かりやすい方法はオイラー角（Euler Angle)を用いる方法である．
-    オイラー角では<img src="eq/physics1.eq28.gif" />軸まわりの回転角<img src="eq/physics1.eq29.gif" />で姿勢を表す
+    オイラー角では<img src="../eq/physics1.eq28.gif" />軸まわりの回転角<img src="../eq/physics1.eq29.gif" />で姿勢を表す
     (それぞれ，ヨー(yaw), ピッチ(pitch)，ロール(roll)角とも呼ぶ)．
     </p>
 
     <p align="center">
-    <img src="fig/euler_angle.jpg" /><br />
+    <img src="../fig/euler_angle.jpg" /><br />
     オイラー角<br />
     </p>
 
     <p>
     また，各軸周りの回転を回転行列で表すと以下のようになる．
     </p>
-    <p align="center"><img src="eq/physics1.eq30.gif" /></p>
-    <p align="center"><img src="eq/physics1.eq31.gif" /></p>
-    <p align="center"><img src="eq/physics1.eq32.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq30.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq31.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq32.gif" /></p>
     <p>
-    <img src="eq/physics1.eq33.gif" />はyz平面，<img src="eq/physics1.eq34.gif" />はxz平面，<img src="eq/physics1.eq35.gif" />はxy平面上での回転である．
+    <img src="../eq/physics1.eq33.gif" />はyz平面，<img src="../eq/physics1.eq34.gif" />はxz平面，<img src="../eq/physics1.eq35.gif" />はxy平面上での回転である．
     これらの回転を順番に掛けることで回転による姿勢変化を表現できる．
     </p>
-    <p align="center"><img src="eq/physics1.eq36.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq36.gif" /></p>
     <p>
-    また，任意軸<img src="eq/physics1.eq37.gif" />周りに角度<img src="eq/physics1.eq38.gif" />だけ回転する場合の回転変換行列は，
+    また，任意軸<img src="../eq/physics1.eq37.gif" />周りに角度<img src="../eq/physics1.eq38.gif" />だけ回転する場合の回転変換行列は，
     </p>
-    <p align="center"><img src="eq/physics1.eq39.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq39.gif" /></p>
     <p>
-    と表される．ここで，<img src="eq/physics1.eq40.gif" />であり，軸を表すベクトル(x,y,z)は単位ベクトルとする．
+    と表される．ここで，<img src="../eq/physics1.eq40.gif" />であり，軸を表すベクトル(x,y,z)は単位ベクトルとする．
     この場合の回転変換は単純に，
     </p>
-    <p align="center"><img src="eq/physics1.eq41.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq41.gif" /></p>
     <p>
     である．
     </p>
     <p align="center">
-    <img src="fig/axis_rotation.jpg" /><br />
+    <img src="../fig/axis_rotation.jpg" /><br />
     任意軸周りの回転<br />
     </p>
 
@@ -318,29 +318,29 @@
     <p>
     四元数はその名の通り，4つの要素を持つベクトルのようなものである．
     回転軸(3要素)とその軸周りの回転角(1要素)で構成される．
-    任意軸<img src="eq/physics1.eq37.gif" />周りの<img src="eq/physics1.eq38.gif" />回転を表す四元数は以下となる．
+    任意軸<img src="../eq/physics1.eq37.gif" />周りの<img src="../eq/physics1.eq38.gif" />回転を表す四元数は以下となる．
     </p>
-    <p align="center"><img src="eq/physics1.eq42.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq42.gif" /></p>
     <p>
-    四元数は複素数<img src="eq/physics1.eq43.gif" />を多次元に拡張したようなものになっている．
-    四元数をベクトル表記ではなく<img src="eq/physics1.eq44.gif" />を使って表すと，
+    四元数は複素数<img src="../eq/physics1.eq43.gif" />を多次元に拡張したようなものになっている．
+    四元数をベクトル表記ではなく<img src="../eq/physics1.eq44.gif" />を使って表すと，
     </p>
-    <p align="center"><img src="eq/physics1.eq45.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq45.gif" /></p>
     <p>
-    <img src="eq/physics1.eq46.gif" />という規則に従うと四元数同士の積は，
+    <img src="../eq/physics1.eq46.gif" />という規則に従うと四元数同士の積は，
     </p>
-    <p align="center"><img src="eq/physics1.eq47.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq47.gif" /></p>
     <p>
     となる．<br />
-    さて，四元数にも単位四元数というものが存在する．回転角が0のとき，上の四元数の定義式から<img src="eq/physics1.eq48.gif" />となることが分かる．
-    これが単位四元数である．<img src="eq/physics1.eq49.gif" />となるとき，<img src="eq/physics1.eq50.gif" />は<img src="eq/physics1.eq51.gif" />の共役四元数(<img src="eq/physics1.eq52.gif" />と表す)であるといい，
-    その値は，<img src="eq/physics1.eq53.gif" />となる
-    (<img src="eq/physics1.eq54.gif" />回転を表す四元数)．
+    さて，四元数にも単位四元数というものが存在する．回転角が0のとき，上の四元数の定義式から<img src="../eq/physics1.eq48.gif" />となることが分かる．
+    これが単位四元数である．<img src="../eq/physics1.eq49.gif" />となるとき，<img src="../eq/physics1.eq50.gif" />は<img src="../eq/physics1.eq51.gif" />の共役四元数(<img src="../eq/physics1.eq52.gif" />と表す)であるといい，
+    その値は，<img src="../eq/physics1.eq53.gif" />となる
+    (<img src="../eq/physics1.eq54.gif" />回転を表す四元数)．
     </p>
     <p>
     この共役四元数を使うと，座標xの任意軸周りの回転変換は以下となる．
     </p>
-    <p align="center"><img src="eq/physics1.eq55.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq55.gif" /></p>
     <p>
     ここで，(x,0)は3次元ベクトルxに4つめの要素0を追加した4次元ベクトルを表す．<br />
     四元数についてより詳しく知りたい人は自分で調べてみること．
@@ -352,9 +352,9 @@
     <div class="task">
       <h4>練習問題5</h4>
       <p>
-        四元数を用いて立方体を任意の軸周りに回転させてみよ．なお，四元数<img src="eq/physics1.eq69.gif" />から回転行列への変換式は以下．
+        四元数を用いて立方体を任意の軸周りに回転させてみよ．なお，四元数<img src="../eq/physics1.eq69.gif" />から回転行列への変換式は以下．
       </p>
-      <p align="center"><img src="eq/physics1.eq70.gif" /></p>
+      <p align="center"><img src="../eq/physics1.eq70.gif" /></p>
       <p>
         ヒント：回転軸を表すベクトルと1ステップあたりの回転角を表す定数と現在の回転角を表す変数を定義して，
         毎ステップ，回転角を更新，回転軸も使って四元数に変換してやればよい．
@@ -366,17 +366,17 @@
     <p>
     並進運動では剛体の位置と速度，加速度，力で運動を表現した．
     回転運動ではそれぞれ姿勢，角速度(Angular Velocity)，角加速度(Angular Acceleration)，トルクで運動を表現する．
-    2次元の場合は姿勢は1つの角度<img src="eq/physics1.eq38.gif" />で表される．
-    そのとき，角速度<img src="eq/physics1.eq56.gif" />，角加速度<img src="eq/physics1.eq57.gif" />はそれぞれの時間微分となる．
+    2次元の場合は姿勢は1つの角度<img src="../eq/physics1.eq38.gif" />で表される．
+    そのとき，角速度<img src="../eq/physics1.eq56.gif" />，角加速度<img src="../eq/physics1.eq57.gif" />はそれぞれの時間微分となる．
     </p>
-    <p align="center"><img src="eq/physics1.eq58.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq58.gif" /></p>
     <p>
-    3次元の場合は<img src="eq/physics1.eq38.gif" />を四元数<img src="eq/physics1.eq59.gif" />で置き換えればよい．
-    角加速度とトルク<img src="eq/physics1.eq5.gif" />を使うとニュートンの第2法則の回転運動版が定義できる．
+    3次元の場合は<img src="../eq/physics1.eq38.gif" />を四元数<img src="../eq/physics1.eq59.gif" />で置き換えればよい．
+    角加速度とトルク<img src="../eq/physics1.eq5.gif" />を使うとニュートンの第2法則の回転運動版が定義できる．
     </p>
-    <p align="center"><img src="eq/physics1.eq60.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq60.gif" /></p>
     <p>
-    ここで，<img src="eq/physics1.eq61.gif" />は慣性テンソルと(2次元なら慣性モーメントとも)呼ばれ，回転のしにくさを表す．
+    ここで，<img src="../eq/physics1.eq61.gif" />は慣性テンソルと(2次元なら慣性モーメントとも)呼ばれ，回転のしにくさを表す．
     これは並進運動の場合の質量に相当し，行列の形で表される(質量はどちらの方向でも変わらないが，
     回転のしにくさは異なるためスカラーではなく行列になっている)．
     この式から角加速度は慣性テンソルの逆行列とトルクを使って計算することができる．
@@ -385,9 +385,9 @@
     回転の場合の運動方程式が分かったのであとは並進運動と同じく，前進オイラー法などで時間積分を離散化してやればよい．
     前進オイラー法の場合は，
     </p>
-    <p align="center"><img src="eq/physics1.eq62.gif" /></p>
+    <p align="center"><img src="../eq/physics1.eq62.gif" /></p>
     <p>
-    <img src="eq/physics1.eq63.gif" />はそれぞれのステップにおいて，かかっているトルクから直接計算すればよい．
+    <img src="../eq/physics1.eq63.gif" />はそれぞれのステップにおいて，かかっているトルクから直接計算すればよい．
     慣性テンソルは剛体であるならば形状が変化しないのであらかじめ計算しておく．
     球や直方体，円柱など基本的な形状ならば直接計算できる．
 	三角形ポリゴンで表された複雑な形状の場合は，重心を中心とし，各三角形ポリゴンを底面とする三角錐の集合として慣性テンソルを計算する．
@@ -396,29 +396,29 @@
 	物理エンジンを使いこなすのは容易である)．
 	</p>
 	<p>
-	上の式は四元数を<img src="eq/physics1a.eq1.gif" />で変化させているが，<img src="eq/physics1a.eq1.gif" />はベクトルなのでこのまま式を計算はできない．
-	<img src="eq/physics1a.eq1.gif" />は角速度であるので，物体の姿勢は1ステップで<img src="eq/physics1a.eq2.gif" />だけ変化する(回転する)ことになる．
-	<img src="eq/physics1a.eq3.gif" />をオイラー角とすると，<img src="eq/physics1a.eq1.gif" />も各軸周りの回転速度<img src="eq/physics1a.eq4.gif" />と定義できる．
+	上の式は四元数を<img src="../eq/physics1a.eq1.gif" />で変化させているが，<img src="../eq/physics1a.eq1.gif" />はベクトルなのでこのまま式を計算はできない．
+	<img src="../eq/physics1a.eq1.gif" />は角速度であるので，物体の姿勢は1ステップで<img src="../eq/physics1a.eq2.gif" />だけ変化する(回転する)ことになる．
+	<img src="../eq/physics1a.eq3.gif" />をオイラー角とすると，<img src="../eq/physics1a.eq1.gif" />も各軸周りの回転速度<img src="../eq/physics1a.eq4.gif" />と定義できる．
 	そうするとオイラー角から四元数への変換を行えば良いことになる．
 	</p>
 	<p>
-	回転を表す四元数の定義(<img src="eq/physics1a.eq5.gif" />から，
-	x軸周りに<img src="eq/physics1a.eq6.gif" />だけ変化する場合の四元数は，
+	回転を表す四元数の定義(<img src="../eq/physics1a.eq5.gif" />から，
+	x軸周りに<img src="../eq/physics1a.eq6.gif" />だけ変化する場合の四元数は，
 	</p>
-	<p align="center"><img src="eq/physics1a.eq7.gif" /></p>
+	<p align="center"><img src="../eq/physics1a.eq7.gif" /></p>
 	<p>
-	同様にして，<img src="eq/physics1a.eq8.gif" />も求めて，その三つを掛け合わせると，
-	オイラー角<img src="eq/physics1a.eq9.gif" />による回転を表す四元数が以下のように定義できる．
+	同様にして，<img src="../eq/physics1a.eq8.gif" />も求めて，その三つを掛け合わせると，
+	オイラー角<img src="../eq/physics1a.eq9.gif" />による回転を表す四元数が以下のように定義できる．
 	</p>
-	<p align="center"><img src="eq/physics1a.eq10.gif" /></p>
+	<p align="center"><img src="../eq/physics1a.eq10.gif" /></p>
 	<p>
-	つまり，上の四元数に対するオイラー前進法の式は，ベクトル<img src="eq/physics1a.eq2.gif" />の各要素を<img src="eq/physics1a.eq11.gif" />として上記で四元数<img src="eq/physics1a.eq12.gif" />に変換して，
-	<img src="eq/physics1a.eq13.gif" />として四元数を更新するという式に置き換えられる．
+	つまり，上の四元数に対するオイラー前進法の式は，ベクトル<img src="../eq/physics1a.eq2.gif" />の各要素を<img src="../eq/physics1a.eq11.gif" />として上記で四元数<img src="../eq/physics1a.eq12.gif" />に変換して，
+	<img src="../eq/physics1a.eq13.gif" />として四元数を更新するという式に置き換えられる．
 	</p>
-    <!--<img src="eq/physics1.eq56.gif" />は角速度であるので，物体の姿勢は1ステップで<img src="eq/physics1.eq64.gif" />だけ変化する(回転する)ことになる．
-	このときの回転軸は<img src="eq/physics1.eq65.gif" />であり，回転角は<img src="eq/physics1.eq66.gif" />となる．
+    <!--<img src="../eq/physics1.eq56.gif" />は角速度であるので，物体の姿勢は1ステップで<img src="../eq/physics1.eq64.gif" />だけ変化する(回転する)ことになる．
+	このときの回転軸は<img src="../eq/physics1.eq65.gif" />であり，回転角は<img src="../eq/physics1.eq66.gif" />となる．
     これらを先ほどの四元数に当てはめて，現在の姿勢を表す四元数にかけてやると回転変化を計算することができる．
-    つまり，<img src="eq/physics1.eq56.gif" />による回転を表す四元数を<img src="eq/physics1.eq67.gif" />とすると，<img src="eq/physics1.eq68.gif" />となる．-->
+    つまり，<img src="../eq/physics1.eq56.gif" />による回転を表す四元数を<img src="../eq/physics1.eq67.gif" />とすると，<img src="../eq/physics1.eq68.gif" />となる．-->
     </p>
 
 
@@ -426,21 +426,21 @@
       <h4>練習問題6(option)</h4>
       <p>
         四元数と回転の場合の運動方程式を用いて，初期に与えたトルクで回転しながら放物運動する剛体(立方体)をシミュレーションせよ．
-        なお，各辺が軸に平行で長さが<img src="eq/physics1.eq71.gif" />である直方体の重心周りの慣性テンソル<img src="eq/physics1.eq61.gif" />は以下で与えられる．
+        なお，各辺が軸に平行で長さが<img src="../eq/physics1.eq71.gif" />である直方体の重心周りの慣性テンソル<img src="../eq/physics1.eq61.gif" />は以下で与えられる．
       </p>
-      <p align="center"><img src="eq/physics1.eq72.gif" /></p>
+      <p align="center"><img src="../eq/physics1.eq72.gif" /></p>
       <p>
         ヒント：練習問題1のサンプル中で初期ステップ(g_iStep == 0)で力から速度を計算したように，
-        初期ステップにトルク<img src="eq/physics1.eq5.gif" />と慣性テンソル<img src="eq/physics1.eq61.gif" />の逆行列から
-        角加速度と初期角速度を求める．求めた初期角加速度<img src="eq/physics1.eq56.gif" />で等速回転すると仮定すると，
-        <img src="eq/physics1.eq56.gif" />から上記の方法で1ステップあたりの回転を表す四元数が得られ，それにより姿勢を表す四元数を更新すれば良い．
+        初期ステップにトルク<img src="../eq/physics1.eq5.gif" />と慣性テンソル<img src="../eq/physics1.eq61.gif" />の逆行列から
+        角加速度と初期角速度を求める．求めた初期角加速度<img src="../eq/physics1.eq56.gif" />で等速回転すると仮定すると，
+        <img src="../eq/physics1.eq56.gif" />から上記の方法で1ステップあたりの回転を表す四元数が得られ，それにより姿勢を表す四元数を更新すれば良い．
       </p>
       <!--<h4>練習問題9(option)</h4>
       <p>
         回転を2次元的に制限(z軸周りにだけ回転)し，床にぶつかったときの角度から衝突によるトルクを擬似的に計算してみよう．
-        たとえば，<img src="eq/physics1.eq73.gif" />ならば現在の回転を打ち消すように，<img src="eq/physics1.eq74.gif" />ならば反時計回りのトルク，
-        <img src="eq/physics1.eq75.gif" />ならば時計回りのトルクをかける(ここで<img src="eq/physics1.eq76.gif" />は<img src="eq/physics1.eq38.gif" />を90で割ったときの余り)．
-        本来は衝突によって発生するトルクは<img src="eq/physics1.eq77.gif" />で計算されることに注意すること(<img src="eq/physics1.eq78.gif" />は重心からの距離ベクトル)．
+        たとえば，<img src="../eq/physics1.eq73.gif" />ならば現在の回転を打ち消すように，<img src="../eq/physics1.eq74.gif" />ならば反時計回りのトルク，
+        <img src="../eq/physics1.eq75.gif" />ならば時計回りのトルクをかける(ここで<img src="../eq/physics1.eq76.gif" />は<img src="../eq/physics1.eq38.gif" />を90で割ったときの余り)．
+        本来は衝突によって発生するトルクは<img src="../eq/physics1.eq77.gif" />で計算されることに注意すること(<img src="../eq/physics1.eq78.gif" />は重心からの距離ベクトル)．
     </p>-->
     </div>
 
