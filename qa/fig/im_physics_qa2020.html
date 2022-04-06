@@ -1,0 +1,3727 @@
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="utf-8"
+
+<html data-page="3"
+        data-canvas="2"
+        data-site="/sites/GC41103_A__2021"
+        data-list="19:375a2bb668254a219768b6e50b9734f3@thread.tacv2_wiki"
+        data-tabId="tab::71d53a64-ecbf-4703-bb4e-5c27e1cfddce"
+        data-slug="質問"
+        data-threadId="19:375a2bb668254a219768b6e50b9734f3@thread.tacv2"<body><h3 class="wiki-mht-note">このページは Microsoft Teams の Wiki で自動的に更新され、ここで行った変更は上書きされます。このページを編集するには、Microsoft Teams で開いてください。</h3>
+<h1 id="wiki-mht-page-title-3">過去の質問(2020年度)＾</h1>
+<h3 id="wiki-mht-section-title-4">[mac] cmakeで*.xcodeprojが生成されない</h3>
+<p id="wiki-mht-section-content-4"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>第一回スライドに載せられていたページ(<a href="http://blog.livedoor.jp/tek_nishi/archives/10156724.html" rel="noreferrer noopener" target="_blank" title="http://blog.livedoor.jp/tek_nishi/archives/10156724.html">http://blog.livedoor.jp/tek_nishi/archives/10156724.html</a>)の手順で作業していたのですが(macです)、ページの説明ではcmakeでgenerateしたのちにBULLET_PHYSICS.xcodeprojが生成されていますが、何度か試しましたが画像のようにしか生成されませんでした。対処法はありますか。</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-4-aa9bf0d82af24df595afdce8dbba6928.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27b2678e68-81f9-4ed1-8081-a00eb313219f%27)/$value" data-ts-imgid="imgea336953-852d-4c31-bce2-40fb8cba5282" data-ts-imglen="48876" height="364" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="568" /></span>
+
+<div>​</div>
+</div>
+</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/12 13:42] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>うーん，Macの設定が分からないので間違っているかもしれませんが，configureかgenerateを押したときに開発環境を選ぶダイアログが出たと思うのでそこでXcodeにしていないとかですかね？その場合，GUI版Cmake使っているならばFile -&gt; Delete Cacheした後に再度configureとかで開発環境を再設定できます．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/12 14:13] 学生</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>ありがとうございます</div>
+
+	<div>configure時にXcodeの指定をしていなかったのでDelete Catheした後Xcodeの指定をしてconfigureしたところ&quot;Error in configuration process, project files may be invalid&quot;となってしまいました、、</div>
+
+	<div>（先回はこのエラーは表示されませんでした）</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/12 14:18] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>キャッシュとかがまだ残ってそうなので，一旦ファイルを削除して，ファイルの解凍からやり直してみてください．</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/12 18:53] <span><span>学生</span></span></span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>再度やり直してみましたが変わりませんでした</div>
+
+	<div>以下のようなエラーが出るのですがコンパイラの問題でしょうか</div>
+
+	<div>
+	<p><span style="color:#ef6950;">CMake Error at CMakeLists.txt:7 (PROJECT): No CMAKE_C_COMPILER could be found.</span>  </p>
+
+	<p><span style="color:#ef6950;">CMake Error at CMakeLists.txt:7 (PROJECT): No CMAKE_CXX_COMPILER could be found.</span></p>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/12 19:45] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>うーん，少し調べてみたらXcodeのパス指定がおかしい場合に起こっているエラーのようです．</div>
+
+	<div><a href="https://qiita.com/pakiln/items/612da90ca6a606e7648c" rel="noreferrer noopener" target="_blank" title="https://qiita.com/pakiln/items/612da90ca6a606e7648c">https://qiita.com/pakiln/items/612da90ca6a606e7648c</a></div>
+
+	<div>↑のページが参考になるかもしれません．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div>
+	<div>
+	<div>
+	<div title="MacでThe CXX compiler identification is unknown や CMAKE_CXX_COMPILER could be foundが出たときの対応 - Qiita"><a href rel="noreferrer noopener" target="_blank">MacでThe CXX compiler identification is unknown や CMAKE_CXX_COMPILER could be foundが出たときの対応 - Qiita</a></div>
+
+	<div title="Karabiner-Elementsのmake中にエラーが出てしまった。
+
+% cd ~/Downloads/Karabiner-Elements-version_12.1.0
+% make
+
+make -C ../lib/Karab..."><a href rel="noreferrer noopener" target="_blank">Karabiner-Elementsのmake中にエラーが出てしまった。 % cd ~/Downloads/Karabiner-Elements-version_12.1.0 % make make -C ../lib/Karab...</a></div>
+	</div>
+
+	<div><a href rel="noreferrer noopener" target="_blank">qiita.com</a></div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/12 19:56] TA</span>
+
+	<div>
+	<div>
+	<div>
+	<div>僕も以前そのエラーが出たのですが、藤澤先生が挙げられたqiitaの記事にある通り、ターミナルで sudo xcode-select --reset と入力すれば解決しました。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/12 20:45] 学生</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>上手くできました！</div>
+
+	<div>ありがとうございました。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-5">[mac] ”argument value 10880 is outside the valid range [0, 255]&quot;というエラーが出る</h3>
+<p id="wiki-mht-section-content-5"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>コンパイルの際に, 以下のようなエラーがでます。</div>
+
+<div>0x80=128が[0,255]の範囲外だといわれます。</div>
+
+<div>昨日bullet physicsをbuildした際にも同様のエラーがでており、どうやら本来の値に85をかけた値として認識されているようなのですが、これについてわかるかたいらっしゃいますか？</div>
+
+<div>
+<div style="font-size:14px;">
+<div> </div>
+
+<blockquote>/Users/~/iml_physics/shared/inc/LinearMath/btVector3.h:330:7:<br />
+<br />
+error:<br />
+argument value 10880 is outside the valid range [0, 255] [-Wargument-outside-range]<br />
+y = bt_splat_ps(y, 0x80);</blockquote>
+</div>
+</div>
+
+<div> </div>
+
+<div>
+<div style="font-size:14px;">
+<div>bullet physicsの際はこのようになりました。</div>
+
+<div>青くハイライトされている部分ではエラーは起きないので尚更不思議です。</div>
+</div>
+</div>
+
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-5-205d21932b0345b9bdbb131024da7f7b.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27442ecabb-b4db-44f2-bda0-933d63868c52%27)/$value" data-ts-imgid="img711edd7b-b0ec-4229-a806-777cde15d733" data-ts-imglen="249960" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="442.50513347022587" /></span>
+
+<div>
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/13 13:55] TA</span>
+
+	<div>
+	<div>
+	<div>そのエラーってbtVector3.hで出てますか？</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/13 13:56] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>はい</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl>
+	<dd>
+	<div>[2020/05/13 14:01] TA</div>
+	</dd>
+</dl>
+</div>
+</div>
+
+<div>
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>今回のsphereのプログラムに関しては，bulletを解凍したフォルダ内にあるsrcフォルダの中身を，自身のプロジェクトのshared/inc内に上書きコピーしてみたら動くと思います．</div>
+	</div>
+	</div>
+
+	<div>編集済み</div>
+	</dd>
+</dl>
+
+<dl>
+	<dd>
+	<div>
+	<div>
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/13 14:01] </span><span>質問者</span>
+
+		<div>
+		<div>
+		<div>
+		<div>
+		<div>
+		<div>
+		<div>以下のページに書かれている回答によって解決しました！</div>
+
+		<div>どうやらappleがclangをupdateした際に発生したものらしいです</div>
+
+		<div><a href="https://www.gitmemory.com/issue/bulletphysics/bullet3/2114/478287490" rel="noreferrer noopener" target="_blank" title="https://www.gitmemory.com/issue/bulletphysics/bullet3/2114/478287490">https://www.gitmemory.com/issue/bulletphysics/bullet3/2114/478287490</a></div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+	</div>
+	</div>
+	</dd>
+</dl>
+</div>
+</div>
+
+<div>
+<div>
+<div style="font-size:14px;"><span>[2020/05/15 12:35] </span><span>TA</span>
+
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>この問題についてですが，Bulletの最新verのv2.89ではこの問題は解消されていたので，最新版のBulletを使えば大丈夫そうです.</div>
+
+<div>(ちなみに，質問者が挙げてくれたサイトの回答と全く同じ記述がコード内にあったので，既に解決済みの方はそのままで問題ないです)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div> </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-6">[mac] mac環境でサンプルプログラムの日本語コメントが文字化けする</h3>
+<p id="wiki-mht-section-content-6"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">mac環境でサンプルプログラムを開くとコメント(日本語の箇所と思われるところ)が文字化けしてしまうのですが、他のmacの方どうですか</div>
+
+<div style="font-size:14px;"> </div>
+
+<div style="font-size:14px;">
+<div>
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/13 14:07] TA</span>
+
+	<div>
+	<div>
+	<div>配布されているソースコードはShift-JISで書かれているので，UTF-8に変換してみてください．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+</div>
+</div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-7">VS2017で&quot;～が開けません&quot;というエラーが大量に出る</h3>
+<p id="wiki-mht-section-content-7"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>サンプルファイルを解凍してプロジェクトを開くと画像のようなエラーが出てしまい実行できません</div>
+
+<div>～を開けません系のエラーが500くらい出てしまいます。なにか設定を間違えたでしょうか</div>
+
+<div>環境はVS2017です</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-7-2dbfeba33cb24bbea6324a3709ecf483.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27b925562a-17a5-4041-a740-b20e0cd03b29%27)/$value" data-ts-imgid="img759cf446-4ac1-486f-bcdc-81b0fae60100" data-ts-imglen="183195" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" /></span>
+
+<div> </div>
+</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/13 14:21] TA</span>
+
+	<div>
+	<div>
+	<div>うーん，状況がわからないのでちょっとなんともいえないですが，解凍してそのままビルドしたらそのエラーが出た感じですか？</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd><span>[2020/05/13 14:22] 質問者</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>解凍してプロジェクトを開き、main.cppを開いた時点でこのエラーが出ます。</div>
+
+	<div>いままで自分で使っていたVS2017がなにかいけないのかと思ったのでとりあえず2019を入れて試してみます</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div>​</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/13 14:29] <span><span>藤澤誠</span></span></span>
+
+	<div>
+	<div>
+	<div>VS2017のままでOKです．おそらくWindowsSDKのバージョン違いだと思います(VS2017の中でもインストールした時期などで微妙に違うんです...)．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/13 14:30] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>プロジェクト(右バーの「sphere」)を右クリックして，プロジェクトの再ターゲットを選んでください．井上君の環境でのWindowsSDKのバージョンが表示されると思うので，そのままOKでプロジェクトが再設定されます．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/13 14:31] 質問者</span>
+
+	<div>
+	<div>
+	<div>ありがとうございます。やってみます</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/13 14:37] </span><span>質問者</span>
+
+	<div>
+	<div>
+	<div>治りました！</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-8">quaternionの式におけるθはradianですか？</h3>
+<p id="wiki-mht-section-content-8"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>quaternionの式におけるθはradianですか？</div>
+
+<div> </div>
+
+<div>
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/15 17:22] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>radianです．degreeでもいいけどC/C++のsin,cos関数はradianなので．​</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/15 17:23] 質問者</span>
+
+	<div>
+	<div>
+	<div>あ、確かに定義式としてはどちらにしても同じですね...。ありがとうございます。</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/15 17:27] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>ちなみに物理エンジンbulletもradianを基本にしているので，radianで全部考えておくと実装するときに間違いがないです(一応，bulletにはbtRadiansという変換用関数があるけど)．定義としてはその通りどちらでもよいけど．</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+</div>
+</div>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-9">VS2019で &#39;RuntimeLibrary&#39; の不一致が検出されました とエラーが出る</h3>
+<p id="wiki-mht-section-content-9"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>VS2019で第2回のInitBulletを定義すると次のようなエラーが何行か出てしまいます。追加のライブラリディレクトリにshared/libは追加してありますが治らないです。</div>
+</div>
+</div>
+</div>
+
+<div> </div>
+
+<div style="font-size:14px;">
+<div>
+<div>
+<blockquote>
+<div>BulletCollision.lib(btCollisionDispatcher.obj) : error LNK2038: 'RuntimeLibrary' の不一致が検出されました。値 'MTd_StaticDebug' が MDd_DynamicDebug の値 'main.obj' と一致しません。</div>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd><span>[2020/05/15 17:41] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>すこし待っていてください．こっちで確認します．このエラーが出るのはビルド設定でlibファイルとプロジェクトのstatic/sharedリンクの設定が異なっている時におきます．bullet2.89のデフォルト設定を確認しておきます．</div>
+
+	<div> </div>
+	</div>
+	</div>
+
+	<div>​[2020/05/15 17:46] 藤澤誠</div>
+
+	<div>VS2019でプロジェクト(sphere)を右クリックして，プロパティを開いてみてください．その中の，C/C++→コード生成 の ランタイムライブラリ の欄はどうなっていますか？bulletのデフォルトは マルチスレッド デバッグ もしくは マルチスレッド だと思いますが，これの後ろにDLLとかついてないですか？</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/15 17:48] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>マルチスレッド デバッグ DLL (/MDd)と書いてありました。</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/15 17:48] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>すいません，今確認したらsphereのデフォルトがマルチスレッド DLLになってました... 上記の設定でそこをマルチスレッド デバッグ (/MTd)に変更してください．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/15 17:50] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>ありがとうございます解決しました！</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-10">[mac] xcodeでのlibファイル生成場所？</h3>
+<p id="wiki-mht-section-content-10"><div itemprop="copy-paste-block">
+<div style="font-size:14px;"><span></span>
+<div> </div>
+
+<div>
+<div>
+<div>libファイルをこぴーするとありますが、xcodeでbuildした場合はどこに生成されるんでしょうか？見つけられず...</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/22 16:32] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>macだと*.libではなく*.aというファイルが生成されていると思います(libBulletDynamics.aとか)．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/22 16:32] TA</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>例えば、LinearMathのlibファイルであればbulidしたフォルダ内のsrc/LinearMath/&quot;Debug&quot;or&quot;Release&quot;/libLinearMath.aです</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/22 16:33] 質問者</span>
+
+	<div>
+	<div>
+	<div>見つかりました、ありがとうございます</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-11">[mac] shared\incへコピーするファイルについて</h3>
+<p id="wiki-mht-section-content-11"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>
+<p style="font-size:14.4px;">BULLET\srcフォルダの中身をそのまま，</p>
+
+<pre style="font-size:14.4px;">
+shared\inc</pre>
+
+<p style="font-size:14.4px;">にコピーするとありますが、build先のフォルダ内のsrcフォルダの中身ですか？mac,xcodeで作業しています</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/22 16:57] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>そうです．Bulletを解凍したフォルダ内のsrcフォルダです．xcodeのプロジェクトでshared/incをインクルードフォルダに設定してあるならばそこでOKです．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/22 16:58] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>わかりました、ありがとうございます</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+
+<div> </div>
+</p>
+<h3 id="wiki-mht-section-title-12">VS2017で include ファイルを開けません。 などのエラーが多発する</h3>
+<p id="wiki-mht-section-content-12"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>VS2017を使っています。bullet2.87をダウンロードして、説明ページの通り実行してビルドすると</div>
+
+<blockquote>
+<div>include ファイルを開けません。'corecrt.h':No such file or directory (ソース ファイルをコンパイルしています ..\..\examples\Importers\ImportObjDemo\LoadMeshFromObj.cpp)    App_RobotSimulator    c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\crtdefs.h    10   </div>
+
+<div>エラー    D8040    子プロセスの作成中または更新中にエラーが発生しました。    BussIK    C:\Users\\デスクトップ\2020春学期\実験A\A\bullet3-2.87\bullet3-2.87\build3\vs2010\cl    1  </div>
+</blockquote>
+
+<div>などのエラーが多数出てしまいビルドできません。（DebugでもReleaseでも同じでした）</div>
+
+<div>今回はWindowsSDKは8.1にしています。</div>
+
+<div>どのようにしたら良いでしょうか</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/22 17:06] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>binフォルダ内にBulletDynamics.libやLinearMath.libなどはできていますか？いくつかのプロジェクトは環境によってはエラーが出るみたいですが，実験で使うのは<span style="font-size:14.4px;">BulletCollision, BulletDynamics, LinearMath, BulletSoftBodyの各libファイルだけなのでそれらが生成できていればそれ以外のプロジェクトのエラーは無視できます．</span></div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/22 17:07] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>すみません、何も生成されず空になっています</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/22 17:09] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>それでは一度ファイルを削除して，解凍し直して，WindowsSDKのバージョンを選ぶところを8.1ではなく10.* (*のところは環境によって違う)でやってみてくれませんか？Community版だと8.1でうまくいかない可能性もあるので．</div>
+
+	<div>(こっちの環境(VS2017Pro)で10.*でやってみたところ，10個ぐらいのプロジェクトはエラーをはきましたが，上記の必要なlibのプロジェクトはビルドに成功するようなので)</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/22 17:11] <span>質問者</span></div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>分かりました</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/05/22 17:20] <span>質問者</span></div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>binファイルに生成されました、ありがとうございます。（エラーは出たままでした）</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/05/22 17:22] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>よかったです．エラーが出たのは今回は無視しましょう(テスト用のプロジェクトが多過ぎなんですよね...)．</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+</div>
+
+<div> </div>
+
+<div> </div>
+</p>
+<h3 id="wiki-mht-section-title-13">&#39;btQuaternion&#39;のメンバーではありませんというエラーが出る</h3>
+<p id="wiki-mht-section-content-13"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>main.cppの冒頭に#pragma ~　を記述するところまで行ったのですが、途中で以下のようなエラー出ていることに気づいたのですが、これはどうすればよいのでしょうか。</div>
+
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-13-b20f9b0e486a459aa37083b9d42aae70.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%276aa37cf5-db5c-4067-a170-ed90e456f9cb%27)/$value" data-ts-imgid="img9ff763ef-7e4c-4557-bde9-188692fdd62c" data-ts-imglen="236560" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="444.6666666666667" /></span>
+
+<div> </div>
+</div>
+
+<div>[2020/05/22 17:48] 藤澤誠</div>
+</div>
+</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>インクルードの順番かな．
+	<pre style="font-size:14.4px;">
+#include &lt;btBulletDynamicsCommon.h&gt;</pre>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>
+<div>
+<div>
+<div>の前にbtQuaternion.hとbtTransform.hをインクルードしているけど，それらをbtBulletDynamicsCommon.hの下に持ってくるか，単純に削除して見てください．</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/22 17:51] 質問者</span>
+
+	<div>
+	<div>
+	<div>治りました。ありがとうございます。</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+
+<div> </div>
+</p>
+<h3 id="wiki-mht-section-title-14">[mac] ld: library not found for -lBulletDynamics というエラーが出る</h3>
+<p id="wiki-mht-section-content-14"><div itemprop="copy-paste-block">
+<div style="font-size:14px;"><span>[2020/05/22 18:19] </span><span>千葉湧河</span>
+<div>
+<div>
+<div>
+<div>
+<div>xcodeで練習問題１を実行しようとしたときに以下のようなエラーが出ました</div>
+
+<div>
+<blockquote>
+<p>ld: library not found for -lBulletDynamics</p>
+
+<p>clang: error: linker command failed with exit code 1 (use -v to see invocation)</p>
+</blockquote>
+
+<div>libBulletDynamics.aやその他*.aファイルはFrameworksに追加しているのでなぜこのエラーが出るかわからないです。どのようにしたら良いでしょうか。</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/22 18:23] TA</span>
+
+	<div>
+	<div>
+	<div>Build SettingsでLibrary Search Pathsを指定してないとかかもしれません．</div>
+
+	<div>ちなみにlib_macフォルダには使うlibファイルをまとめて入れておくとよいです．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-14-a8e14d76fbbb4609a3fd28ab8cf93dc5.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27f4430f32-2009-40c0-a5b6-481053cb18e8%27)/$value" data-ts-imgid="imgac895f87-50d9-4491-9a0f-0a0c6ae97402" data-ts-imglen="1164409" height="548" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="878" /></span>
+
+	<div> </div>
+	</div>
+
+	<div>​[2020/05/22 18:38] 質問者</div>
+
+	<div>うまく行きました。ありがとうございます！</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div> </div>
+	</dd>
+</dl>
+</div>
+
+<div> </div>
+
+<div> </div>
+</p>
+<h3 id="wiki-mht-section-title-43">[mac] xcodeでThread 1: signal SIGABRTというエラーが出る</h3>
+<p id="wiki-mht-section-content-43"><div itemprop="copy-paste-block">
+<div>
+<div style="font-size:14px;"><span>[2020/06/03 14:29] 質問者</span>
+<div>
+<div>
+<div>
+<div>
+<div>btcubeについて、build succeededとは出るのですが、ソースコードではない部分(実行ファイル？)に</div>
+
+<div>
+<p>Thread 1: signal SIGABRT</p>
+
+<div>が出て原因がわかりません。調べてもよくわからないです、、</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/03 14:36] 質問者</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>あ、今解決しました。</div>
+
+	<div>frameworksにあった余分なものを消したら動きました。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</div>
+	</dd>
+</dl>
+</div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-15">関数InitBulletを定義するだけでエラーがたくさん出てくる</h3>
+<p id="wiki-mht-section-content-15"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>関数InitBulletを定義するだけでエラーがたくさん出てきてビルドできないのですが、これは正常なのでしょうか。main関数の中などで呼び出しているわけではありません。</div>
+</div>
+</div>
+
+<div>
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-15-35e555eadc3b47f4918b7ec7b9d53888.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27a65d6f2a-d01a-498b-ace3-01c863630d91%27)/$value" data-ts-imgid="img5a047bc4-e58a-46cb-8773-6e2dd178b4fd" data-ts-imglen="305090" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="444.3298969072165" /></span>
+
+<div> </div>
+</div>
+
+<div>​</div>
+</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/22 19:11] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div style="font-size:14px;">Visual Studioでプロジェクト(sphere)を右クリックして，プロパティを開いてみてください．その中の，C/C++→コード生成 の ランタイムライブラリ の欄が&quot;マルチスレッド デバッグ DLL&quot;となっていたら&quot;マルチスレッド デバッグ&quot;に変更してみてください(すいません，サンプルプログラムの設定ミスのようです)．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div> </div>
+
+	<div>
+	<div>
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:15] 質問者</span>
+
+		<div>
+		<div>
+		<div>マルチスレッドデバッグに直してみたのですが、変わらないです...</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<div>​</div>
+
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:18] </span><span><span>質問者</span></span>
+
+		<div>
+		<div>
+		<div>vsの再起動などもしてみましたが、エラーの数は変わってないみたいです。</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<div>​</div>
+
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:18] </span><span>藤澤誠</span>
+
+		<div>
+		<div>
+		<div>あとは，ReleaseでビルドしたlibファイルをDebugモードで参照してないでしょうか？Bulletのビルドで最後にReleaseとDebugどちらでビルドしましたか？</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<div>​</div>
+
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:20] </span><span><span>質問者</span></span>
+
+		<div>
+		<div>
+		<div>先にdebugでやったので最後にreleaseをしたと思います。</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<div>​</div>
+
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:21] </span><span>藤澤誠</span>
+
+		<div>
+		<div>
+		<div>そうするとshared/libフォルダにはReleaseで作ったlibファイルが入っているので，sphereのプログラムの方をReleaseにしてみてください(上のランタイムライブラリはReleaseの場合は&quot;マルチスレッド&quot;になります)．</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<div>​</div>
+
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:25] </span><span><span>質問者</span></span>
+
+		<div>
+		<div>
+		<div>できました。ありがとうございます。これからずっとreleaseモードでビルドしていかないとエラーが出てしまうということですか？debugモードに直した方ががよいのでしょうか。</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<div>​</div>
+
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:30] </span><span>藤澤誠</span>
+
+		<div>
+		<div>
+		<div>両方使えるとそれがいいのですがとりあえずはReleaseでもだいじょうぶです．ただ，Releaseだとデバッガが使えないので，時間のあるときにDebugでもBulletを再度ビルドしてみてください(Releaseはその代わりに最適化してくれるので実行速度が速い)．ただし，Bulletはdebugとreleaseでlibファイル名を変えないので再度ビルドすると今度はDebug版でRelease版が上書きされてしまします(今はdebug-&gt;releaseの順番でビルドしたのでdebug版のlibが上書きされてしまった状態)．そのため，binフォルダの中身を丸ごとどっかにコピーしておいてから行うことをおすすめします．</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<div>​</div>
+
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:32] </span><span><span>質問者</span></span>
+
+		<div>
+		<div>
+		<div>わかりました。ありがとうございます。</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<div>​</div>
+
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:32] </span><span>藤澤誠</span>
+
+		<div>
+		<div>
+		<div>なお，両方使う場合は，上でも確認してもらったプロジェクトのプロパティの リンカー→全般→追加のライブラリディレクトリ の設定をReleaseとDebugで変えると良いです(プロパティウィンドウの左上でRelese,Debug選べます)．</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<div>​</div>
+
+	<dl style="font-size:14px;">
+		<dd>
+		<div><span>[2020/05/22 19:35] </span><span><span>質問者</span></span>
+
+		<div>
+		<div>
+		<div>承知しました。</div>
+		</div>
+		</div>
+		</div>
+		</dd>
+	</dl>
+
+	<dl>
+		<dd>
+		<div> </div>
+		</dd>
+	</dl>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+</div>
+
+<div> </div>
+</p>
+<h3 id="wiki-mht-section-title-16">[mac] xcodeで Undefined symbols for architecture というエラーが出る</h3>
+<p id="wiki-mht-section-content-16"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>xcodeにてbuildをした際、以上のようなerrorが出ます。関数がないということだと思うのですが、それがどこにあるのかもわかりません</div>
+</div>
+</div>
+
+<div><span contenteditable="false"></span>
+
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-16-d152cf0d92444372976d844fcfe3f4a3.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27de337015-5c33-46fe-81f5-7965bc0159fe%27)/$value" data-ts-imgid="imgc8e84070-66c3-42bb-bf10-656d5e380464" data-ts-imglen="1452417" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="457.5371549893843" /></span>
+
+<div>lib, srcは次の通り、不足はないはずです</div>
+</div>
+
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-16-bcf8df00247249adba7fd0641dba33be.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%273060a372-b2bb-4998-b609-7258234c4b4c%27)/$value" data-ts-imgid="img1fb1e2ae-20fb-4a6a-be74-851acd39f2fa" data-ts-imglen="85376" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="203.84615384615384" /></span>
+
+<div> </div>
+</div>
+
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-16-3d5b42ad3a444839a9f9f0644de90224.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27b9856f41-4f21-4f53-9ed7-c821496e0f1a%27)/$value" data-ts-imgid="img2c4171a6-4bb2-4cf1-9203-87cd45fec1df" data-ts-imglen="171318" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="73.9795918367347" /></span>
+
+<div> 
+<div>
+<div>
+<div>定義もされているように見えます</div>
+</div>
+</div>
+
+<div>
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-16-3314134061ed4c0a8031d6bb630c99c3.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27f59716ab-a798-46ad-a1a3-34a51892bdb1%27)/$value" data-ts-imgid="img3c7e9b98-d440-4573-9d79-a6e705357a7c" data-ts-imglen="183224" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="478.8888888888889" /></span>
+
+<div> </div>
+</div>
+
+<div>​</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/27 13:51] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>btsphereをビルドしようとしている段階ですね．定義に関してはヘッダーファイル内でのdefineは単純に関数名の変換用なので，関数の中身自体はlibLinearMath.aにあります．それがうまくリンクされていないようですね．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/05/27 13:53] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>少し調べてみたところ <a href="http://tech.admax.ninja/2014/09/12/add-library-in-xcode-project/" rel="noreferrer noopener" target="_blank" title="http://tech.admax.ninja/2014/09/12/add-library-in-xcode-project/">http://tech.admax.ninja/2014/09/12/add-library-in-xcode-project/</a> の方法でxcodeのプロジェクトでリンクされているライブラリを確認できそうなので，調べてみてくれませんか．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div>
+	<div>
+	<div>
+	<div title="【Xcode】ライブラリの追加方法 | AdMax Tech Blog"><a href rel="noreferrer noopener" target="_blank">【Xcode】ライブラリの追加方法 | AdMax Tech Blog</a></div>
+
+	<div title="Xcodeにおけるライブラリの追加方法を説明します。
+初めてXcodeをみると機能がたくさんありすぎて、なにがどこを指しているのかよくわからないという自体になります。
+これだけのために記事を書くのはすこしもったいないですが、色々なところで当たり前のように
+「○○のライブラリを追加してください。」
+っ"><a href rel="noreferrer noopener" target="_blank">Xcodeにおけるライブラリの追加方法を説明します。 初めてXcodeをみると機能がたくさんありすぎて、なにがどこを指しているのかよくわからないという自体になります。 これだけのために記事を書くのはすこしもったいないですが、色々なところで当たり前のように 「○○のライブラリを追加してください。」 っ</a></div>
+	</div>
+
+	<div><a href rel="noreferrer noopener" target="_blank">tech.admax.ninj</a></div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/05/27 14:00] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>こうなっておりました。ここに.aファイルを追加したらコンパイル成功しました。</div>
+
+	<div>library search pathにlibへのパスを書いていれば良いと勘違いしておりました。</div>
+
+	<div>
+	<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-16-6c71c2be0a1d4862a2d933159db780ce.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27e40d77e7-7f5c-4470-a793-93cc73166b98%27)/$value" data-ts-imgid="img5bc63588-ce81-4292-9138-3362329b524e" data-ts-imglen="122791" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="453.6842105263158" /></span>
+
+	<div> </div>
+	</div>
+
+	<div>
+	<div>
+	<div> </div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+</div>
+
+<div> </div>
+</p>
+<h3 id="wiki-mht-section-title-17">[mac] freeglut関係のインクルードでエラーが出る</h3>
+<p id="wiki-mht-section-content-17"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div itemtype="http://schema.skype.com/CodeSnippet">
+<div>
+<h4> </h4>
+</div>
+
+<div>
+<pre>
+<span itemid="19e59c667ce94b1081acccc9374e35fc" itemtype="http://schema.skype.com/InputExtension"><code><span>/shared/inc/GL/freeglut_ext.h:168:27: Functions that differ only in their return type cannot be overload</span></code></span></pre>
+</div>
+</div>
+というエラーが出ました。返り値が違うだけの関数はオーバーロードできないということですが、かといって関数名をかえたら他のところが動かなくなりそうでどうしたら良いかわかりません。どうしたら良いでしょうか...？</div>
+
+<div> 
+<div>
+<div>
+<div>
+<div>
+<div>該当の箇所です</div>
+
+<blockquote>
+<div>
+<p>/*</p>
+
+<p> * Extension functions, see freeglut_ext.c</p>
+
+<p> */</p>
+
+<p><span><b>typedef</b></span> <span><b>void</b></span> (*GLUTproc)();</p>
+
+<p>FGAPI GLUTproc FGAPIENTRY glutGetProcAddress<span>( </span><span><b>const</b></span> <span><b>char</b></span><span> *procName );</span></p>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>もう一つの宣言はglut.hにあるようです。555行目です</div>
+
+	<blockquote>
+	<div>
+	<p>#if (GLUT_API_VERSION &gt;= <span>5</span>)</p>
+
+	<p><span><b>extern</b></span> <span><b>void</b></span> * <span>APIENTRY</span> <span>glutGetProcAddress</span>(<span><b>const</b></span> <span><b>char</b></span> *procName) <span>OPENGL_DEPRECATED</span>(<span>10</span>_3, <span>10</span>_9);</p>
+
+	<p>#endif</p>
+	</div>
+	</blockquote>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/29 19:29] 質問者</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>stackoverflowはありましたが解決策はない感じです</div>
+
+	<div><a href="https://stackoverflow.com/questions/20024008/error-functions-that-differ-only-in-their-return-type-cannot-be-overloaded" rel="noreferrer noopener" target="_blank" title="https://stackoverflow.com/questions/20024008/error-functions-that-differ-only-in-their-return-type-cannot-be-overloaded">https://stackoverflow.com/questions/20024008/error-functions-that-differ-only-in-their-return-type-cannot-be-overloaded</a></div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div>
+	<div>
+	<div>
+	<div title="Error: functions that differ only in their return type cannot be overloaded"><a href rel="noreferrer noopener" target="_blank">Error: functions that differ only in their return type cannot be overloaded</a></div>
+
+	<div title="I'm using mac os 10.9, I have a C++ program which uses freeglut library. When I try to make the project. It gives an error which I don't know it's my fault or not. This is the message:
+
+In file inc..."><a href rel="noreferrer noopener" target="_blank">I'm using mac os 10.9, I have a C++ program which uses freeglut library. When I try to make the project. It gives an error which I don't know it's my fault or not. This is the message: In file inc...</a></div>
+	</div>
+
+	<div><a href rel="noreferrer noopener" target="_blank">stackoverflow.com</a></div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd><span>[2020/05/29 19:48] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>xcodeでGLUT Frameworkを使っているならば，freeglutは使う必要ないので，shared/inc/GLは無視でOKです．</div>
+
+	<div>#include &lt;GL/glut.h&gt;</div>
+
+	<div>を消して，</div>
+
+	<div>#include &lt;GLUT/GLUT.h&gt;</div>
+
+	<div>に置き換えてみてください．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div> </div>
+
+	<div>[2020/05/29 20:02] 藤澤誠</div>
+
+	<div>あと，glutCloseFuncもそんな関数ないと言われるかもしれません，その場合は glutWMCloseFuncに置き換えてみてください．</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/30 15:33] TA</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>utils.hとrx_shadow_gl.hの両方に</div>
+
+	<div>
+	<div style="font-size:14px;">#include &lt;GL/glut.h&gt;</div>
+
+	<div style="font-size:14px;">があるので注意してください。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>
+<div>
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/05/30 15:52] TA</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>また、GLEWのlibファイルが必要になるので、brewなどでインストールしてみてください。</div>
+
+	<div>libファイルの設定の仕方などは以下のサイトが参考になると思います。</div>
+
+	<div><a href="https://riptutorial.com/ja/opengl/example/21105/macos%E4%B8%8A%E3%81%AE%E6%9C%80%E6%96%B0%E3%81%AEopengl-4-1%E3%82%92%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E3%81%99%E3%82%8B-xcode-glfw-%E3%81%8A%E3%82%88%E3%81%B3glew-" rel="noreferrer noopener" target="_blank" title="https://riptutorial.com/ja/opengl/example/21105/macos%e4%b8%8a%e3%81%ae%e6%9c%80%e6%96%b0%e3%81%aeopengl-4-1%e3%82%92%e3%82%bb%e3%83%83%e3%83%88%e3%82%a2%e3%83%83%e3%83%97%e3%81%99%e3%82%8b-xcode-glfw-%e3%81%8a%e3%82%88%e3%81%b3glew-">https://riptutorial.com/ja/opengl/example/21105/macos%E4%B8%8A%E3%81%AE%E6%9C%80%E6%96%B0%E3%81%AEopengl-4-1%E3%82%92%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E3%81%99%E3%82%8B-xcode-glfw-%E3%81%8A%E3%82%88%E3%81%B3glew-</a></div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd><span>[2020/06/03 5:50] </span><span>佐々木龍</span>
+
+	<div>
+	<div>
+	<div>返信が遅くなり申し訳ありません。無事コンパイルできました！ありがとうございます...！！</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+
+<dl>
+	<dd>
+	<div> </div>
+	</dd>
+</dl>
+</div>
+</div>
+
+<div> </div>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-18">衝突検出の練習問題４で衝突検出結果がおかしい</h3>
+<p id="wiki-mht-section-content-18"><div itemprop="copy-paste-block">
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>衝突検出の練習問題４で特定のキーを押したときにグローバル変数g_pMoveBodyにCreateRigidBody(0.0, trans, box_shape, 0)を格納し、 左右キーが押されたとき(下のコードは右だけ)に</div>
+
+	<blockquote>
+	<div>if(g_pMoveBody){​​​​</div>
+
+	<div>​     btTransform new_trans;</div>
+
+	<div>    g_pMoveBody-&gt;getMotionState()-&gt;getWorldTransform(new_trans);</div>
+
+	<div>    new_trans.getOrigin() += btVector3(0.02, 0.0, 0.0);</div>
+
+	<div>    g_pMoveBody-&gt;getMotionState()-&gt;setWorldTransform(new_trans);</div>
+
+	<div>}​​​​​</div>
+	</blockquote>
+
+	<div>を記述したのですが、左右キーで動くのは物体の形だけで実際には最初の位置にずっと透明の立方体があるようになってしまいます。 また、左右キーで動かした物体は他の物体がすり抜けてしまいます。 なぜこうなるのか考えても理由がわからず質問しました。​</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>こんな感じです。</div>
+	</div>
+	</div>
+
+	<div>
+	<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-18-37b246c3ee524a4b98096b4c23fbf755.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%274a4e4956-a839-40aa-9c6a-55cf363e910a%27)/$value" data-ts-imgid="img23314d13-af84-43ee-95ed-5558c32f4ed2" data-ts-imglen="13540" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="275.9282970550576" /></span>
+
+	<div> </div>
+	</div>
+
+	<div> </div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/05 15:53] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>確認なのですが，「グローバル変数g_pMoveBodyにCreateRigidBody(0.0, trans, box_shape, 0)を格納」は特定のキーを押したときとありますが，<span>SetRigidBodies関数内で行っているわけではないということですか？(つまり最初の状態では緑のboxはなくて，キーを押すと緑のboxが出てくるような状態)</span></div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/05 15:55] 質問者</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>SetRigidBodiesの関数内で格納してます。特定のキーを押した時に用意しておいたグローバル変数の値を変更し、その後SetRigidBodies内でif文を使って、g_pMoveBody=CreateRigidBody(0.0, trans, box_shape, 0)を実行しています。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<blockquote> つまり最初の状態では緑のboxはなくて，キーを押すと緑のboxが出てくるような状態←この状態です。</blockquote>
+
+<div> </div>
+
+<div>
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/05 16:30] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div style="font-size:14px;">g_pMoveBody=CreateRigidBody(0.0, trans, box_shape, 0)の下に，</div>
+
+	<blockquote>
+	<div style="font-size:14px;">g_pMoveBody-&gt;setCollisionFlags(g_pMoveBody-&gt;getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);</div>
+	</blockquote>
+
+	<div style="font-size:14px;">を追加して試してみてもらえませんか．こちらではそれで解決しました．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/06/05 16:32] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>上手く実行できました。ありがとうございます</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+</div>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-19">衝突フィルタリングについて</h3>
+<p id="wiki-mht-section-content-19"><div class="copy-paste-block" itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>衝突フィルタリングについて</div>
+
+<div>
+<pre style="font-size:14.4px;">
+world-&gt;addRigidBody(body1, RX_COL_GROUP1, RX_COL_GROUND);
+world-&gt;addRigidBody(body2, RX_COL_GROUP2, RX_COL_GROUND | RX_COL_GROUP1 | RX_COL_GROUP2);
+</pre>
+
+<div>といったように, group2にはgroup1と衝突する。と指定し、group1ではgroup2と衝突しない。と指定した場合、これら二つは衝突しない、という認識で正しいでしょうか？</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/10 13:03] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>はい，そうです．group1と2を衝突させる場合は，body1,body2にそれぞれRX_COL_GROUP2,RX_COL_GROUP1を指定する必要があります(片一方だけでは×)．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/06/10 13:15] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>であれば、各オブジェクトごとにぶつかる対象のグループを設定するではなく、</div>
+
+	<div>各グループごとに衝突するグループを設定し、各オブジェクトに対してはそれがどのグループに属するかのみを与えたほうが設定漏れなどのミスがなくて良いのではないかと思うのですが、そういったことはできるのでしょうか</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/06/10 13:22] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>もしかしたらあるかもしれないですが，私の知る限りではbulletでグループの衝突を個別に設定できる機能はないですね．基本的にはbtRigidBodyごとに設定する必要がありそうです．</div>
+	</div>
+	</div>
+
+	<div>グループとグループに属するオブジェクト，グループ間の衝突フィルタなどをまとめて管理するクラスなどを自分で作るのが解決策かな．
+	<div>
+	<div>
+	<div>後は，Custom NearCallBackという衝突時の処理を自分でカスタマイズできる機能もあるのでそれを使って衝突時のフィルタ処理を自分で書くという手もあります(Bullet User Manualの7.Collision Filteringの&quot;Filtering Collisions Using a Custom NearCallback&quot;参照)．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/06/10 13:28] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>ありがとうございます。管理クラスのほうが実装は難しくなさそうですね。</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+
+<div> </div>
+</p>
+<h3 id="wiki-mht-section-title-20">[mac] ライブラリのリンクが一定時間で切れたり、プロジェクト起動時に再設定しなければならない</h3>
+<p id="wiki-mht-section-content-20"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>質問ではないですが、ライブラリのリンクが一定時間で切れたり、プロジェクト起動時に再設定しなければならなかった問題について。</div>
+
+<div>リンクしていたライブラリがicloud上に保存されていたものであったのが原因なようです。一度自身のPCにダウンロードすることで解決できたと思われます。icloudとデスクトップが同期されているのですが、今回は生成されたライブラリファイルをicloud上のみに保存してしまってました。</div>
+</div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-21">＆演算子について</h3>
+<p id="wiki-mht-section-content-21"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>練習問題６の描画する位置をDisplay関数内に変えたいのですが、&amp;演算子についてあんまり理解しておらず、グローバル変数を定義しようとしてもエラーが解決できずにいます。どのような感じの定義をしたらいいのでしょうか。</div>
+</div>
+</div>
+
+<div>
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-21-1682620b913e47668a96cc316e3a11e9.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%275ad8bcb7-e9cb-40c0-a70a-e000208797d6%27)/$value" data-ts-imgid="img374500e3-5979-4adf-85f9-14353b83b88d" data-ts-imglen="66282" height="103" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="862" /></span>
+
+<div> </div>
+</div>
+
+<div>​</div>
+</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd><span>[2020/06/10 14:51] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>変数定義時の＆演算子は参照変数を表しています．例えば，</div>
+
+	<div>int a = 10;</div>
+
+	<div>int &amp;b = a;</div>
+
+	<div>と定義した後に，bの値を変更すると，変数aの中も変更されます(bはaの参照になっている)．練習問題6のサンプルコード内で&amp;を使っているのは単に余計なメモリを食わないようにしているだけなので，グローバル変数で定義する場合は特に必要ないかと思います．</div>
+
+	<div>あと，スクリーンショットで示したg_ptAは何を格納したいのでしょうか？衝突点座標を格納したいのならば配列にすべきなので，例えば可変長配列vectorを使って，</div>
+
+	<div>vector&lt;btVector3&gt; g_pts;</div>
+
+	<div>とグローバルで定義しておいて，衝突点をg_pts.push_back(ptA);とかで格納していくという方法もあります．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div> </div>
+
+	<div>ちなみにvectorについては実験ページのC++の教材のところにある「<a href="http://slis.tsukuba.ac.jp/~fujisawa.makoto.fu/lecture/iml/cpp/stl.pdf" rel="noreferrer noopener" target="_blank" title="http://slis.tsukuba.ac.jp/~fujisawa.makoto.fu/lecture/iml/cpp/stl.pdf">データ構造と標準テンプレートライブラリ(STL)</a>」というPDFが使い方の参考になると思います．</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/10 15:10] 質問者</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>ポインタはアドレスから値を取り出す感じなので、実体を宣言してからそこのアドレスを取り出すのは厳しいですが、それを可能にするのが＆(アドレスを取り出すというよりもアドレスを見ているというイメージではあるが)といった感じですかね。</div>
+
+	<div>後g_ptAについて、forで全パターン見ているのを考えてなかったです。確かに配列にすべきでした。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/10 15:23] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>アドレスを見ているというイメージで合ってますね．ただ，あまり深く考えずにポインタだと*b=12とかのように*をつけて値にアクセスしなければならないけど，参照変数なら普通の変数のようにb=12と扱えるので便利という程度に考えておくと良いかと思います(参照引数と同じ)．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/10 15:27] </span><span>質問者</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div style="font-size:14px;">わかりました。ありがとうございます。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-22">「４．剛体間リンク」の練習問題2でforce1の初期値が大きい？</h3>
+<p id="wiki-mht-section-content-22"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>練習問題２についてです。force1の値を出力しているのですが、一番最初の値がかなり大きくなってしまい、最初の段階でconstraintがはずれてしまいます。練習問題２に書いてある通りにコードは書いています。</div>
+
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-22-b1edad5e57024d4b8a2b068694a305cb.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27b793cbde-1518-4ba0-8d47-f955141d6e6b%27)/$value" data-ts-imgid="imgb8bbc7ce-d290-4459-9551-d35278f55141" data-ts-imglen="23840" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="469.49891067538124" /></span>
+
+<div> </div>
+</div>
+
+<div>​</div>
+</div>
+</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/12 17:31] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>何らかの設定か環境によってそうなることがあるようです．私の環境でもたまにこの現象が起きます(実はさっきの講義中のデモでも1回ありました)．この現象を確実になくすならば，</div>
+
+	<div>if(g_pConstraint){​​​</div>
+
+	<div>           static bool init = true;</div>
+
+	<div>            if(init){​​​​​​​​​​</div>
+
+	<div>               init = false;</div>
+
+	<div>            }​​​​​​​​​​</div>
+
+	<div>            else{​​​​​​​​​​​​​​​​​</div>
+
+	<div>                // ここにconstraintにかかる力のチェックのコードを記述</div>
+
+	<div>            }​​​​​​​​​​​​​​​​​</div>
+
+	<div>}​​​​​​​​​​​​​​​​​</div>
+
+	<div>と言ったように最初の1回だけスキップする用のコードを入れると良さそうです．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-23">Hinge2 Constraintの変数の形式が違うというエラーが出る</h3>
+<p id="wiki-mht-section-content-23"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>Hinge2 Constraintの初期化をしようとした際に、サジェストされている通りに変数を与えても形式が違うと言われてします。</div>
+
+<div>どこを間違っているのか見ていただきたいです</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<div><span contenteditable="false"><img alt="" data-ts-imgid="img5b26ec6f-c5a8-4809-8b4b-155c2fe01770" data-ts-imglen="81054" height="191" style="vertical-align:bottom;" width="862" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%277dc62658-fccb-43a3-b757-7f22ec7a0479%27)/$value" data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-23-eb7644466a1c45b3aa7eb79ceeb3803e.png" itemtype="http://teams.microsoft.com/WikiImage"></span>
+
+<div>&nbsp;</div>
+</div>
+
+<div>&nbsp;</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/17 14:44] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>後ろの3つの引数は btVector3 &amp;anchor, btVector3 &amp;axis1 btVector3 &amp;axis2 と参照引数になっています．そのため，定数ではなく中身を変更できる変数でないとだめです．変数anchor,axis2,axis3の宣言時のconstを取る必要ありです．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/06/17 14:47] 佐々木龍</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>ありがとうございます！</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/06/17 14:50] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>ついでに今手元で確認してみたのですが，2つのaxisについてはベクトルが正規化されていなかったら，正規化されて返されるようです(axis2のところに(1,0,1)を与えたら(0.7071, 0, 0.7071)と変更されて返ってきました)．その変数を別のところで使うときには注意が必要かもしれません．</div>
+	</div>
+	</div>
+
+	<div>&nbsp;</div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-24">Hinge Constraintの軸設定</h3>
+<p id="wiki-mht-section-content-24"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>Hinge Constraintをかけていれば一方向にしか回転しないと思うのですが、動かしていると車のボディに対するタイヤの向きが変わってしまいます。これは軸の設定が誤っているのでしょうか</div>
+</div>
+</div>
+
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-24-475128676f8e42ee93cb67e6d6f18192.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27b0b32b99-60e3-457b-89b0-b61b637b8457%27)/$value" data-ts-imgid="img72b8418a-e495-451e-ba2b-57b15bd5ed88" data-ts-imglen="23010" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="315.8396946564886" /></span>
+
+<div> </div>
+</div>
+
+<div>コードは以下のようになっております
+<div>
+<div>
+<div>
+<div>
+<blockquote>
+<div>
+<p>    <span><b>const</b></span> <span>btVector3</span> pivotInBody1 = <span>btVector3</span>(<span>0</span>, -BODY[<span>1</span>]/<span>3</span>, BODY[<span>2</span>]/<span>2</span>);</p>
+
+<p>    <span><b>const</b></span> <span>btVector3</span> pivotInBody2 = <span>btVector3</span>(<span>0</span>, -BODY[<span>1</span>]/<span>3</span>, -BODY[<span>2</span>]/<span>2</span>);</p>
+
+<p>    <span><b>const</b></span> <span>btVector3</span> pivotInWheel = <span>btVector3</span>(<span>0</span>, <span>0</span>, <span>0</span>);</p>
+
+<p>    <span>btVector3</span> axis1 = <span>btVector3</span>(<span>0</span>, <span>0</span>, <span>0</span>);</p>
+
+<p>    <span>btVector3</span> axis2 = <span>btVector3</span>(<span>1</span>, <span>0</span>, <span>0</span>);</p>
+
+<p>    <span>g_pJoint1</span> = <span><b>new</b></span> <span>btHingeConstraint</span>(*body, *rear_wheel, pivotInBody1, pivotInWheel, axis1, axis2);</p>
+
+<p>    <span>btHingeConstraint</span> *joint2 = <span><b>new</b></span> <span>btHingeConstraint</span>(*body, *front_wheel, pivotInBody2, pivotInWheel, axis1, axis2);</p>
+</div>
+</blockquote>
+
+<div> </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<div>
+<div>
+<div>axis1を(1,0,0）としたら外れなくなりました。</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/19 16:11] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>タイヤはbtCylinderShapeとbtCylinderShapeXどちらを使っていますか？どちらにしてもpivotのx座標値とaxis1がおかしくないでしょうか？axis1が(0,0,0)では軸にならないのと，pivotInWheelの(0,0,0)もrigidbodyの中心で車のボディに接続することになってしまいます．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/06/19 16:13] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>btCylinderShapeXを使っております。</div>
+
+	<div>ご指摘の通りaxis1をきちんと設定したら起きなくなりました。</div>
+
+	<div>またpivotInWheelについては、タイヤを2つと勘違いしておりました。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/06/19 16:20] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>「pivotInWheelについては、タイヤを2つと勘違いしておりました。」って横に細長いタイヤ2つをボディにめり込ませていたのか(理解するのに少し時間がかかりました...)．それでpivotのx座標が0なのか．それはそれでありですね(ロードローラーのようなイメージですね)．問題の意図としては4つのタイヤだったのですが，質問者の案でも良さそうです．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>↑もちろんCollision Filteringをちゃんと設定していることが前提ですが．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/06/19 16:24] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>そうです、細長い円柱を一つのタイヤとしていました。言葉足らずでした、すみません。</div>
+
+	<div>わかりました。ありがとうございます！</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-25">種類の違う複数のConstraintを一括で扱える型はあるのか？</h3>
+<p id="wiki-mht-section-content-25"><div class="copy-paste-block" itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>破棄のためにConstraintをグローバル変数として格納することについて質問です。</div>
+
+<div>Constraintを配列に格納したいのですが、btHingeConstraint, btHinge2Constraint, btTypedConstraintとそれぞれ型が異なります。</div>
+
+<div>これらを一括で扱える型はあるのでしょうか？型ごとに配列を用意しなければなりませんか？</div>
+
+<div>btConstraintArray *g_pConstraints;</div>
+
+<div>を用いようとしたのですが、</div>
+
+<blockquote>
+<div>
+<p>Reference to type 'const btSolverConstraint' could not bind to an lvalue of type 'btHingeConstraint *'</p>
+</div>
+</blockquote>
+
+<div>とエラーが出てしまいました</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/19 16:42] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>btTypedConstraint型ならすべてのConstraintを格納できるはずです．なのでvector&lt;btTypedConstraint*&gt;とかにすればOKです．後は，こちらで格納しなくてもWorldにaddConstraintしてあるならば，</div>
+
+	<div>for(int i = g_pDynamicsWorld-&gt;getNumConstraints()-1; i&gt;=0 ;i--){​​​​​         btTypedConstraint* constraint = g_pDynamicsWorld-&gt;getConstraint(i);         g_pDynamicsWorld-&gt;removeConstraint(constraint);         delete constraint; }​​​​​</div>
+
+	<div>といったコードでWorldからConstraintを取り出して破棄することは可能です．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/06/19 16:46] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>btTypedConstraintで良いのですね。ありがとうございます。</div>
+
+	<div>今確認したら上記コードを実装しておりました、ワールドリセットの際にクラッシュしてしまったため破棄の処理ができていないものと思っていたのですが、別の部分が問題かもしれません。確認してみます。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-26">objファイルはどこにおいたらいい？</h3>
+<p id="wiki-mht-section-content-26"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>bunny.objをDLしてmain.cppと同じフォルダに置いて、&quot;./bunny.obj&quot;の名前で3Dオブジェクトを読み込もうとすると、</div>
+
+<blockquote>
+<div>rxOBJ::Read : Invalid file specified</div>
+</blockquote>
+
+<div>と標準出力に出力されるのですが、これはパスの指定が間違っているのでしょうか。</div>
+
+<div>３Dモデルのファイルはどこに置いたら良いでしょうか</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/24 13:58] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>サンプルプログラムのデフォルトだとbinフォルダですね(sharedとかsrcと同じ階層のフォルダ)．binフォルダに置いた場合はファイル名のみでOKです．​</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/24 13:59] 質問者</span>
+
+	<div>
+	<div>
+	<div>できました！有難うございます</div>
+	</div>
+	</div>
+
+	<div> </div>
+
+	<div>[2020/06/24 13:59] 藤澤誠</div>
+
+	<div>後は，絶対パスで指定するのも可能です．例えば &quot;C:/data/bunny.obj&quot; とか．この場合は，区切りをバックスラッシュ&quot;/&quot;にしておいてください．</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-27">RxModel::Readが上手く動かない？</h3>
+<p id="wiki-mht-section-content-27"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>3Dモデルの読み込みで、RxModel::Readが上手く動きません。 エラーはこんな感じです。</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-27-f9209f265c694ee1b0ad3282718839e6.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%277d25ef76-8f0d-40cc-ba75-0042af5368c4%27)/$value" data-ts-imgid="img537e8f87-529f-4ea8-9cc5-13b42f940aed" data-ts-imglen="20533" height="135" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="741" /></span>
+
+<div> </div>
+</div>
+
+<div> </div>
+</div>
+
+<div>[2020/06/24 14:24] 藤澤誠</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>対応する部分のコードを見せてもらうことは出来ますか？</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​<span>[2020/06/24 14:24] 質問者</span></div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div> </div>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<blockquote>
+	<div>rxPolygons poly;</div>
+
+	<div>RxModel::Read(&quot;bunny.obj&quot;, poly);</div>
+	</blockquote>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>
+<div>
+<div>
+<div>HPのコピペです。ファイル名だけ変えました。</div>
+</div>
+</div>
+
+<div> </div>
+</div>
+
+<div>[2020/06/24 14:29] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>うーん，ソースファイルごとアップロードしてもらっていいですか？こっちで検証してみます．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>↑main.cppだけでOKです．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/06/24 14:31] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>よろしくお願いします</div>
+	</div>
+	</div>
+
+	<div>
+	<div>[main.cpp]</div>
+
+	<div> </div>
+
+	<div>[2020/06/24 14:35] 藤澤誠</div>
+
+	<div>上のコードですが，RxModel::Readとかを関数内でなくグローバル変数の定義のとこに書いちゃってますね．関数外で他の関数は呼べません．<span>RxModel::Readのところは剛体とかを追加している関数内に書いてください．</span></div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/24 14:36] 質問者</span>
+
+	<div>
+	<div>
+	<div>エラー治りました。ありがとうございます。</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+</div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-28">[mac] rx_model.hをインクルードするとエラーが出る</h3>
+<p id="wiki-mht-section-content-28"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>
+<p>rx_model.hをインクルードすると以下のものと似たようなエラーが何箇所か出てしまい直し方がわからないです。</p>
+
+<div>また.libファイルはxcodeで作業しているので.aファイルにするべきでしょうか</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<div> </div>
+
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-28-dc4c542750b74dc49bf4ebb3bb9943d6.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27d6dc00b1-5120-46e9-b892-286191f6422b%27)/$value" data-ts-imgid="img63b519ec-3d3c-49ac-aebe-f4a174a3f9aa" data-ts-imglen="20024" height="60" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="234" /></span>
+
+<div> </div>
+</div>
+
+<div> </div>
+</div>
+
+<div>​[2020/06/24 14:14] 藤澤誠</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>rx_model.hはrx_mesh.hというヘッダファイルを呼んでいるのですが，その中の関数の宣言と定義が違うというエラーっぽいですね．sharedフォルダ内のrx_mesh.hを開いて，エラーが出た関数の宣言(ReverseNormalsなら224行目あたり)にstaticを前につけてみてください(static void ReverseNormals(const ～) のように)．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div>ちなみにVisual Studioの場合は定義側だけにstaticを付けていても問題ないので，xcodeのコンパイラとの仕様の違いかと思います．後，.libファイルはxcodeの場合は.aファイルになります．</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd><span>[2020/06/24 14:21] 質問者</span>
+
+	<div>
+	<div>
+	<div>エラーの件、staticをつけることで解決しました。ありがとうございます。</div>
+	</div>
+	</div>
+
+	<div> </div>
+
+	<div>[2020/06/24 14:26] <span>質問者</span></div>
+
+	<div>.aファイルの作り方がいまいち分からないです。.libからは変換できないですよね</div>
+	</dd>
+</dl>
+
+<div>[2020/06/24 14:28] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>以前にBulletDynamics.aとかを作ったときにSoftBodyのも作られているはずなので改めて作る必要はないかと．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/06/24 14:30] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd><span></span>
+
+	<div>
+	<div>
+	<div>あ、今回のrx_model.libについてです</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/06/24 14:32] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>あー，そうだったrx_model.libもmacでビルドする必要があるのか．少々お待ちください．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/06/24 14:39] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd><span></span>
+
+	<div>
+	<div>
+	<div>ありがとうございます</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/06/24 16:05] TA</div>
+
+<div style="font-size:14px;">
+<div>
+<div>
+<div>一般チャンネルの方にlibrx_model.aをアップロードしたので，macユーザーの方は使ってみてください．</div>
+</div>
+</div>
+</div>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-29">未解決の外部シンボル &quot;void _cdecl RxModel::Read(～&quot;というエラーが出る</h3>
+<p id="wiki-mht-section-content-29"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>画像のようなエラーが出るのですが、解決方法がわからないです</div>
+</div>
+</div>
+
+<div>
+<div><span contenteditable="false"><img alt="" data-ts-imgid="img8d678e2a-666b-472e-a16e-7d8ee82da2c3" data-ts-imglen="30648" height="54" style="vertical-align:bottom;" width="862" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27113eff01-0eb2-40e7-8879-4d122dd33dff%27)/$value" data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-29-f7465d3b7299411ea57cb63f52cd00f7.jpeg" itemtype="http://teams.microsoft.com/WikiImage"></span>
+
+<div>&nbsp;</div>
+</div>
+
+<div>[2020/06/26 15:39] 藤澤誠</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>ライブラリファイル rx_model.libはリンクしてありますか？</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/06/26 15:46] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>うまくリンクされていなかったみたいです。ifdefの方を書いたらうまくいきました。ありがとうございます</div>
+	</div>
+	</div>
+
+	<div>&nbsp;</div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-30">3Dモデルの読み込みでの変数定義について</h3>
+<p id="wiki-mht-section-content-30"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<blockquote>
+<div><span style="font-size:14.4px;">なお，セットし終わった後のindicesとverticesはdeleteせずにそのまま残しておくこと． 内部的にポインタ参照しているのでこれをdeleteすると参照ミスでプログラムが落ちることがある．</span></div>
+</blockquote>
+
+<div>とあるのですが、これはつまりindicesとverticesをグローバル変数にする必要があるということでしょうか？</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/06/26 15:38] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>グローバル変数である必要はありません．newで確保した配列はスタック領域ではなく，ヒープ領域に置かれるので通常の変数のスコープからは外れます(関数内でその変数が有効なのではなく，deleteするまでその変数は有効)．後でdeleteするためにグローバル変数にしておくのはOKですが，bulletのbt*Shapeの破棄時に破棄されるはずです．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/06/26 15:48] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>newだとヒープに置かれるんですね。ありがとうございます</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-31">3Dモデルのスケールが描画に反映されない</h3>
+<p id="wiki-mht-section-content-31"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>blenderでの3Dモデルのスケールが描画に反映されません。同じオブジェクトのスケールを2倍、3倍としてobjファイル形式でエクスポートしてもプログラムから読み込んだ時には同じ大きさの見た目となってしまいます。少し調べたところ3Dモデルの頂点が-1~1の範囲に正規化されていることが原因のようなのですが解決する方法はありますか？</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/07/10 18:10] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>皆さんが使っているRxModel::Read関数だと正規化してしまっているかもしれません(私の手ものとのやつは変更したのかスケールが反映されます...)．RxModel::Readのオーバーロード関数で3～5番目の引数でスケールとかを設定できるのものがあるのでそちらを使うか，poly.verticesからverticesにコピーしているところで2倍とか3倍にしてもスケールを変えることが出来ます．前者の例を以下に示します．</div>
+
+	<blockquote>
+	<div>RxModel::Read(filename, poly, Vec3(0.0), Vec3(0.5), Vec3(0.0));</div>
+	</blockquote>
+
+	<div>↑ではスケールを0.5にしています．第3引数が中心位置，第4がスケーリング，第5が回転(オイラー角)です．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/10 18:21] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>ありがとうございます。反映されました。</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-32">キネティック物体の回転はどう書けば良いのか？</h3>
+<p id="wiki-mht-section-content-32"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>質量ゼロの物体（床）をキーを押している間回転させたいのですが、移動のときのように       </div>
+
+<blockquote>
+<div>g_pFloor-&gt;getMotionState()-&gt;getWorldTransform(tr); tr.getOrigin() += btVector3(0.02, 0.0, 0.0); tr.getRotation() += btQuaternion(0,0,0.5); g_pFloor-&gt;getMotionState()-&gt;setWorldTransform(tr);</div>
+</blockquote>
+
+<div>としてみても回転しませんでした。キネティック物体の回転はどのように書いたら良いですか？</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/07/10 17:17] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>getRotation関数ですがgetOrigin関数と違ってconst関数なのでそれで得られた値に足してもtrの中の値は変わらないです(getOriginは返値に&amp;が付いた参照関数なので↑の方法で値を変えれます)．そのため，getRotationで得た四元数(btQuarternion)を一時的な変数にでも入れておいて，その変数を回転させて，setRotation関数でtrに戻してください．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​あと，四元数(0,0,0,5)を&quot;足しても&quot;元の姿勢は変わらないと思います．四元数の場合は別の回転を表す四元数を&quot;掛けて&quot;ください．ちなみに(0,0,0,5)は軸が(0,0,0)なので何の回転も表さないです．せめて(1,0,0,5)とかにしてください(x軸周りに2cos^-1 (5)だけ回転)</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>(この辺の四元数による姿勢変化の話を最初の方の説明ですべきでしたね...)</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd><span>[2020/07/10 17:27] 質問者</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>Quaternionの仕組みがよくわかっていませんでした、すみません。</div>
+
+	<div>無事治りました、有難うございます。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-33">キネティック物体を直接動かしても当たり判定の位置が変わらない？</h3>
+<p id="wiki-mht-section-content-33"><div itemprop="copy-paste-block">
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>キネティック物体を直接動かしても当たり判定の位置は変わらないなどといったことがあるのでしょうか</div>
+
+	<div>床を傾けてもボールが全く転がる気配がないので、床を下に動かして試してみたのですが</div>
+
+	<div>一度衝突した後に床の位置を下の方に動かしても、ぶつかる前に下に動かしてももともと床があった位置で止まってしまいます</div>
+
+	<div>床を上に動かしてもすり抜けてこの位置で止まります。床を定義しなかった場合は普通に下に落ちていきました</div>
+
+	<div>＊オレンジ色は衝突点の位置を表示しています</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div>
+	<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-33-7b2391385f80490b9753d4e686e5cc85.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27036c189a-495a-4f9a-a3b2-fd22b7d3224f%27)/$value" data-ts-imgid="img2678be10-1d12-4e24-9fde-003c67aee576" data-ts-imglen="132944" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="444.3298969072165" /></span>
+
+	<div> </div>
+	</div>
+
+	<div>
+	<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-33-4acbdd9a16cf4f3cb798a53edd367d78.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%274a72da56-040c-4727-a2ab-6f49a955fa71%27)/$value" data-ts-imgid="img4fb6bb10-0e74-42cd-9917-57251afd0685" data-ts-imglen="130128" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="444.3298969072165" /></span>
+
+	<div> </div>
+	</div>
+
+	<div>[2020/07/10 18:00] 藤澤誠</div>
+
+	<div>これ球体の方が静止状態になってないですか(色かわっているし)．1度静止状態になると無理矢理動かすか他の動的なrigid bodyがぶつからないとそのまま静止したままになっちゃいます．球体の定義時にrigidbodyにsetActivationStateメンバ関数でDISABLE_DEACTIVATIONをセットすると静止状態にならないので試してみてください．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/07/10 18:04] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>このときは色々試してみようと思って逆にスリープ機能をオンにしていました</div>
+
+	<div>しかし    body1-&gt;setSleepingThresholds(0,0);    body1-&gt;setActivationState(DISABLE_DEACTIVATION);</div>
+
+	<div>を設定していても結果は変わりませんでした。</div>
+
+	<div>床をボールが落ちてくる前に上に移動させても床をすり抜けてそのしたの床が最初にあった位置で衝突してしまうなどもあってなぜこうなってしまうのかよくわかりません…</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/07/10 18:53] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>一度こちらで状況を再現してみました．床に対してkinematic objectということを指定しないと動かしたときに上手く衝突判定してくれないようです．床をbodyとしたら，</div>
+
+	<div>body-&gt;setCollisionFlags(body-&gt;getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT); body-&gt;setActivationState(DISABLE_DEACTIVATION);</div>
+
+	<div>というのを追加してみて試してみてください．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-34">床を回転させるとその上のオブジェクトが飛ばされてしまう</h3>
+<p id="wiki-mht-section-content-34"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>床を下のようにして回転しているのですが、ボールを床の低い方に寄せて床を持ち上げるとボールがふっとばされてしまいます。</div>
+
+<blockquote>
+<div>g_pFloor-&gt;getMotionState()-&gt;getWorldTransform(tr);<br />
+quat = tr.getRotation();<br />
+tr.setRotation(quat*btQuaternion(0, 0, 1, PI / 2 * -1*turnSpeed));<br />
+g_pFloor-&gt;getMotionState()-&gt;setWorldTransform(tr);</div>
+</blockquote>
+
+<div>・めり込んだ時の反発ばね定数を小さくしたら良いのかと思いましたが、何処で設定するのか検索しても見つけられませんでした。（g_pBallはbtRigidBodyです）</div>
+
+<blockquote>
+<div>　　g_pBall-&gt;setDamping(0.1 ,0.1);<br />
+　g_pBall-&gt;setContactStiffnessAndDamping(0.1, 0.1);</div>
+</blockquote>
+
+<div>　　などかと思い設定してみましたが変わりませんでした。</div>
+
+<div>・床の角速度ではなく回転を直接書き換えているのが原因かと考えて、g_pFloor-&gt;setAngularVelocityで動かそうとしましたがKineticなので動かせないことに気が付きました。</div>
+
+<div>　　床は普通の剛体にした上で、静的な剛体を別に用意して、それにコンストレインでくっつけて回転させるのが良いでしょうか</div>
+
+<div>　　<span style="font-size:14.4px;"><strong>Universal Constraintを使って試していますがまだ上手く行っていません（床の重みで勝手にぐるぐると回転します）</strong></span></div>
+
+<div> </div>
+
+<div> </div>
+
+<div>[2020/07/15 13:58] 藤澤誠</div>
+
+<div>
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>反発はsetDampingではなく，setRestitution関数で設定できます(衝突応答のところの練習問題を見直してみてると良いかも)．ちなみにDampingは減衰という意味でbulletだと主に空気抵抗による速度減衰を表しています．なのでDampingはむしろ大きい方がはねにくいです(落下速度とかも遅くなりますが)．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>床とボールどちらにもsetRestitutionで反発係数0にしたとしても，床の運動で上部にある程度はねるのは仕方ないのですが，それも抑えたいならば，</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>・btGeneric6DofConstraintで床に対してx,z方向だけ動くようなconstraintを作成する</div>
+
+	<div>・床の左右前後および上部に別のboxを設定し，それをDrawBulletObjects関数内で描画しないようにする</div>
+
+	<div>という方法が考えられます．後者については床に透明なケースを付けるようなイメージですね．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/15 14:08] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>床と玉の反発係数を0にしても遥か上空に飛んでいってしまうようなので、まずはbtGeneric6DofConstraintを試してみます</div>
+
+	<div>ありがとうございます。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/15 14:10] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>こちらで試している限り，床を動かしても↑の動画のように遙か上空に飛んでいくということはありません．玉の質量が軽すぎるか，床を1度に動かしすぎているかのどちらかのような気がします．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/15 14:21] <span>質問者</span></div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>床の動かし方はKeyboard関数の中で</div>
+
+	<div>　const btScalar PI = 3.1419;//</div>
+
+	<div>    btTransform tr;</div>
+
+	<div>    btQuaternion quat;</div>
+
+	<div>    const float turnSpeed = 0.0001;        </div>
+
+	<div>　    g_pFloor-&gt;getMotionState()-&gt;getWorldTransform(tr);         quat = tr.getRotation();         tr.setRotation(quat*btQuaternion(1, 0, 0, PI/2*-1*turnSpeed));         g_pFloor-&gt;getMotionState()-&gt;setWorldTransform(tr);</div>
+
+	<div>などとしています。見た目的にもかなりゆっくり回っているように見えました</div>
+
+	<div>玉の重さは10000でした</div>
+
+	<div>もう一度見直してみましたが何処が原因かわかりませんでした。</div>
+
+	<div> </div>
+
+	<div>[2020/07/15 14:36] 藤澤誠</div>
+
+	<div>重さ10000は大きいね．重さの単位はkgだと考えれば良いので10tのボールになってしまっています．ただ，こちらで10000に設定しても問題はなかったです．あと，上の方で設定してたsetContactStiffnessAndDampingは使わないならば削除しておいた方がよさそう．マニュアルやwebにもはっきりとした情報を見つけられなかったけど柔らかい(反発するような)衝突を設定するのに使われるようです．少なくとも関数内でstiffnessで割るという計算があると書いてあるので0.1で割られて反発速度が10倍とかになってる可能性もあり．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/07/15 14:41] <span>質問者</span></div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>現在の設定は以下のようになっていますが飛んでいってしまいます</div>
+
+	<div>何度も申し訳ないです…玉はこれでもかと重くしてみましたがだめでした</div>
+
+	<div>void SetFirstRigidBodies(void) {​​     // ----- 地面 -----     btCollisionShape *ground_shape = new btBoxShape(btVector3(3, 0.05, 3));    // 形状     btVector3 trans=btVector3(0,  - 0.01, 0);    // 上の面がy=0になるように設定     g_pFloor = AddObj(ground_shape,trans,RX_COL_GROUND, RX_COL_GROUP1 | RX_COL_GROUP2,0);    // Body     g_pFloor-&gt;setCollisionFlags(g_pFloor-&gt;getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);     g_pFloor-&gt;setActivationState(DISABLE_DEACTIVATION);     g_pFloor-&gt;setRestitution(0);</div>
+
+	<div>    // ---------------------- 玉 ----------------------------     btCollisionShape *sshape = new btSphereShape(BALL_R);     btVector3 startPos = btVector3(0,2,0);     g_pBall = AddObj(sshape,startPos,RX_COL_GROUP2,RX_COL_GROUND|RX_COL_GROUP1,100);     g_pBall-&gt;setActivationState(DISABLE_DEACTIVATION);     g_pBall-&gt;setFriction(0.8);     g_pBall-&gt;setDamping(0.3, 0.3);     g_pBall-&gt;setRestitution(0); }​​​​​​​​​</div>
+	</div>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>btRigidBody* AddObj(btCollisionShape* shape, btVector3 pos, unsigned TAG, unsigned TARGET, float mass = 1.0 ,int index=0) {​​​​​​​​​​​​​​​​     // 初期位置・姿勢     btQuaternion qrot(0, 0, 0, 1);     btTransform trans;    // 剛体オブジェクトの位置姿勢を格納する変数(行列)     trans.setIdentity();// 位置姿勢行列の初期化     trans.setOrigin(pos);     trans.setRotation(qrot);    // 四元数を行列に変換して姿勢行列に掛け合わせる</div>
+
+	<div>
+	<div>
+	<div>    // 剛体オブジェクト生成     btRigidBody* body1 = CreateRigidBody(mass, trans, shape, index, TAG, TARGET);     g_vCollisionShapes.push_back(shape); // 最後に破棄(delete)するために形状データを格納しておく</div>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>    return body1; }​​​​​​​​​​​​​​​​</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/15 14:50] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>うーん，設定的には問題なさそう．他の部分が原因かもしれないので一度cppファイルをおくってください．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/15 14:51] <span>質問者</span></div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>お願いします…</div>
+	</div>
+	</div>
+
+	<div>
+	<div>[main (2).cpp]</div>
+
+	<div> </div>
+
+	<div>[2020/07/15 15:21] 藤澤誠</div>
+
+	<div>問題はrigidbodyの定義ではなく，床を回転させているところのようです．左右回転だけですが以下のように変えたら飛ばなくなりました．</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<blockquote>
+	<div>
+	<div style="font-size:14px;">
+	<div>case 'a':<br />
+	{​​​​​​​​​​​​​​​​​<br />
+	g_pFloor-&gt;getMotionState()-&gt;getWorldTransform(tr);<br />
+	quat = tr.getRotation();<br />
+	double ang = -PI/2*turnSpeed;<br />
+	quat *= btQuaternion(0, 0, sin(0.5*RX_TO_RADIANS(ang)), cos(0.5*RX_TO_RADIANS(ang)));<br />
+	tr.setRotation(quat);<br />
+	g_pFloor-&gt;getMotionState()-&gt;setWorldTransform(tr);<br />
+	}​​​​​​​​​​​​​​​​​<br />
+	break;</div>
+
+	<div>
+	<div> </div>
+
+	<div>
+	<div>case 'd':<br />
+	{​​​​​​​​​​​​​​​​​<br />
+	g_pFloor-&gt;getMotionState()-&gt;getWorldTransform(tr);<br />
+	quat = tr.getRotation();<br />
+	double ang = PI/2*turnSpeed;<br />
+	quat *= btQuaternion(0, 0, sin(0.5*RX_TO_RADIANS(ang)), cos(0.5*RX_TO_RADIANS(ang)));<br />
+	tr.setRotation(quat);<br />
+	g_pFloor-&gt;getMotionState()-&gt;setWorldTransform(tr);<br />
+	}​​​​​​​​​​​​​​​​​<br />
+	break;</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</blockquote>
+
+	<div>
+	<div>
+	<div>
+	<div>要するに「１．物理シミュレーションとは？」のところでやった，角度から四元数を計算する式をちゃんと計算すれば問題ないと言うことです．表示上は床もちゃんと回転していますが，回転とは別の部分で四元数がおかしくなっていて，それが衝突応答の計算に効いてきたというのが原因かと．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>↑のコード例だとturnSpeedは単純に角度[deg]になるので1とか設定しておいてください．後RX_TO_RADIANS関数はdegからradへの変換をしています(実験サンプルコードにも含まれているので質問者のところでも使えるはず)．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>[2020/07/15 16:02] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>ありがとうございます！修正します</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+</div>
+</div>
+
+<div> </div>
+
+<div> </div>
+</div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-35">視点の初期化について</h3>
+<p id="wiki-mht-section-content-35"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>操作中の場面の切り替わり時や、キーボードの入力などを受けて視点を初期状態に戻したいのですが、InitGL関数内の</div>
+
+<div>
+<blockquote>
+<p>// 視点の初期化</p>
+
+<p>g_tbView<span>.</span>SetScaling<span>(-</span><span>7.0</span><span>);</span></p>
+
+<p>g_tbView<span>.</span>SetTranslation<span>(</span><span>0.0</span><span>, -</span><span>2.0</span><span>);</span></p>
+</blockquote>
+
+<div>の部分を使ってみたところ、視点を戻せませんでした。keybord関数などで視点を初期化したい際はどのように書いたら良いでしょうか。</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/07/22 12:55] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>↑のコードだとスケーリングと平行移動だけが初期化され，回転部分が変わっていません．回転部分も初期化するならば以下のようにしてみてください．</div>
+
+	<blockquote>
+	<div>       g_tbView.SetScaling(-7.0);</div>
+
+	<div>        g_tbView.SetTranslation(0.0, -2.0);</div>
+
+	<div>        double q[4] = {​​​​​​​ 1, 0, 0, 0 }​​​​​​​;</div>
+
+	<div>        g_tbView.SetQuaternion(q);</div>
+	</blockquote>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>SetQuaternion関数に単位四元数を与えることで初期化しています．</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/07/22 12:57] 質問者</span>
+
+	<div>
+	<div>
+	<div>意図したように動きました。ありがとうございます。</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/22 12:58] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>ちなみに，</div>
+
+	<blockquote>
+	<div>      double q0[4];</div>
+
+	<div>      g_tbView.GetQuaternion(q0);</div>
+	</blockquote>
+
+	<div>とすると現在の視点の回転を表す四元数が得られるのでそれを記録しておけば，任意の視点を初期姿勢に設定することも出来ます．</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div> </div>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-36">オブジェクトの前方方向を表す単位ベクトルを取得したい</h3>
+<p id="wiki-mht-section-content-36"><div class="copy-paste-block" itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<p>対象オブジェクトの前方の単位ベクトルを取得したいのですが、下のコードだとtankdirが(0.000289, -1.000000, -0.000568)といったようにy座標が大きくなる上、方向もまちまちになってしまいます、どうしたら良いのでしょうか？</p>
+
+<div itemtype="http://schema.skype.com/CodeSnippet">
+<div>
+<pre>
+<code><span><span>// tankの位置、回転取得</span>
+</span><span>    <span>btTransform</span> <span>tankTrans</span>;
+</span><span>    <span>tank</span><span>-&gt;</span><span>getMotionState</span>()<span>-&gt;</span><span>getWorldTransform</span>(<span>tankTrans</span>);
+</span><span>    <span>btVector3</span> <span>tankPos</span> <span>=</span> <span>tankTrans</span>.<span>getOrigin</span>();
+</span><span>    <span>btQuaternion</span> <span>tankRot</span> <span>=</span> <span>tankTrans</span>.<span>getRotation</span>();
+</span><span>    <span>tankRot</span> <span>=</span> <span>tankRot</span>.<span>inverse</span>();
+</span><span>    <span>btVector3</span> <span>tankDir</span> <span>=</span> <span>btVector3</span>(<span>tankRot</span>[<span>0</span>], <span>tankRot</span>[<span>1</span>], <span>tankRot</span>[<span>2</span>]);
+</span><span>    <span>tankDir</span>.<span>normalize</span>();
+</span><span>    <span>// 初期位置・姿勢</span>
+</span><span>    <span>btTransform</span> <span>cannonballTrans</span>;    <span>// 剛体オブジェクトの位置姿勢を格納する変数(行列)</span>
+</span><span>    <span>cannonballTrans</span>.<span>setIdentity</span>();<span>// 位置姿勢行列の初期化</span>
+</span><span>    <span>btQuaternion</span> <span>qrot</span><span>=</span> <span>btQuaternion</span>(<span>0</span>, <span>0</span>, <span>0</span>, <span>1</span>);
+</span><span>    <span>cannonballTrans</span>.<span>setOrigin</span>(<span>tankPos</span>);
+</span><span>    <span>cannonballTrans</span>.<span>setRotation</span>(<span>qrot</span>);    <span>// 四元数を行列に変換して姿勢行列に掛け合わせる</span>
+</span><span>...
+</span><span>    <span>cannonball</span><span>-&gt;</span><span>setLinearVelocity</span>(<span>btVector3</span>(<span>tankDir</span><span>*</span><span>speed</span>));</span></code></pre>
+</div>
+</div>
+
+<p> </p>
+</div>
+
+<div>対象にしているオブジェクトは</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<p><span><b>const</b></span> btVector3 <span>bodySize</span><span> = </span>btVector3<span>(</span><span>0.7</span><span>, </span><span>0.3</span><span>, </span><span>1.0</span><span>);</span></p>
+
+	<div>で生成しています</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/07/22 13:17] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>オブジェクト前方のベクトルがほしい場合は，オブジェクトの初期状態での前方ベクトル(車とかの例なら(0,0,-1))をtankRotで回転させればOKです．以下は私の手元のコードで試した例です．</div>
+
+	<div>
+	<blockquote>
+	<div>
+	<div style="font-size:14px;">
+	<div>btTransform trans;<br />
+	g_pCarBody-&gt;getMotionState()-&gt;getWorldTransform(trans);<br />
+	btVector3 p = trans.getOrigin();<br />
+	btQuaternion q = trans.getRotation();</div>
+
+	<div>
+	<div> </div>
+
+	<div>
+	<div>btVector3 d(0, 0, -1);<br />
+	d = d.rotate(q.getAxis(), q.getAngle());<br />
+	d.normalize();<br />
+	cout &lt;&lt; d.x() &lt;&lt; &quot;, &quot; &lt;&lt; d.y() &lt;&lt; &quot;, &quot; &lt;&lt; d.z() &lt;&lt; endl;</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</blockquote>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>
+<div>
+<div>
+<div>d(0,0,-1)を変えれば，上方向(0,1,0)や前方斜め上(0,1,-1)とかも取得できます．</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/07/22 13:26] 質問者</span>
+
+	<div>
+	<div>
+	<div>初期状態で望む方向を向いたベクトルにかければよかったんですね!</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-37">読み込めるワールドの広さを広くしたい</h3>
+<p id="wiki-mht-section-content-37"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>読み込めるワールドの広さを広くしたいのですが、どこのコードをいじれば良いのかわかりません。教えていただけるとありがたいです</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/07/28 11:08] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>bulletだと特にワールドの大きさを定義はしていないです(BroadPhaseでbtAxisSweep3を使っている場合はそこで範囲を設定されているぐらい)．そのため，自由に大きなオブジェクトとかを読み込んだりしてくれてOKです．後は床をBoxとかで定義している場合はその大きさを変えたり，初期視点位置を後ろに下げたり(InitGL関数内のg_tbView.SetScaling(-7.0);のところの-7.0を-15.0とかにする)すれば良いかと思います．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/28 11:12] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>初期視点位置をz軸の正の方向に大きくするともともとの初期視点位置で見えていたものが見えなくなってしまうみたいなことが起きてしまって、これは物体を小さくしないといけないのでしょうか</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/28 11:15] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>初期視点位置はマイナス方向に移動するようにしてください．z軸は視点の方を向いているので値を小さくするほど視点位置が後ろに下がります(OpenGLは右手座標系なのでz軸の向きがあまり直感的ではないんですよね)．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/28 11:19] <span>質問者</span></div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>すいません。あまりよく理解できていないんですが、視点を後ろに下げるともともとの視点から見えていたものが見えなくなるというのが現在の課題で、それを解決するためには物体の大きさを変えるしかないって感じなんでしょうか</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/28 11:24] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>ごめんなさい．勘違いしていました．サンプルプログラムなら負の方向にすると視点が後ろに下がります...　あと，あまりに下げすぎるとクリッピングの範囲に入ってしまうので，その場合はProjection関数内のgluPerspectiveに設定している最後の引数(デフォだと1000.0f)を大きくしてみてください．</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>あともう一つ，影が上手く出ない可能性ありなので，その場合はRX_LIGHT0_POSという光源位置を表すグローバル変数の中身を変えてください(オブジェクトが大きくなったらそれに合わせて光源位置をもっと高くする必要あり)．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>
+	<div>↑影についてはDisplay関数内のrxFrustum light = CalFrustum(90, 0.02, 50.0, g_iShadowMapSize, g_iShadowMapSize, light_pos, Vec3(0.0));というところの3番目の引数(50.0)をもっと大きくする必要もあるかもしれません(少なくとも光源の高さ以上に設定)．</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>ちなみにOpenGLのz軸は手前向きなのですが，サンプルプログラムでは視点を動かすのではなく，実際にはオブジェクトを含む座標系を動かすので，視点位置は(0,0,0)のままワールド全体を負の方向に移動させるというイメージです．</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/07/28 11:31] </span><span><span>質問者</span></span>
+
+	<div>
+	<div>
+	<div>
+	<div>
+	<div>
+	<div style="font-size:14px;">視点ではなく、視点以外を動かして視点が動いているように見せてたんですね、理解しました。それとgluPerspectiveの最後の引数は20.0fとかでしたが、その値を大きくしたら解決しました。ありがとうございます。影についてはまだ試してませんが、わからないことがあったらまた質問させていただきます。授業時間外のお忙しい中、時間を割いていただきありがとうございました。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</div>
+	</dd>
+</dl>
+</div>
+</p>
+<h3 id="wiki-mht-section-title-38">Projection関数？</h3>
+<p id="wiki-mht-section-content-38"><div>ハマってしまってたので一応共有です。</div>
+
+<div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>以下を参考にProjection関数ないのgluPerspectiveの引数の値をいろいろ変えたんですけど反映されず。困ってたんですが</div>
+
+<div>Resize関数の中でもgluPerspectiveを呼び出しているのでそっちの引数も変える必要があるというのが原因でした。</div>
+
+<div>加えてresize関数の中ではzFarの初期値が20.0fになっているので注意です。</div>
+
+<div>
+<div> </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​[2020/07/29 11:54] 藤澤誠</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>指摘ありがとう．そもそもProjection関数は以前は影を付けるルーチンから使っていたのですが，その後変更して使わなくなっていたのが残っていました(なのでProjection関数を削除しても問題ありません)．指摘してくれたとおりResize関数内のgluPerspectiveの引数を変えるのが正しいです．</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+</div>
+
+<div> </div>
+</p>
+<h3 id="wiki-mht-section-title-39">衝突点の描画でエラーが出る</h3>
+<p id="wiki-mht-section-content-39"><div itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div><a href="http://www.slis.tsukuba.ac.jp/~fujisawa.makoto.fu/lecture/iml/text/3_collision.html" rel="noreferrer noopener" target="_blank" title="http://www.slis.tsukuba.ac.jp/~fujisawa.makoto.fu/lecture/iml/text/3_collision.html">http://www.slis.tsukuba.ac.jp/~fujisawa.makoto.fu/lecture/iml/text/3_collision.html</a></div>
+
+<div>この衝突点のところのオプション問題7を実装しようとしているのですが、</div>
+
+<div>衝突点描画の箇所(// ここに衝突点情報を格納するor衝突点描画するコードを書く のコメントの後)で以下の命令を入れてみるとスクリーンショットのようなエラーが出てきてしまいます。</div>
+
+<div>
+<pre style="font-size:14.4px;">
+g_pDynamicsWorld-&gt;removeCollisionObject(obA);</pre>
+</div>
+
+<div>ヘッダファイルの方で何かエラーが出ているのですが、ggっても解決しそうなページも出てこず、困っています。どういったことが原因としてありそうでしょうか？</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<div><span contenteditable="false"><img alt data-preview-src="/sites/GC41103_A__2021/Teams Wiki Data/質問/img-39-ba6a886f22314fc39c7d51a3c1d1b50c.png" src="https://o365tsukuba.sharepoint.com/sites/GC41103_A__2021/_api/web/getfilebyid(%27cd493917-8b1d-48d9-a33c-09ddff484e34%27)/$value" data-ts-imgid="img720b252b-d573-4d5f-90e1-165a7e41d512" data-ts-imglen="2023381" height="250" itemtype="http://teams.microsoft.com/WikiImage" style="vertical-align:bottom;" width="399.81447124304265" /></span>
+
+<div> </div>
+</div>
+
+<div>​</div>
+</div>
+</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/07/30 13:40] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>うーん，不確定だけど，removeCollisionObjectの後でbreakしてfor文を抜けるようにしていますか？一つの物体で2カ所以上同時に衝突点があると1カ所目の処理で物体が消えて，2カ所目を処理しようとしてもその物体がdeleteされていてエラーが出ているとか？</div>
+	</div>
+	</div>
+	</div>
+	</dd>
+</dl>
+
+<div>​[2020/07/30 13:49] 質問者</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div>
+	<div>
+	<div>確かに、それが原因なようです。breakしていませんでした。すみませんありがとうございます。</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</dd>
+</dl>
+</div>
+
+<div> </div>
+</p>
+<h3 id="wiki-mht-section-title-40">レポートの表紙の概要欄には何を記述すればよい？</h3>
+<p id="wiki-mht-section-content-40"><div class="copy-paste-block" itemprop="copy-paste-block">
+<div style="font-size:14px;">
+<div>
+<div>
+<div>
+<div>
+<div>レポートについて質問です。</div>
+
+<div>作成したアプリケーションについての概要は本文にてまとめたのですが、サンプルの表紙にある概要の欄には何について記せば良いのでしょうか。</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div>​</div>
+
+<dl style="font-size:14px;">
+	<dd>
+	<div><span>[2020/08/03 12:09] </span><span>藤澤誠</span>
+
+	<div>
+	<div>
+	<div>アプリケーションの目的や結果について概要を書いてくれればと思います．本文に概要があるならばそれのコピーでもOKです．元々配布されていた実験表紙(PDF)と同じになるように作ったものなので概要は適当でも問題ありません．</div>
+	</div>
+	</div>
+
+	<div> </div>
+	</div>
+	</dd>
+</dl>
+</div>
+</p>
+</body></html>
