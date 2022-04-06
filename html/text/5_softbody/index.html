@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+  <title>
+    情報メディア実験
+  </title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+  <div class="main">
+  	<div class="title">
+  	 情報メディア実験 物理エンジンを使ったアプリケーション開発(5)
+  	</div>
+
+    <ul class="header">
+        <li><a href="#elastics">弾性力学</a></li>
+    	<li><a href="#1d">1次元弾性体</a></li>
+    	<li><a href="#2d">2次元弾性体</a></li>
+    	<li><a href="#3d">3次元弾性体</a></li>
+  	</ul>
+
+  	<div class="content">
+    <a name="elastics" id="elastics"></a>
+    <h2>弾性力学</h2>
+    <p>
+      変形しない剛体だけでも身の回りの様々なものをシミュレーションできるが，
+      布や糸，クッションや輪ゴムなど柔らかいもの(変形するもの)も扱えれば，より多くのシーンに対応できる．
+      変形する物体において，変形後に元の形状に戻る物体のことを弾性体(Elastics Body)という．
+      また，このときの変形を弾性変形と呼ぶ．
+      一方，変形後の形状を保つような変形を塑性変形と呼ぶ．
+      例えば，粘土や大きな力を加えて変形させたときの金属やプラスチックなどである．
+      通常の物体は弾性体，塑性体両方の性質を持ち，
+      ある一定の力までは弾性変形で元の形状に戻るが，
+      大きな力により大きな変形が起こると塑性変形となり，形状が変化したままになってしまう
+      (このときの応力を降伏応力という)．
+    </p>
+    <p>
+      Bulletではバネ-質点系というモデルを用いて弾性体を扱うことができる．
+      ここでは弾性体について，1次元，2次元の弾性体に分けて，順番に説明するとともに，
+      Bulletでの設定方法について学ぶ．
+      なお，注意点として，剛体と異なり弾性体はその動きを1つの位置と姿勢で表すことはできないので，
+      形状を点とその間の接続により表し，各点の動きで全体の動きを表す．
+    </p>
+
+    <a name="1d" id="1d"></a>
+    <h2>1次元弾性体</h2>
+    <p>
+      力を加えると変形し，離すと元に戻るものとしては，「バネ」(spring)が一番分かりやすいだろう．
+      物体をバネと質点(mass)の集合で表し，各バネの伸び縮みを計算することで弾性体の変形をシミュレーションする手法を，
+      バネ-質点系(Mass-springs System)という．
+    </p>
+    <p>
+      例として糸をバネ-質点系でシミュレーションすることを考えてみよう(図1)．
+      糸をまず点(図1中段の赤点)とそれをつなぐリンク構造で表現することを考える．
+      ちょうど前回のジョイントを使って，棒(線分)がPoint to Point Constraintで接続されているような状態を思い浮かべてみよう．
+      さて，この状態でも(動きの不自然さなどを考えなければ)伸び縮みしない糸の動きを再現できるだろう．
+      しかし，もし糸が伸び縮みするとしたらどうだろう．
+      糸の伸縮を計算するために，各点の間にバネを設定してみよう(図1下段)．
+      こうするとバネが伸縮することで全体としての伸縮も計算できることになる．
+      もちろん，バネが非常に硬ければ，伸縮しない糸もある程度再現できるだろう．
+      これがバネ-質点系によるシミュレーションである．バネは伸縮を再現するためだけでなく，
+      シミュレーションを安定化させるのにも役立っている．
+    </p>
+    <p align="center">
+      <img src="fig/mass-spring1.jpg" alt="質点とばねによる近似" /><br />
+      質点とばねによる近似
+    </p>
+    <p>
+      かかった力をFとバネの伸縮の関係はフックの法則より，
+    </p>
+    <p align="center"><img src="eq/physics5a.eq1.gif" /></p>
+    <p>
+      となる．ここで，xはバネの元の長さ(自然長)からの伸び or 縮んだ量，
+      kはばね定数と呼ばれ，ばねの強さを表す．
+    </p>
+    <p>
+      シミュレーションではまず，各質点にかかる力(重力や空気抵抗，衝突による力など)を計算して，
+      質点を運動方程式に従って移動させる．
+      そして，その移動量から各ばねの元に戻ろうとする力をフックの法則に従って求め，
+      その力により質点の位置を修正する．
+      位置の修正は何回か反復され，収束するまで繰り返される．
+      これが大まかな手順である．
+    </p>
+    <p>
+      以下でBulletにおける弾性体の設定方法を説明していく．なお，Bulletでは剛体に対して柔軟に変形する物体としてSoft Body
+      (btSoftBody)と呼んでいる．
+    </p>
+
+    <p>
+      <strong>ライブラリの準備</strong><br />
+      btSoftBodyを扱うためにはインクルード，ライブラリファイルを追加する必要がある．
+      Bulletを最低限動かすのに必要なのは， BulletCollision, BulletDynamics, LinearMathの3つであると
+      <a href="2_bullet.html">以前</a>に説明した．
+      剛体だけの場合には必要ないのだが，btSoftBodyを使う場合にはもう一つ，BulletSoftBodyを追加する．
+      ビルドしていない人は<a href="2_bullet.html">Bulletのビルド方法</a>を再度参照して，
+      BulletSoftBodyをビルドしよう．shared/libにBulletSoftBody_*.libがすでにある場合はビルドする必要は無い．
+    </p>
+    <p>
+      ビルドすると，
+      BulletSoftBody.lib
+      がlibフォルダ内にできるので，これらをshared/libにコピーする．
+    </p>
+    <p>
+      <strong>インクルードファイルとライブラリファイル</strong><br />
+      ソースコードを変更する前に，以前と同じようにこれまで作成したコードをフォルダごとコピーして，
+      新しい名前のフォルダから実行するようにしておこう．<br />
+      まず，btSoftBodyを扱うために以下のインクルードファイルを追加する．
+    </p>
+    <pre class="code">
+#include &#x3c;BulletSoftBody/btSoftRigidDynamicsWorld.h&#x3e;
+#include &#x3c;BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h&#x3e;
+#include &#x3c;BulletSoftBody/btSoftBodyHelpers.h&#x3e;
+#include &#x3c;BulletSoftBody/btSoftBody.h&#x3e;</pre>
+    <p>
+      そして，プロジェクトのプロパティで
+    </p>
+    <pre class="code">リンカー → 入力 → 追加の依存ファイル</pre>
+    <p>
+      にBulletSoftBody.libを追加設定する．
+      ただし，DebugモードとReleaseモードでファイルが異なる(ファイル名は同じ)ので注意．
+      もしくは，main.cppの冒頭に
+    </p>
+    <pre class="code">
+#pragma comment (lib, "BulletSoftBody.lib")</pre>
+    <p>
+      と記述することでもライブラリをリンクできる(Visual C++の場合)．
+    </p>
+
+    <p>
+      <strong>Bulletワールドの初期化部分の変更</strong><br />
+      これまで，btDiscreteDynamicsWorldによりBulletのワールドを生成してきたが，
+      btSoftBodyを使う場合は，btSoftRigidDynamicsWorldを用いる．
+      また，btDefaultCollisionConfigurationの代わりにbtSoftBodyRigidBodyCollisionConfigurationを用いる．
+      以下にBulletワールドの初期化の例(InitBullet関数)を示す．
+    </p>
+    <pre class="code">
+	// 衝突検出方法の選択(デフォルトを選択)
+btDefaultCollisionConfiguration *config = new btSoftBodyRigidBodyCollisionConfiguration();
+btCollisionDispatcher *dispatcher = new btCollisionDispatcher(config);
+
+// ブロードフェーズ法の設定(Dynamic AABB tree method)
+btDbvtBroadphase *broadphase = new btDbvtBroadphase();
+
+// 拘束(剛体間リンク)のソルバ設定
+btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
+
+// Bulletのワールド作成
+g_pDynamicsWorld = new btSoftRigidDynamicsWorld(dispatcher, broadphase, solver, config, 0);</pre>
+    <p>
+      衝突検出の設定とワールド作成部分が変更されているので，
+      自分のコードでも該当部分を変更してみよう．
+      g_pDynamicsWorldはグローバル変数で，
+    </p>
+    <pre class="code">btSoftRigidDynamicsWorld* g_pDynamicsWorld;	//!&#x3c; Bulletワールド</pre>
+    <p>
+      と定義される．
+    </p>
+    <p>
+      さらにbtSoftBodyを設定する際にワールドの情報を渡す必要がある．
+      グローバル変数として，
+    </p>
+    <pre class="code">btSoftBodyWorldInfo g_softBodyWorldInfo;</pre>
+    <p>
+      を定義し，InitBullet関数でワールド作成後，
+    </p>
+    <pre class="code">
+// btSoftBodyWorldInfoの初期化・設定
+g_softBodyWorldInfo.m_dispatcher = dispatcher;
+g_softBodyWorldInfo.m_broadphase = broadphase;
+g_softBodyWorldInfo.m_sparsesdf.Initialize();
+g_softBodyWorldInfo.m_gravity.setValue(0, -9.8, 0);
+g_softBodyWorldInfo.air_density = 1.2;
+g_softBodyWorldInfo.m_sparsesdf.Reset();</pre>
+    <p>
+      などとして，SoftBodyのための各種設定を行っておく．
+    </p>
+    <div class="notation">
+      <h4>Bullet Physics ver3.09でのbtSoftBodyのマウスピックについて</h4>
+      <p>
+        サンプルプログラム2ではbtSoftBodyについてもこれまでのbtRigidBodyと同様にマウス左ドラッグで移動させるようにしていますが，
+        Bullet Physicsの現バージョン(こちらで確認したのはver3.09)において，
+        マウスクリックした位置に対応するノードを得るために使っているrayTest関数が上手く働かず，プログラムが落ちてしまう現象を確認しています．
+        そのため，代わりとなるMouse関数を<strong><a href="../sample/mouse_softbody.cpp">このファイル</a></strong>に載せたので，
+        main.cppのMouse関数部分をこちらで置き換えるようにしてください(intersectRaySphereという関数も一緒にコピペするように)．
+      </p>
+      <p>
+        なお，btSoftBody::rayTest関数およびrayFaceTest関数はReleaseモードだと動かなかったため，
+        ReleaseモードではbtSoftBodyを構成するノード(頂点)と交線の交差判定を"全探索"で行っています．
+        そのため，ノード数が多いモデルを読み込むと計算に時間がかかり遅くなる可能性があります．
+        注意してください．
+      </p>
+    </div>
+
+    <p>
+      <strong>1次元弾性体の追加</strong><br />
+      btSoftBodyの形状は，三角形メッシュ(ポリゴン)として入力するか，
+      Bullet側で用意された生成関数を使って生成する．
+      3Dモデルファイルを用いた三角形メッシュの読み込みは後で学ぶ．
+      ここではBulletにある1次元弾性体(ロープ)の生成関数を使ってみる．
+    </p>
+    <p>
+      btSoftBodyHelpersクラスはbtSoftBodyの形状を設定するためのヘルパークラスであり，
+      1次元のロープの他に四角形の布のような2次元弾性体，
+      球(楕円体)形状の3次元弾性体などを作成してくれる関数が用意されている(後で述べるがメッシュ読み込みのための関数もある)．
+      ここではbtSoftBodyHelpers::CreateRope関数を使って1次元の弾性体(ロープ)を追加してみる．
+      CreateRope関数を用いたロープ形状の作成例を以下に示す．
+    </p>
+    <pre class="code">
+btSoftBody* rope = btSoftBodyHelpers::CreateRope(g_softBodyWorldInfo,
+                                                 btVector3(-1, 0, 0), // ロープの端点1
+                                                 btVector3( 1, 0, 0), // ロープの端点2
+                                                 16,   // 分割数(ばねの数)
+                                                 1+2); // 端点の固定フラグ
+rope-&#x3e;m_cfg.piterations    = 4;     // ばねによる位置修正の最大反復回数
+rope-&#x3e;m_materials[0]->m_kLST = 0.5; // 剛性(Linear Stiffness Coefficient) (変形のしやすさ)
+rope-&#x3e;setTotalMass(1.0);            // 全体の質量
+rope-&#x3e;getCollisionShape()-&#x3e;setMargin(0.01);
+g_pDynamicsWorld-&#x3e;addSoftBody(rope);</pre>
+    <p>
+      btSoftBodyとしてropeというオブジェクトを生成し，
+      CreateRope関数を使ってロープ形状の弾性体を作り，
+      各種パラメータの設定後，btSoftRigidDynamicsWorld::addSoftBody関数でbtSoftBodyをワールドに追加している
+      (このときRigidBodyと同じく衝突フィルタリングも設定できる)．
+      CreateRope関数の最後の引数は端点の固定フラグで，
+      0なら両方フリー,1 or 2で片方だけ固定，3(=1+2)で両端点固定となる．
+    </p>
+    <p>
+      btRigidBodyの時と同様にbtSoftBodyも手動で破棄する必要がある．
+      例えば，CleanBullet関数のbtRigidBodyの破棄のところの処理を以下のように書き換える．
+      <pre class="code">
+// 衝突オブジェクトの破棄
+for(int i = g_pDynamicsWorld-&#x3e;getNumCollisionObjects()-1; i >= 0; --i){
+    btCollisionObject* obj = g_pDynamicsWorld-&#x3e;getCollisionObjectArray()[i];
+
+    // オブジェクトがRigid Bodyの場合の破棄
+    btRigidBody* body = btRigidBody::upcast(obj);
+    if(body && body-&#x3e;getMotionState()){
+        delete body-&#x3e;getMotionState();
+    }
+
+    // オブジェクトがSoft Bodyの場合の破棄
+    btSoftBody* softBody = btSoftBody::upcast(obj);
+    if(softBody){
+        static_cast&#x3c;btSoftRigidDynamicsWorld*&#x3e;(g_pDynamicsWorld)->removeSoftBody(softBody);
+    }
+    else{
+        static_cast&#x3c;btSoftRigidDynamicsWorld*&#x3e;(g_pDynamicsWorld)->removeCollisionObject(obj);
+    }
+
+    g_pDynamicsWorld-&#x3e;removeCollisionObject(obj);
+    delete obj;
+}</pre>
+
+    <p>
+      <strong>btSoftBodyの描画(サンプルプログラム2にはあらかじめ含まれているので興味がある場合のみ読むこと)</strong><br />
+      最後にbtSoftBodyをOpenGLを使って描画する．
+      btRigidBodyの時と違い，btSoftBodyはそれぞれの質点座標値を取得して，
+      線(GL_LINE_STRIPなど)か面(GL_POLYGONなど)として描画する．
+      以下にbtSoftBodyを描画する関数の例を示す．
+    </p>
+    <pre class="code">
+void DrawBulletSoftBody(btSoftBody* sbody)
+{
+    // btSoftBodyに面(face)がない場合は線として描画
+    if(sbody-&#x3e;m_faces.size() == 0){
+        glBegin(GL_LINE_STRIP);
+        for(int i = 0; i &#x3c; sbody-&#x3e;m_nodes.size(); ++i){
+            const btSoftBody::Node &node = sbody-&#x3e;m_nodes[i]; // 頂点ノード(質点)
+            btVector3 p = node.m_x; // 頂点座標
+            glVertex3f(p.x(), p.y(), p.z());
+        }
+        glEnd();
+    }
+
+    // 面(face)がある場合はポリゴンとして描画
+    for(int i = 0; i &#x3c; sbody-&#x3e;m_faces.size(); ++i){
+        const btSoftBody::Face &face = sbody-&#x3e;m_faces[i];
+
+        glBegin(GL_POLYGON);
+        for(int j = 0; j &#x3c; 3; ++j){
+            const btSoftBody::Node* node = face.m_n[j]; // 面を構成する頂点ノード
+            btVector3 p = node-&#x3e;m_x; // 頂点座標
+            btVector3 n = node-&#x3e;m_n; // 頂点法線
+
+            glNormal3f(n.x(), n.y(), n.z());
+            glVertex3f(p.x(), p.y(), p.z());
+
+        }
+        glEnd();
+    }
+}</pre>
+    <p>
+      ロープの場合は面がないので，GL_LINE_STRIPで描画される．
+      この関数を呼び出すために，<strong>DrawBulletObjects関数も変更する必要がある．</strong>
+      具体的には最初にbtRigidBodyかbtSoftBodyかを判断して，描画を切り替える．
+      こちらは長くなるので<strong><a href="../sample/draw_softbody.cpp">このファイル</a></strong>を参照．
+    </p>
+    <p align="center">
+      <img src="fig/softbody_rope.jpg" alt="ロープ" /><br />
+      ロープ
+    </p>
+
+    <div class="task">
+      <h4>練習問題1</h4>
+      <p>
+        前回のプロジェクトをフォルダごとコピーして新しいプロジェクトとし，上記の1次元弾性体(ロープ)を実装してみよ．
+      </p>
+    </div>
+    <div class="task">
+      <h4>練習問題2</h4>
+      <p>
+        btSoftBodyの追加のところで設定していた，
+      </p>
+      <pre class="code">rope-&#x3e;m_materials[0]->m_kLST = 0.5;</pre>
+      <p>
+        ではロープの剛性を設定している(ばね定数のようなもの)．この値をいろいろ変えて試してみよう．
+      </p>
+    </div>
+    <div class="task">
+      <h4>練習問題3(option)</h4>
+      <p>
+        btSoftBody::appendAnchorメンバ関数を使うとbtSoftBodyとbtRigidBodyを接続することができる．
+        btRigidBodyを一つ追加し，ロープの先につなげてみよう．
+        片方の端点をフリーにしたロープとそれに接続する剛体を定義し，以下のようにして接続させる．
+      </p>
+      <pre class="code">rope-&#x3e;appendAnchor(rope->m_nodes.size()-1, rigidbody);</pre>
+      <p>
+        ここではロープの最後の点(ノード番号:rope->m_nodes.size()-1)に接続したが，
+        もう一方の端点に接続する場合は第1引数に0を指定する．appendAnchorを実行したときのこのノード座標値が剛体側の接続点となる．
+      </p>
+      <p align="center">
+        <img src="fig/softbody_rope2.jpg" alt="ロープと立方体" /><br />
+        ロープと立方体
+      </p>
+    </div>
+
+
+    <a name="2d" id="2d"></a>
+    <h2>2次元弾性体</h2>
+    <p>
+      布のように2次元的な広がりを持つ弾性体も我々にとってとても身近なものである．
+      2次元弾性体も1次元の時と同じくバネ-質点系でモデル化できる．
+      2次元の場合は質点を格子状に配置し，各格子点同士を下図のようにバネで接続する．
+    </p>
+    <p align="center">
+      <img src="fig/mass-spring2.jpg" alt="2次元バネ-質点系" /><br />
+      2次元バネ-質点系
+    </p>
+    <p>
+      図では中央の赤い点とその周囲の更新点との間に配置されるバネを示している．
+      最も単純な場合は上下左右に接続する青いバネのみが用いられる．
+      より剛性を強くしたい場合は斜め方向のばね(緑のバネ)も用いられる．
+      また，布を接線方向に圧縮したときに起こる座屈(Buckling)もシミュレートしたい場合は，
+      1つ飛ばした位置にも接続する(黄色のバネ)．
+    </p>
+    <p>
+      質点の配置とバネの接続方法が変化しただけで後の処理は1次元の場合と同じである．
+    </p>
+
+    <p>
+      <strong>Bulletでの設定</strong><br />
+      Bulletでは単純な四角形の布のような弾性体を簡単に追加する機能を持つ．
+      btSoftBodyのためのワールド初期化や描画に関しては1次元の場合と同じなので省略する．
+      Bulletワールドに2次元弾性体(四角形)を追加するには，
+      btSoftBodyHelpers::CreatePatch関数を用いる．
+      CreatePatch関数を用いた例を以下に示す．
+    </p>
+    <pre class="code">
+btScalar sl = 1.0;
+btScalar y = 0.0;
+int res = 9;
+btSoftBody* cloth = btSoftBodyHelpers::CreatePatch(g_softBodyWorldInfo,
+                                                   btVector3(-sl, y, -sl),    // 四隅の座標 00
+                                                   btVector3(-sl, y,  sl),    // 四隅の座標 10
+                                                   btVector3( sl, y, -sl),    // 四隅の座標 01
+                                                   btVector3( sl, y,  sl),    // 四隅の座標 11
+                                                   res, res, // 分割数(2方向)
+                                                   1+2+4, // 四隅の固定フラグ(1,2,4,8)
+                                                   true); // 斜め方向のばねのON/OFF
+cloth-&#x3e;getCollisionShape()->setMargin(0.01);
+cloth-&#x3e;setTotalMass(0.02); // 全体の質量
+cloth-&#x3e;m_materials[0]->m_kLST = 0.5;
+g_pDynamicsWorld-&#x3e;addSoftBody(cloth);</pre>
+    <p>
+      btSoftBodyとしてclothというオブジェクトを生成し，
+      CreatePatch関数を使って四角形状の弾性体を作り，
+      各種パラメータの設定後，btSoftRigidDynamicsWorld::addSoftBody関数でbtSoftBodyをワールドに追加している．
+      CreatePatch関数では4隅の座標と縦横の分割数，固定フラグ，斜め方向のばねの有無を指定する．
+      上記の例では4隅の座標値の2番目と3番目が入れ替わっているように思うかもしれないが，
+      これはそのまま設定すると法線方向が下向きになってしまったので逆向きになるように設定しているからである．
+      下図に設定した結果を示す．
+    </p>
+    <p align="center">
+      <img src="fig/softbody_cloth1.jpg" alt="3点が固定された布" /><br />
+      3点が固定された布
+    </p>
+
+    <p>
+      <strong>空気抵抗について</strong><br />
+      布や紙のような薄い物体は空気の流れの影響を大きく受ける．
+      例えば，紙吹雪や旗などである．
+      この風の影響を流体力学(Fluid Dynamics)を使って正確に計算することはとてもチャレンジングなタスクである
+      (例えば，<a href="https://graphics.stanford.edu/papers/thin_shells_fluid_coupling-sig05/">[Guendelman et al. SIGGRAPH2005]</a>など)．
+      しかし，今のところ多くの計算コストが必要で，リアルタイムのアプリケーションに適応するのは難しい．
+      そこでBulletでは流体力学の代わりに航空力学(Aerodynamics)を使って，
+      2次元弾性体への風の影響を計算している．
+    </p>
+    <p>
+      航空力学を使うと風の流れにより飛行機の翼やヘリコプターのブレードなど(Aerofoilという)にかかる力を近似的に計算できる．
+      まず，下の図のようにある角度(これを迎角(Angle of attack)という)で傾いた翼の断面を考える．
+    </p>
+    <p align="center">
+      <img src="fig/lift_and_drag.jpg" alt="抗力と揚力" /><br />
+      抗力と揚力
+    </p>
+    <p>
+      このとき，翼の周りの空気の流れにより2種類の力，
+      上昇させようとする力である揚力<img src="eq/physics5a.eq2.gif" />(Lift force)と
+      風により後ろに引っ張られる力である抗力<img src="eq/physics5a.eq3.gif" />(Drag force)が働く．
+      航空力学ではこれらの力を以下の式を使って計算する．
+    </p>
+    <p align="center"><img src="eq/physics5a.eq4.gif" /></p>
+    <p align="center"><img src="eq/physics5a.eq5.gif" /></p>
+    <p>
+      ここで，<img src="eq/physics5a.eq6.gif" />は揚力係数，
+      <img src="eq/physics5a.eq7.gif" />は抗力係数，
+      <img src="eq/physics5a.eq8.gif" />は空気密度，
+      <img src="eq/physics5a.eq9.gif" />は翼の気流方向への投影面積，
+      <img src="eq/physics5a.eq10.gif" />は気流と翼との相対速度，
+      <img src="eq/physics5a.eq11.gif" />は法線である．
+      これらの式を用いると詳細な周りの気流を流体力学で計算しなくてもある程度の値は推測可能となる．
+    </p>
+    <p>
+      Bulletで航空力学を用いて風による影響を計算するには，
+      btSoftBodyに抗力/揚力係数と計算モデル，気流速度を設定してやればよい．
+      例えば，前節で定義した布モデルにこれを設定するには以下のようにする．
+    </p>
+    <pre class="code">
+// Lift, Drag Forceのための係数[0,∞]
+cloth-&#x3e;m_cfg.kLF = 0.05;
+cloth-&#x3e;m_cfg.kDG = 0.01;
+
+cloth-&#x3e;m_cfg.piterations = 2; // ばねによる位置修正の最大反復回数
+cloth-&#x3e;m_cfg.aeromodel = btSoftBody::eAeroModel::V_TwoSidedLiftDrag;
+
+cloth-&#x3e;setWindVelocity(btVector3(4.0, 0.0, 0.0));</pre>
+    <p>
+      ここで計算の反復回数(piterations)を2とした．この値があまり大きいと逆に計算が不安定になるようなので注意．
+      aeromodelは揚力と抗力を計算する時の方法で，ここでは頂点ごと(V)，法線方向を風の向きに合わせて反転(TwoSided)，
+      揚力と抗力を考慮(LiftDrag)としている．
+      その他の設定できる方法はbtSoftBody.hの80行目あたりに書かれている(eAeroModel構造体)のでそちらを参照．
+    </p>
+    <p>
+      btSoftBodyに風の影響を追加する場合は，Collision Filteringに注意しよう．
+      <strong>少なくともシーン中の1つのbtRigidBody(床など)と衝突するようにしておかないと，
+      風の影響がうまく働かないことがある．</strong>
+    </p>
+    <p align="center">
+      <img src="fig/softbody_cloth2.jpg" alt="風を設定した例" /><br />
+      風を設定した例
+    </p>
+
+    <div class="task">
+      <h4>練習問題4</h4>
+      <p>
+        上記の2次元弾性体を実装してみよ．
+      </p>
+    </div>
+    <div class="task">
+      <h4>練習問題5</h4>
+      <p>
+        分割数や固定フラグなどを変更してみて，各パラメータによる変化を確かめてみよう．
+        また，setTotalMass関数を使うと全体の質量，
+        1次元の時と同じようにm_kLSTを使うと剛性も変えられるので試してみよう．
+      </p>
+    </div>
+    <div class="task">
+      <h4>練習問題6(option)</h4>
+      <p>
+        btSoftBody::appendAnchorメンバ関数で布を棒形状の剛体と接続し，
+        旗を再現してみよう．また，航空力学を設定して旗を風でたなびかせてみよう．<br />
+        2次元ではノード番号は下図のようになっている．
+        図中の[00],[10],[01],[11]は上記のCreatePatch定義例の引数にコメントとして書いてある端点番号である．
+      </p>
+      <p align="center">
+        <img src="fig/softbody_nodes.jpg" alt="ノード番号" /><br />
+        N×Mに分割した場合のノード番号
+      </p>
+      <p>
+        appendAnchor関数で棒と接触しているところをすべて接続する(上下2カ所だけでもよい)．
+        なお，appendAnchor関数でbtRigidBodyと接続する場合は同じノードをCreatePatch関数の引数の固定フラグで指定しないように気をつけよう
+        (上のコードサンプルで"1+2+4"としているところ)．
+        以前のバージョンでは問題なかったが，ver3.09でappendAnchorと固定フラグ両方で同じノードを指定すると，
+        布全体が全く動かなる現象をこちらで確認した．どちらかだけなら問題ないので注意しよう．
+      </p>
+    </div>
+    <!--<div class="task">
+      <h4>練習問題7(option)</h4>
+      <p>
+        たくさんの小さなパッチを作成し，それぞれに風を設定することで紙吹雪を再現してみよう．
+      </p>
+      <p align="center">
+        <img src="fig/confetti.jpg" alt="紙吹雪" height="240px" /><br />
+        紙吹雪をシミュレーションした例
+      </p>
+    </div>-->
+
+    <a name="3d" id="3d"></a>
+    <h2>3次元弾性体</h2>
+    <p>
+      3次元形状の場合も2次元弾性体の時のように表面上にバネを設定すればよいように思うかもしれないが，
+      それだと物体の体積が保存されず，最終的に形状がつぶれてしまう(下図参照)．
+    </p>
+    <p align="center">
+      <img src="fig/softbody3d_1.jpg" alt="体積保存されなかった場合の例1" />
+      <img src="fig/softbody3d_2.jpg" alt="体積保存されなかった場合の例2" />
+      <img src="fig/softbody3d_3.jpg" alt="体積保存されなかった場合の例3" />
+      <img src="fig/softbody3d_4.jpg" alt="体積保存されなかった場合の例4" />
+      <br />
+      体積保存されなかった場合の例
+    </p>
+    <p>
+      これを解決するための方法として，Bulletでは2つのアプローチを用いている．
+      1つは物体内部にもバネを追加する方法である．
+      形状表面は三角形ポリゴンの集合で表される．
+      内部にバネを追加する場合は，物体内部に四面体メッシュ(Tetrahedral mesh)を定義して(下図参照)，
+      そのエッジにバネを設定するなどする．
+      Bulletで四面体メッシュを使う場合にはあらかじめ四面体メッシュ情報を持ったファイルを用意する必要がある．
+      ファイルを読み込み後，btSoftBodyHelpers::CreateFromTetGenDataで四面体メッシュを持つbtSoftBodyを作成する．
+      四面体メッシュを作成するライブラリには<a href="http://tetgen.berlios.de/">tetgen</a>などがある．
+    </p>
+    <p align="center">
+      <img src="fig/tetra2_resize.jpg" alt="四面体メッシュの例" />
+      <img src="fig/tetra1_resize.jpg" alt="四面体メッシュの例" />
+      <br />
+      四面体メッシュの例(左:表面ポリゴン，右:内部の四面体メッシュをワイヤフレームで描画)
+    </p>
+    <p>
+      2つめとして，バネ-質点の定義は表面だけにしておき，
+      その体積を保つような力をかけるという方法がある．
+      これはちょうど航空力学で各質点に力を加えたように，
+      現在の物体の体積に応じた圧力から計算した力を質点に働かせることで，
+      物体がつぶれてしまうのを防ぐ．詳しい理論は<a href="http://arxiv.org/ftp/physics/papers/0407/0407003.pdf">こちらの論文</a>
+      を参考にしてほしい．<br />
+      本実習では表面の三角形メッシュのみを用いた2つめの方法を主に用いる．
+    </p>
+    <p>
+      それでは具体的に3次元の物体を設定してみよう．
+      btSoftBodyHelpers::CreateEllipsoid関数を用いると楕円体形状のメッシュを生成できる．
+    </p>
+    <pre class="code">
+btSoftBody *sphere = btSoftBodyHelpers::CreateEllipsoid(g_softBodyWorldInfo,
+                                                        btVector3(0, 0, 0),	// 中心座標
+                                                        btVector3(0.5, 0.5, 0.5), // 各軸方向の半径
+                                                        28);	// 総ノード数
+sphere-&#x3e;getCollisionShape()->setMargin(0.05);
+sphere-&#x3e;setTotalMass(1.0);				// 全体の質量
+sphere-&#x3e;m_materials[0]->m_kLST = 0.5;</pre>
+    <p>
+      この例では各軸方向の半径をすべて同じにしているので，半径0.5の球が生成される．
+    </p>
+    <p>
+      次に体積保存のための係数などを設定していく．
+    </p>
+    <pre class="code">
+sphere-&#x3e;m_cfg.kVC = 20.0;
+sphere-&#x3e;setPose(true, false);</pre>
+    <p>
+      kVCは体積保存のための係数([0,∞])で大きいほど体積保存性が高くなるが，
+      余り大きすぎると計算が不安定になるので注意．
+      下図は体積保存を上記のように設定したときの例で，
+      上の方で示した図と異なり，体積を保存するような変形になっている
+      (ちょうど空気を入れた柔らかいゴムボールのような変形となる)．
+      setPose関数では第1引数で体積保存のON/OFF，第2引数で内部フレームのON/OFFを切り替えることができる．
+      フレームをONにする(第2引数をtrueにする)とより元の全体的な形状を保存するようになる．
+    </p>
+    <p align="center">
+      <img src="fig/softbody3d_5.jpg" alt="体積保存した例" /><br />
+      体積保存した例
+    </p>
+    <p>
+      デフォルトではbtSoftBodyはbtRigidBodyと衝突するが，
+      btSoftBody同士では衝突しない．衝突処理させたい場合は，
+    </p>
+    <pre class="code">
+sphere-&#x3e;m_cfg.collisions |= btSoftBody::fCollision::VF_SS;</pre>
+    <p>
+      とする．VF_SSはSoftBody同士で頂点(Vertex)と面(Face)の衝突処理を行うためのフラグである．
+    </p>
+    <p>
+      さらに，btSoftBodyHelpers::CreateFromTriMesh関数を使うと任意形状の三角形メッシュを読み込んでbtSoftBodyに設定できる．
+      ただし，そのためには三角形メッシュファイル(3Dモデルファイル)を用意する必要がある．
+      3Dモデルファイルの読み込みについては次の章で説明する．
+    </p>
+
+
+    <div class="task">
+      <h4>練習問題7</h4>
+      <p>
+        上記の実装を実際にやってみよう．また，kVCの値や全体の質量，密度(setTotalDensity関数で設定)を変えて試してみよう．
+      </p>
+    </div>
+    <!--<div class="task">
+      <h4>練習問題2</h4>
+      <p>
+        <a href="4_constraint.html#task">拘束条件のページ</a>の練習問題で行ったマウスピックはまだbtSoftBodyには対応していない．
+        以下の修正を行ってbtSoftBodyにも対応させてみよう．<br />
+        まず，光線と衝突した剛体が static or kinematicでないかを判断していたif文のところを以下のように書き換える．
+      </p>
+      <pre class="code">
+if(body && !(body-&#x3e;isStaticObject() || body->isKinematicObject())){
+    // 元々の剛体に対するマウスピック処理
+}
+else{
+    // ここにbtSoftBodyに対する処理を追加する
+}</pre>
+      <p>
+        if文の最初に条件を追加して，剛体かどうかを判別している(Soft Bodyならbody==0となる)．<br />
+        剛体でなかった場合はbtSoftBodyに変換して，再度光線との衝突判定を行い，もっとも衝突点に近いノードを検索する．
+      </p>
+      <pre class="code">
+// btSoftBodyへのキャスト
+btSoftBody* body = const_cast&#x3c;btSoftBody*&#x3e;(btSoftBody::upcast(obj));
+btSoftBody::sRayCast res;
+
+// btSoftBodyとの衝突判定
+body-&#x3e;rayTest(ray_from, ray_to, res);
+if(res.fraction &#x3c; 1.0){// ray_fromからray_toの間に衝突点があった場合
+    btVector3 intersect = ray_from+(ray_to-ray_from)*res.fraction; // 衝突点座標
+    if(res.feature == btSoftBody::eFeature::Face){ // 面の場合(四面体メッシュを使った場合はTetra)
+        btSoftBody::Face& face = res.body-&#x3e;m_faces[res.index]; // 衝突のあった面
+
+        // 面を構成するノード(頂点)から衝突点に最も近いノードを探索
+        btSoftBody::Node* node = face.m_n[0];
+        for(int i = 1; i &#x3c; 3; ++i){
+            if((node-&#x3e;m_x-intersect).length2() > (face.m_n[i]->m_x-intersect).length2()){
+                node = face.m_n[i];
+            }
+        }
+        g_pPickNode = node; // マウスピックされたノードをグローバル変数に確保しておく
+        g_fPickDist = (g_pPickNode-&#x3e;m_x - ray_from).length(); // 衝突点までの距離
+    }
+}</pre>
+      <p>
+        注意として，g_pPickNodeは0で初期化しておき，マウスボタンを放したとき(GLUT_UP)にもg_pPickNode=0としておくこと．<br />
+        最後にMotion関数でマウスドラッグ時に選択されたノードに力を加える．
+        衝突点までの距離(g_fPickDist)から新しい頂点座標値を求める方法は<a href="4_constraint.html#task2">以前</a>と同じなので省略する．
+        新しい頂点位置(目標座標)が計算できたら，現在の位置から目標座標へ向かうベクトル方向の力をノードに加える．
+      </p>
+      <pre class="code">
+if(g_pPickNode){
+    g_pPickNode-&#x3e;m_f += (new_pivot-g_pPickNode->m_x)*10.0;
+}</pre>
+      </p>
+  </div>-->
+    <p></br /></p>
+    <p>
+      <strong>3Dモデルの設定</strong><br />
+      btSoftBodyの場合は，三角形ポリゴンを設定するのにbtSoftBodyHelpers::CreateFromTriMeshを用いる．
+      CreateFromTriMesh関数を用いてbtSoftBodyに形状を設定するコード例を以下に示す．
+    </p>
+    <pre class="code">
+// 三角メッシュからSoftBodyを作成（btSoftBodyHelpersを使用）
+btSoftBody* soft_body = btSoftBodyHelpers::CreateFromTriMesh(g_softBodyWorldInfo, vertices, indices, index_count);
+soft_body-&#x3e;getCollisionShape()->setMargin(0.01);</pre>
+    <p>
+      あとは，これまでやってきたbtSoftBodyのものと同様にして，kLSTやkVCなどの値を設定してやればよい．
+      また，これまでと異なり，CreateFromTriMeshでは物体の位置を直接指定していない(頂点位置verticesで指定は出来るが)．
+      位置を変えるためにはbtSoftBodyのtransform関数を用いる．
+      例えば，位置pos (btVector3型)，姿勢qrot (btQuaternion型) に移動させたいならば，以下のようなコードを追加する．
+    </p>
+    <pre class="code">
+btTransform trans;
+trans.setIdentity();		// 位置姿勢行列の初期化
+trans.setOrigin(pos);		// 初期位置
+trans.setRotation(qrot);	// 初期姿勢
+soft_body->transform(trans);</pre>
+    <p><br /></p>
+    <p align="center">
+      <img src="fig/bunny_soft.jpg" alt="bunny.objを読み込んで設定した例" /><br />
+      bunny.objを読み込んで設定した例
+    </p>
+
+    <div class="task">
+      <h4>練習問題8</h4>
+      <p>
+        btSoftBodyとして三角形ポリゴンを登録して，任意形状の弾性体シミュレーションを実行してみよう．
+      </p>
+    </div>
+    <div class="task">
+      <h4>練習問題9(option)</h4>
+      <p>
+        btSoftBodyではこれまで照会したパラメータ以外に様々なものがある．例えば，
+      </p>
+      <ul>
+        <li>m_cfg.kMT : Pose Matching係数([0,1])．元の形状を保とうとする力を働かせる</li>
+        <li>m_cfg.kDP : 減衰(Damping)係数([0,1])．空気抵抗</li>
+        <li>m_cfg.kDF : 動摩擦係数([0,1])</li>
+        <li>m_materials[0]->m_kAST : 回転に対する剛性</li>
+      </ul>
+      <p>
+        などである．これらを設定してみてどのように変化するか確かめてみよう．
+        また，その他のパラメータはbtSoftBody.hに書かれているのでチェックしてみよう．
+      </p>
+    </div>
+
+    <!--<div class="task">
+      <h4>練習問題10(option)</h4>
+      <p>
+        実習室のPCにインストールされているBlenderやMetasequoiaLE，Rhinocerosなどで3Dモデルを作成 or 既存のモデルを編集して，
+        3Dモデルファイルとしてエクスポートし，自分のプログラムから読み込ませてみよう．
+      </p>
+    </div>-->
+
+    <p align="right">
+    <a href="../index.html">戻る</a>
+    </p>
+    </div>
+
+  	<div class="footer">
+  	</div>
+  </div>
+</body>
+</html>

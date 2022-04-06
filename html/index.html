@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+  <title>
+    物理エンジンを使ったアプリケーション開発
+  </title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <div class="main">
+  	<div class="title">
+  	 情報メディア実験 物理エンジンを使ったアプリケーション開発
+  	</div>
+
+    <ul class="header">
+    	<li><a href="#intro">テーマ概要</a></li>
+  		<li><a href="#teacher">担当教員</a></li>
+  		<li><a href="#schedule">説明ページ</a></li>
+  		<li><a href="#reference">参考書</a></li>
+  	</ul>
+
+
+  	<div class="content">
+      <h2>お知らせ</h2>
+      <ul>
+        <!--<li>
+          <strong>初回(4/16(金)5,6限)からMicrosoft Teamsを用いて授業を行います．Teamsへの登録についてこのテーマを選択した皆さんにメールを送ります．
+          もし本テーマに割り当てられたのにメールを受け取っていないという人は<a href="#teacher">担当教員の藤澤</a>まで連絡してください．</strong><br />
+          オンラインでの講義受講については学情の<a href="https://www.cc.tsukuba.ac.jp/wp/remote-lecture-students/">こちらのページ</a>を参考にしてください．
+        </li>-->
+        <li>
+          <!--初回(4/19(金)5,6限)集合場所 : 7C202-->
+          本実験テーマはC/C++のコンパイルができるPC環境があることを前提としています(可能ならばVisual Studio環境が整えられること)．
+          実験テーマ選択する場合にご注意ください．</strong><br />
+        </li>
+        <!--<li>
+          <a href="report.html">レポートについて</a>
+        </li>-->
+      </ul>
+
+      <h2><a name="intro" id="intro">テーマ概要</a></h2>
+      <ul>
+        <li>テーマ名：物理エンジンを使ったアプリケーション開発</li>
+        <li>科目番号：<a href="https://kdb.tsukuba.ac.jp/syllabi/2022/GC41103/jpn/">GC41103 情報メディア実験A</a></li>
+        <li>開講時限：春学期ABC 水曜日3,4時限, 金曜日5,6時限
+        (詳細な日程はmanabaの情報メディア実験を参照)
+        </li>
+        <li>教室：<del>7C202, 7A202</del> MS Teamsを用いたリモートでの説明/開発補助を予定</li>
+        <li>概要：
+          <p>
+            最近のゲームやアプリケーションでは剛体同士の衝突などを物理法則に従って計算する物理シミュレーションがよく使われています．
+            本実験テーマではオープンソースの物理シミュレーションエンジンを利用したアプリケーションを作成することで，
+            物理シミュレーションの基礎と物理エンジンを使ったプログラミングを学びます．<br />
+            実験では最初に物理シミュレーションおよび物理エンジンの基礎について練習問題を解くことで学び，
+            その後物理エンジンを使った簡単なシステム/アプリケーションの開発を行ってもらいます．
+          </p>
+          <!--<p>
+            本テーマはenPiT合宿参加を前提とした春学期enPiT準拠テーマとして実施します．実験テーマの内容は4～6月に行い，8月初旬のenPiT合宿に参加してもらいます．
+            通常の実験と比べて6月までと期間が短くなっていること，短縮した分でenPiT合宿に参加することに注意してください．
+          </p>
+          <p>
+            昨年度は春学期enPiT準拠テーマとして実施しましたが，2020年度はCOVID-19の影響で<strong>通常テーマとして実施する</strong>ことになりました．
+            このテーマを選択してもenPiT合宿に合流することはありません．テーマ選択する際は注意してください．
+          </p>-->
+        </li>
+      </ul>
+
+
+      <h2><a name="teacher" id="teacher">担当教員</a></h2>
+      <ul class="labeled">
+       <li>氏名： 藤澤 誠 (ふじさわ まこと)</li>
+       <li>所属： 図書館情報メディア系(情報メディア創成学類，図書館情報メディア研究科担当)</li>
+       <li>電子メール： fujis[at]slis.tsukuba.ac.jp</li>
+       <li>ホームページ： <a href="http://slis.tsukuba.ac.jp/~fujis/">http://slis.tsukuba.ac.jp/~fujis/</a></li>
+       <li>オフィスアワー : 随時(メールでアポを取って下さい)</li>
+      </ul><br />
+
+
+      <h2><a name="schedule" id="schedule">説明ページ</a></h2>
+      <h3>C++の教材</h3>
+      <p>
+        本実験で用いるBullet PhysicsライブラリはC++で書かれたオープンソースライブラリである．
+        実験で用いるサンプルプログラムではC++のクラスなどは使わないようにしているので，
+        C言語(とOpenGL)が分かっていれば理解できるでしょう．
+        しかし，Bulletを深く理解するためにはC++(特にクラスについて)が分かっている必要がある．
+        C++の参考資料(PDF)を以下に置くので，必要に応じて参照すること．
+      </p>
+      <ul>
+        <li><a href="cpp/cpp1.pdf">オブジェクト指向言語C++ 前編 ～C言語からC++へ～</a></li>
+        <li><a href="cpp/cpp2.pdf">オブジェクト指向言語C++ 後編 ～クラスをうまく使おう～</a></li>
+      </ul>
+      <p>
+        また，Visual Studioなどほとんどの開発環境で標準的に使えるSTLという便利なライブラリがある．
+        これを使うと便利なので，簡単な解説資料を以下においたので，是非使ってみてほしい
+      </p>
+      <ul>
+        <li><a href="cpp/stl.pdf">データ構造と標準テンプレートライブラリ(STL)</a></li>
+      </ul>
+      <p>
+        なお，これらの資料は私が学生の時に研究室の輪講用に作成したものを少しだけ修正したものである
+        (なので日本語がおかしかったり，間違っていたらごめんなさい)．
+      </p>
+
+      <h3>ガイダンス資料</h3>
+      <ul>
+        <li><!--<a href="ppt/iml_physics_00_guidance_and_cpp.pdf">初回ガイダンス資料(C++の説明スライド含む)</a>--></li>
+      </ul>
+
+      <h3>物理エンジンについて</h3>
+      <table class="tab" summary="説明">
+        <tr>
+          <th>
+          </th>
+          <th>
+            内容
+          </th>
+          <th>
+            資料
+          </th>
+        </tr>
+        <tr>
+          <td>
+            １．物理シミュレーションとは？
+          </td>
+          <td>
+            物理シミュレーションの基礎的な理論(物理エンジンを使うために必要となる理論的な基礎)について学ぶ．
+          </td>
+          <td>
+            <!--<a href="ppt/iml_physics_01.pdf">説明スライド(PDF)</a><br />-->
+            <a href="text/1_basis/index.html">説明ページ</a><br />
+            <!--<a href="sample/iml_physics_1.zip">サンプルプログラム</a>
+            (MD5:f4fc4e66664e32ebb83dd9bb9282eb22)-->
+          </td>
+        </tr>
+        <tr>
+          <td>
+            ２．物理エンジンとは？
+          </td>
+          <td>
+            オープンソースの物理エンジン"Bullet Physics Library"(以下Bullet)について学び，
+            Bulletライブラリのビルド，Bulletを使った単純な剛体シミュレーションプログラムを作成する．
+          </td>
+          <td>
+            <!--<a href="ppt/iml_physics_02.pdf">説明スライド(PDF)</a><br />-->
+            <a href="text/2_bullet/index.html">説明ページ</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            ３．多数の剛体間の衝突判定,衝突応答
+          </td>
+          <td>
+            物理エンジンの重要な機能である衝突判定，衝突応答について，
+            多数の剛体が存在する場合でも高速に処理するための方法を学ぶ．
+          </td>
+          <td>
+            <!--<a href="ppt/iml_physics_03.pdf">説明スライド(PDF)</a><br />-->
+            <a href="text/3_collision/index.html">説明ページ1(衝突検出)</a><br />
+            <a href="text/3_collision2/index.html">説明ページ2(衝突応答)</a><!--<br />
+            <a href="sample/iml_physics_2.zip">サンプルプログラム2</a>
+            (MD5:3e84ba9e4edd7e0c07a910d0fdf015c0)-->
+          </td>
+        </tr>
+        <tr>
+          <td>
+            ４．剛体間リンク
+          </td>
+          <td>
+            剛体同士の位置，姿勢関係に拘束条件を加えることでジョイント構造を持たせることができる．
+            この剛体間リンクの理論とBulletで設定できるジョイントの種類について学ぶ．
+          </td>
+          <td>
+            <!--<a href="ppt/iml_physics_04.pdf">説明スライド(PDF)</a><br />-->
+            <a href="text/4_constraint/index.html">説明ページ</a><br />
+            <a href="text/viewpoint/index.html">補足：視点の追従</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            ５．3Dモデル読み込みと弾性体
+          </td>
+          <td>
+            Bulletでは剛体だけでなく，ゴムや布ような変形する物体(弾性体)も扱うことができる．
+            そのためのバックグラウンドになっている技術を学ぶとともに，
+            三角形メッシュによる形状の読み込みについても学び，
+            弾性体を使ったプログラムを作成する．
+          </td>
+          <td>
+            <!--<a href="ppt/iml_physics_05.pdf">説明スライド(PDF)</a><br />-->
+            <a href="text/5_polygon/index.html">説明ページ1(3Dモデル読み込み)</a><br />
+            <a href="text/5_softbody/index.html">説明ページ2(弾性体)</a><br />
+            <a href="text/blender/index.html">補足：Blenderによるポリゴン数削減</a>-->
+          </td>
+        </tr>
+        <tr>
+          <td>
+            補足など
+          </td>
+          <td>
+            -
+          </td>
+          <td>
+            <!--<strong><a href="report.html">レポートについて</a></strong><br />-->
+            <a href="text/compound/index.html">補足：複合形状</a><br />
+            <a href="text/screen_character/index.html">補足：文字列描画</a>
+          </td>
+        </tr>
+      </table>
+
+      <h2>ソースコードに関する注意事項</h2>
+      <h3>ファイルのMD5によるチェック</h3>
+      <p>
+        実習室のPCではダウンロードしたファイルが不完全であることがある
+        (この場合，解凍時にエラーが出るか，ビルドしようとするとファイルが足りないといわれる)．
+        サンプルファイルの下にMD5チェックサムを載せておいた．
+        WindowsだとNirSoftの<a href="http://www.nirsoft.net/utils/hash_my_files.html">HashMyFiles</a>というフリーソフトで
+        ファイルのMD5を確認できるので不安な人はこれでダウンロードしたファイルのMD5を調べ，上記の値と一致するかをチェックすること．
+      </p>
+      <h3>dllファイルが見つかりません</h3>
+      <p>
+        Visual Studioでビルドしたプログラムを実行しようとすると「*.dllファイルが見つかりません」といわれ実行できない場合，
+        プロジェクトファイル(*.vcxproj)があるフォルダにDebugもしくはReleaseという名前のフォルダがあるので，
+        その中に，bin/*.dllファイルをコピーする．
+        (サンプルプログラム2以降ではビルド後に自動でコピーされるようにしてある．)
+      </p>
+      <h3>シャドウマッピングについて</h3>
+      <p>
+        サンプルプログラム2ではシャドウマッピングという技術を用いて物体の影をつけている．
+        これはデプスマップテクスチャというテクスチャを用いて影領域を判別しているのだが，
+        このテクスチャの解像度が低いと影の輪郭にシャギー(エリアシング)が発生する．
+        サンプルプログラム2に同封したシャドウマッピングのコード(rx_shadow_gl.h)は実習室のPC(GPUがIntel HD Graphics 4000)上で動作するように作ったので，
+        この解像度が<strong>ウィンドウ解像度以下に制限される</strong>(一部，GL拡張やGLSLなどが使えないため)．<br />
+        自分のPCなどで実習を行う場合で，少なくともOpenGLのオフラインバッファであるFBOが使える環境であるならば，
+        rx_shadow_gl.hをインクルードしている部分をrx_shadow_glsl.hをインクルードするように変更することで，
+        より高解像度の影を扱える(rx_shadow_glsl.hはサンプルプログラム2に同封している．インクルードを変えるだけで自身のプログラムは変える必要はない)．
+      </p>
+<!--      <ul>
+        <li><a href="sample/rx_shadow_fbo.h">rx_shadow_fbo.h</a></li>
+      </ul>
+      <p>
+        右クリックでリンク先を保存でダウンロードし，shared/incに置いて，utils.h内でrx_shadow_gl.hの代わりにインクルードすればよい．<br />
+        また，NVIDIA GeForceやATI RadeonなどのGPUを搭載したPCならば，GLSLを用いたシャドウマップが使えることが多い．
+        この場合は以下のファイルを用いる．
+      </p>
+      <ul>
+        <li><a href="sample/rx_shaders.h">rx_shaders.h</a></li>
+        <li><a href="sample/rx_shadow_glsl.h">rx_shadow_glsl.h</a></li>
+      </ul>
+      <p>
+        右クリックでリンク先を保存でダウンロードし，shared/incに置いて，utils.h内でrx_shadow_gl.hの代わりにインクルードすればよい
+        (rx_shaders.hは上書き)．
+      </p>-->
+
+
+      <h2><a name="reference" id="reference">参考書,参考Webページ</a></h2>
+      <ul>
+        <li>藤澤誠著 : CGにおける物理シミュレーションの基礎，マイナビ</li>
+        <li>原田隆宏，松生裕史著，西川善司監修 : ゲーム制作者のための物理シミュレーション 剛体編, インプレスジャパン</li>
+        <li>Christer Ericson著，中村達也訳 : ゲームプログラミングのためのリアルタイム衝突判定(Real-Time Collision Detection)，ボーンデジタル</li>
+        <li>金谷一朗著 : 3D-CGプログラマーのためのクォータニオン入門，工学社</li>
+        <li>Bullet Physics Library : <a href="http://bulletphysics.org/wordpress/">http://bulletphysics.org/wordpress/</a></li>
+      </ul>
+    </div>
+
+  	<div class="footer">　
+  	</div>
+  </div>
+</body>
+</html>
