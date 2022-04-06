@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+  <title>
+    情報メディア実験
+  </title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+  <div class="main">
+    <div class="title">
+     Blenderを用いたポリゴン数削減
+    </div>
+
+    <ul class="header">
+      <li><a href="#reduce">ポリゴン数削減</a></li>
+      <li><a href="#blender">Blenderの基本操作</a></li>
+    </ul>
+
+    <div class="content">
+    <a name="reduce" id="reduce"></a>
+    <h2>Blenderを用いたポリゴン数削減</h2>
+    <p>
+      実習室のPCにインストールされているBlenderを使って3Dモデルのポリゴン数を削減する方法を述べる．
+      なお，Blenderはフリーソフトなので<a href="http://www.blender.org/download/get-blender/">Webからダウンロード</a>して自分のPCにインストールすることもできる．
+    </p>
+    <ol>
+      <li>
+        スタートメニューからBlenderを起動する<br />
+        <img src="fig/blender1.jpg" alt="blender1" width="60%" />
+      </li>
+      <li>
+        左上のメニュー File -> Import -> Wavefront(.obj) (自分の読み込ませたいファイル形式を選択)<br />
+        でファイルを選択後，右上のImport OBJで読み込む
+        (あらかじめ配置されているオブジェクトが必要ない場合は，そのオブジェクトを右クリックで選択，Deleteキーで削除しておく)
+      </li>
+      <li>
+        読み込んだオブジェクトだけを右クリックで選択し，右のパネルでアイコンが並んでいるところから，
+        Modifierを選択し，Add Modifier -> Decimate をクリック<br />
+        <img src="fig/blender2.jpg" alt="blender1" width="60%" />
+      </li>
+      <li>
+        Ratioというところを左ドラッグで左右に動かして数値を変更するとメッシュが粗くなので
+        (Ratioの下に表示されているFace Countがポリゴン数なので参考にしつつ，適切なポリゴン数まで減らす)，
+        減らせたらApplyボタンをクリックして決定<br />
+        <img src="fig/blender3.jpg" alt="blender3" width="60%" />
+      </li>
+      <li>
+        左上のメニュー File -> Export -> Wavefront(.obj) <br />
+        で編集したデータをモデルファイルとして保存する．
+      </li>
+    </ol>
+
+
+    <a name="blender" id="blender"></a>
+    <h2>Blenderの基本操作</h2>
+    <h4>基本操作(マウス)</h4>
+    <ul>
+      <li>右クリック : オブジェクト選択</li>
+      <li>左ドラッグ : 操作選択(直線ジェスチャで平行移動，円形ジェスチャで回転など)</li>
+      <li>右ドラッグ : 選択オブジェクト平行移動</li>
+      <li>ホイール : 全体ズーム</li>
+      <li>中ドラッグ : 全体回転</li>
+      <li>Shift+中ドラッグ : 全体平行移動</li>
+      <li>Ctrl+中ドラッグ : 全体ズーム</li>
+    </ul>
+
+    <h4>選択操作</h4>
+    <ul>
+      <li>右クリック : 個別選択</li>
+      <li>Shift+右クリック : 連続選択</li>
+      <li>Aキー : 全選択/解除</li>
+      <li>Bキー : 矩形範囲選択</li>
+      <li>Cキー : 円範囲選択(マウスホイール or +/-キーで半径変更)</li>
+      <li>Alt+右クリック : ループ選択(選択した頂点/辺/面につながる部分が選択される)</li>
+      <li>Lキー : 接続メッシュ選択(マウスカーソルがある部分につながるポリゴンメッシュを選択)</li>
+    </ul>
+    
+    <h4>編集操作</h4>
+    <p>
+      オブジェクトを右クリックで選択後，平行移動，回転などの操作を行う．
+      マウスと矢印キーで位置や大きさを変更後，Enterで決定/Escでキャンセル．
+    </p>
+    <ul>
+      <li>Gキー : 平行移動</li>
+      <li>Rキー : 回転</li>
+      <li>Sキー : 拡大縮小</li>
+      <li>Ctrl+スペース : 3Dマニピュレータ</li>
+    </ul>
+
+    <h4>モードについて</h4>
+    <ul>
+      <li>オブジェクトモード : オブジェクトを見るモード．オブジェクトそのものが選択対象</li>
+      <li>エディットモード : 編集モード．選択状態でTabを押す．個別のポリゴンや頂点などが選択対象</li>
+      <li>スカルプトモード : Sculpt操作 (つまんだり，引っ張ったりのような3D Brushみたいな変形)</li>
+    </ul>
+
+    <h4>TIPS</h4>
+    <ul>
+      <li>
+        ウィンドウサイズが保存されない場合 <br />
+        「File」→「Save User Settings」
+      </li>
+    </ul>
+
+
+    <p align="right">
+    <a href="../index.html">戻る</a>
+    </p>
+    </div>
+
+    <div class="footer">
+    </div>
+  </div>
+</body>
+</html>
