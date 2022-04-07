@@ -7,7 +7,7 @@
     情報メディア実験
   </title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="../style.css" />
+  <link rel="stylesheet" type="text/css" href="../../style.css" />
 </head>
 
 <body>
@@ -39,38 +39,33 @@
     <a name="intersect" id="intersect"></a>
     <h2>マウスクリックした点との交差判定</h2>
     <p>
-      OpenGL(freeglut)のMouse関数にクリックしたときに視点座標とクリックした位置ベクトルを取得するコードを追加する．
-      まず，実験のサンプルプログラムでは左ドラッグで視点移動になっているので(if(button == GLUT_LEFT_BUTTON)のところ)，
-      そこを例えば以下のように変更する．
+      OpenGL(glew)のMouse関数にクリックしたときに視点座標とクリックした位置ベクトルを取得するコードを追加する．
+      まず，実験のサンプルプログラムでは左ドラッグで視点移動になっているので(if(button == GLFW_MOUSE_BUTTON_LEFT)のところ)，
+      そこを変更していく．
     </p>
     <pre class = "code">
-if(button == GLUT_LEFT_BUTTON){
-if(mod == GLUT_ACTIVE_SHIFT){
-  if(state == GLUT_DOWN){
+if(button == GLFW_MOUSE_BUTTON_LEFT){
+  if(action == GLFW_PRESS){
       // 視点，クリック位置の取得処理をここに記述
+      // 元々あった視点移動の処理は動的剛体をクリックしなかった場合に行うようにする
   }
 }
-else{
-  // 元々あった視点移動の処理をここに移動
-}
-}</pre>
+</pre>
     <p>
-      ここではShiftキーを押しながらクリックしたときに処理をするようにした(GLUT_ACTIVE_SHIFT)が，
-      別の修飾キー(AltやCtrl)でもよい．
-    </p>
-    <p>
-      実験サンプルプログラムでの視点座標の取得方法は<a href="3_collision.html">衝突判定の説明ページの練習問題8</a>と同じ．
+      実験サンプルプログラムでの視点座標の取得方法は<a href="../3_collision/index.html">衝突判定の説明ページの練習問題8</a>と同じ．
       クリック位置ベクトルの取得にはGetRayTo関数を用いる．
     </p>
     <pre class = "code">
-double ray_to[3];
-g_tbView.GetRayTo(x, y, RX_FOV, ray_to);</pre>
-    <p>
-      (もしもGetRayTo関数がないというエラーが出たら<a href="../sample/iml_physics_2.zip">サンプルプログラム2</a>をもう一度ダウンロードして，
-      その中のrx_trackball.hとrx_trackball.cppを更新)．
-    </p>
+glm::vec3 ray_from0, ray_to0;
+g_view.CalLocalPos(ray_from0, glm::vec3(0, 0, 0));
+g_view.GetRayTo(x, y, FOV, ray_to0);
     <p>
       得られた視点座標，クリック位置ベクトルはbtVector3型の変数に代入しておこう．
+    </p>
+    <pre class = "code">
+btVector3 ray_from = btVector3(ray_from0[0], ray_from0[1], ray_from0[2]);
+btVector3 ray_to = btVector3(ray_to0[0], ray_to0[1], ray_to0[2]);</pre>
+    <p>
       視点座標が光線の原点，クリックした位置が光線のターゲット位置(光線方向=ターゲット位置-原点)となる．
     </p>
     <p>
@@ -81,7 +76,7 @@ g_tbView.GetRayTo(x, y, RX_FOV, ray_to);</pre>
     </p>
     pre class = "code">
 btCollisionWorld::ClosestRayResultCallback ray_callback(ray_from, ray_to);
-g_pDynamicsWorld->rayTest(ray_from, ray_to, ray_callback);</pre>
+g_dynamicsworld-*&#x3e;rayTest(ray_from, ray_to, ray_callback);</pre>
     <p>
       ここでray_fromとray_toはそれぞれ光線の原点とターゲット位置(btVector3)である．
       衝突が検出されたかどうかは，ClosestRayResultCallbackクラスのhasHitメンバ関数で確かめることができる．
@@ -93,16 +88,16 @@ g_pDynamicsWorld->rayTest(ray_from, ray_to, ray_callback);</pre>
     </p>
     <pre class = "code">
 if(ray_callback.hasHit()){
-// 光線と衝突した剛体
-const btCollisionObject* obj = ray_callback.m_collisionObject;
-btRigidBody* body = const_cast&#x3c;btRigidBody*&#x3e;(btRigidBody::upcast(obj));
+  // 光線と衝突した剛体
+  const btCollisionObject* obj = ray_callback.m_collisionObject;
+  btRigidBody* body = const_cast&#x3c;btRigidBody*&#x3e;(btRigidBody::upcast(obj));
 
-// 衝突点座標(ジョイントになる位置座標)
-btVector3 picked_pos = ray_callback.m_hitPointWorld;
+  // 衝突点座標(ジョイントになる位置座標)
+  btVector3 picked_pos = ray_callback.m_hitPointWorld;
 
-if(!(body->isStaticObject() || body->isKinematicObject())){
-  // ここに拘束条件を追加するコードを記述する
-}
+  if(body && !(body->isStaticObject() || body->isKinematicObject())){
+    // ここに拘束条件を追加するコードを記述する
+  }
 }</pre>
 
 
@@ -122,15 +117,15 @@ body->setActivationState(DISABLE_DEACTIVATION);</pre>
         (6DOF Constraintでもよい)．
     </p>
     <pre class = "code">
-if(g_pPickConstraint){
-g_pDynamicsWorld->removeConstraint(g_pPickConstraint);
-delete g_pPickConstraint;
+if(g_pickconstraint){
+  g_dynamicsworld->removeConstraint(g_pickconstraint);
+  delete g_pickconstraint;
 }
-g_pPickConstraint = new btPoint2PointConstraint(*body, local_pos);
-g_pDynamicsWorld->addConstraint(g_pPickConstraint, true);</pre>
+g_pickconstraint = new btPoint2PointConstraint(*body, local_pos);
+g_dynamicsworld->addConstraint(g_pickconstraint, true);</pre>
     <p>
       あとでMotion関数でも用いるのでConstraintは
-      btPoint2PointConstraint*型のグローバル変数g_pPickConstraintに格納してある．
+      btPoint2PointConstraint*型のグローバル変数g_pickconstraintに格納してある．
     </p>
     <p>
       Constraintを設定できたらマウスをドラッグしたときにジョイントの位置を変更する．
@@ -141,20 +136,20 @@ g_pDynamicsWorld->addConstraint(g_pPickConstraint, true);</pre>
       Mouse関数内で衝突が検出されたときに
     </p>
       <pre class = "code">
-g_fPickDist = (picked_pos-ray_from).length();</pre>
-        のようにして衝突点までの距離を保存しておく．g_fPickDistは衝突点までの距離を保存するグローバル変数である．
+g_pickdist = (picked_pos-ray_from).length();</pre>
+        のようにして衝突点までの距離を保存しておく．g_pickdistは衝突点までの距離を保存するグローバル変数である．
         そして，マウスドラッグ時の処理を行うMotion関数内でray_fromとray_toを前と同じ手順で求めた後，
         <pre class = "code">
 btVector3 dir = ray_to-ray_from;
 dir.normalize();
-btVector3 new_pivot = ray_from+dir*g_fPickDist;</pre>
+btVector3 new_pivot = ray_from+dir*g_pickdist;</pre>
         とすると新しいジョイント位置(ワールド座標)が求まる．
         ジョイントは2つのオブジェクトを接続するものであるが，
         今回は1つのオブジェクト(pivotInA)とワールド座標(pivotInB)を接続しているので，
         btPoint2PointConstraintのsetPivotBメンバ関数を使ってnew_pivotを直接指定してやればよい(ローカル座標への変換は必要ない)．
       </li>
       <li>
-        最後にマウスボタンを放したときに設定していた拘束条件を破棄する．このとき，g_pPickConstraint = 0と再初期化することを忘れないように．
+        最後にマウスボタンを放したときに設定していた拘束条件を破棄する．このとき，g_pickconstraint = 0と再初期化することを忘れないように．
       </li>
     </ol>
     これらの手順によりマウスによる物体の選択，移動が可能となる．
@@ -163,94 +158,9 @@ btVector3 new_pivot = ray_from+dir*g_fPickDist;</pre>
     m_setting.m_tauを使うか，6DOF Constraintを使ってみるとよい)．
 </p>
 <p align="center">
-  <img src="fig/mouse_pick_cube.jpg" alt="Mouse Pick" /><br />
+  <img src="../fig/mouse_pick_cube.jpg" alt="Mouse Pick" /><br />
   マウスによるオブジェクト選択，移動<br />
 </p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <a name="draw" id="draw"></a>
-    <h2>btCompoundShapeの描画</h2>
-    <p>
-      btCompoundShapeをOpenGLで描画する場合はgetChildShape関数で複合形状に含まれるすべての子形状とその位置/姿勢を取得し，
-      描画する必要がある．
-      そのために衝突形状を引数として読み込んでその形状タイプごとに描画する関数を作成し，
-      その関数を子ノードごとに再帰的の呼び出すことで描画処理を行う．
-      以下のそのコード例を示す．
-    </p>
-    <pre class="code">
-/*!
- * Bulletの衝突形状を描画
- * @param[in] shape 衝突形状
- */
-void DrawBulletShape(const btCollisionShape *shape)
-{
-  int shapetype = shape->getShapeType();
-
-  glPushMatrix();
-
-  // 形状の種類ごとに描画
-  if(shapetype == BOX_SHAPE_PROXYTYPE){
-    // ボックス形状の描画処理をここに記述
-  }
-  else if(shapetype == SPHERE_SHAPE_PROXYTYPE){
-    // 球形状の描画処理をここに記述
-  }
-  else if(shapetype == CAPSULE_SHAPE_PROXYTYPE){
-    // カプセル形状の描画処理をここに記述
-  }
-  else if(shapetype == COMPOUND_SHAPE_PROXYTYPE){
-    // 複合形状の描画処理
-    const btCompoundShape* compound = static_cast<const btCompoundShape*>(shape);
-    int num_child = compound->getNumChildShapes();
-    btScalar mc[16];
-    for(int j = 0; j < num_child; ++j){
-      // Compound Shapeを構成するchild shapeを再帰的にDrawBulletShapeに渡す
-      compound->getChildTransform(j).getOpenGLMatrix(mc);
-      glPushMatrix();
-      glMultMatrixf(mc);
-      DrawBulletShape(compound->getChildShape(j));
-      glPopMatrix();
-    }
-  }
-  glPopMatrix();
-}</pre>
-    <p>
-      形状がCOMPOUND_SHAPE_PROXYTYPEである場合は，getNumChildShapes関数で子形状の数を調べて，
-      その数だけループを回す．
-      ループ内ではgetChildTransformで位置姿勢をOpenGLの変換行列として取得，設定し，
-      getChildShape関数で取得したインスタンスを引数として渡して，関数自身を再帰的に呼び出している．
-    </p>
-
-    <a name="code" id="code"></a>
-    <h2>コード例</h2>
-    <ul>
-      <li><a href="../sample/btcompound.zip">btcompound.zip</a></li>
-    </ul>
-    <p>
-      解凍してsrcフォルダに配置．
-    </p>
-
-
 
     <p align="right">
     <a href="../index.html">戻る</a>

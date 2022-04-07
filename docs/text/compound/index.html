@@ -19,7 +19,7 @@
     <ul class="header">
       <li><a href="#definition">btCompoundShapeの定義</a></li>
       <li><a href="#draw">btCompoundShapeの描画</a></li>
-      <li><a href="#code">コード例</a></li>
+      <!--<li><a href="#code">コード例</a></li>-->
     </ul>
 
     <div class="content">
@@ -66,7 +66,7 @@ compound->recalculateLocalAabb();
 trans.setIdentity();
 trans.setOrigin(btVector3(0, GROUND_HEIGHT+1.0, 0));
 btRigidBody* body1 = CreateRigidBody(0.2, trans, compound, 0);
-g_pDynamicsWorld->addRigidBody(body1);
+g_dynamicsworld->addRigidBody(body1);
 </pre>
     <p>
       2つのカプセル形状(btCapsuleShape)とbtCompundShapeを定義した後，
@@ -136,14 +136,14 @@ void DrawBulletShape(const btCollisionShape *shape)
       getChildShape関数で取得したインスタンスを引数として渡して，関数自身を再帰的に呼び出している．
     </p>
 
-    <a name="code" id="code"></a>
+    <!--<a name="code" id="code"></a>
     <h2>コード例</h2>
     <ul>
       <li><a href="../sample/btcompound.zip">btcompound.zip</a></li>
     </ul>
     <p>
       解凍してsrcフォルダに配置．
-    </p>
+    </p>-->
 
 
 
