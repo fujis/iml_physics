@@ -7,7 +7,7 @@
     情報メディア実験
   </title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="../style.css" />
+  <link rel="stylesheet" type="text/css" href="../../style.css" />
 </head>
 
 <body>
@@ -43,81 +43,81 @@
         多くの物理エンジンでは拘束条件を記述する拘束方程式を解くConstraint-based methodを用いている．
       </p>
       <p>
-        まず，拘束条件を<img src="eq/physics4.eq1.gif" />という形で表現する．
+        まず，拘束条件を<img src="../eq/physics4.eq1.gif" />という形で表現する．
         例えば，2つの物体の単純な衝突の場合，
-        めり込みが発生しないとするとそれぞれの物体での衝突点座標<img src="eq/physics4.eq2.gif" />)
+        めり込みが発生しないとするとそれぞれの物体での衝突点座標<img src="../eq/physics4.eq2.gif" />)
         の間の関係は，
       </p>
-      <p align="center"><img src="eq/physics4.eq3.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq3.gif" /></p>
       <p>
-        と表される．ここで，<img src="eq/physics4.eq4.gif" />は衝突点の法線方向を示し，
+        と表される．ここで，<img src="../eq/physics4.eq4.gif" />は衝突点の法線方向を示し，
         両物体の法線方向の位置関係が固定されることを意味する．
-        このとき，<img src="eq/physics4.eq5.gif" />を拘束条件を表す式として定義する．
+        このとき，<img src="../eq/physics4.eq5.gif" />を拘束条件を表す式として定義する．
         <br />
       </p>
       <p>
-        拘束条件を解決するためには，<img src="eq/physics4.eq6.gif" />を満たすように各オブジェクトに力を加える必要がある．
+        拘束条件を解決するためには，<img src="../eq/physics4.eq6.gif" />を満たすように各オブジェクトに力を加える必要がある．
         拘束条件を保つための力を求める式を導出するために，
         より単純な例として下図のように物体(黒丸)の動きが原点を中心とした半径1の円上に制限されている場合を考える
         (ブランコのような動き)．
       </p>
       <p align="center">
-        <img src="fig/circle_constraint.jpg" alt="動きを円形状に制限した場合" /><br />
+        <img src="../fig/circle_constraint.jpg" alt="動きを円形状に制限した場合" /><br />
         動きを円形状に制限した場合
       </p>
       <p>
-        黒丸の中心位置を<img src="eq/physics4.eq7.gif" />とすると拘束条件は，
+        黒丸の中心位置を<img src="../eq/physics4.eq7.gif" />とすると拘束条件は，
       </p>
-      <p align="center"><img src="eq/physics4.eq8.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq8.gif" /></p>
       <p>
         となる．ここで1/2はこの後の計算式を簡単化するためにつけた係数である．
         括弧の中が0となるので1/2倍しても拘束条件としてはなり立っている．<br />
-        C=0なのでその時間微分<img src="eq/physics4.eq9.gif" />，2階微分<img src="eq/physics4.eq10.gif" />も0となる．
+        C=0なのでその時間微分<img src="../eq/physics4.eq9.gif" />，2階微分<img src="../eq/physics4.eq10.gif" />も0となる．
         これを式にすると，
       </p>
-      <p align="center"><img src="eq/physics4.eq11.gif" /></p>
-      <p align="center"><img src="eq/physics4.eq12.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq11.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq12.gif" /></p>
       <p>
-        ここで<img src="eq/physics4.eq13.gif" />は速度，<img src="eq/physics4.eq14.gif" />は加速度になっている．
-        さて，物体にかかる力を<img src="eq/physics4.eq15.gif" />とし，<img src="eq/physics4.eq15.gif" />に加えて，
-        拘束条件を満足させるためにかける力を<img src="eq/physics4.eq16.gif" />とすると，
+        ここで<img src="../eq/physics4.eq13.gif" />は速度，<img src="../eq/physics4.eq14.gif" />は加速度になっている．
+        さて，物体にかかる力を<img src="../eq/physics4.eq15.gif" />とし，<img src="../eq/physics4.eq15.gif" />に加えて，
+        拘束条件を満足させるためにかける力を<img src="../eq/physics4.eq16.gif" />とすると，
         物体の加速度は運動方程式より，
       </p>
-      <p align="center"><img src="eq/physics4.eq17.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq17.gif" /></p>
       <p>
         ここでmは物体質量である．
         これを先ほどの式に代入する．
       </p>
-      <p align="center"><img src="eq/physics4.eq18.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq18.gif" /></p>
       <p>
-        <img src="eq/physics4.eq16.gif" />について解く．
+        <img src="../eq/physics4.eq16.gif" />について解く．
       </p>
-      <p align="center"><img src="eq/physics4.eq19.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq19.gif" /></p>
       <p>
-        そして，スカラー値となる項をまとめて<img src="eq/physics4.eq20.gif" />とすると，
+        そして，スカラー値となる項をまとめて<img src="../eq/physics4.eq20.gif" />とすると，
       </p>
-      <p align="center"><img src="eq/physics4.eq21.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq21.gif" /></p>
       <p>
-        となり，この式で<img src="eq/physics4.eq16.gif" />を計算して，先ほどの運動方程式から加速度，そして速度を更新すれば拘束条件を解くことができる．
+        となり，この式で<img src="../eq/physics4.eq16.gif" />を計算して，先ほどの運動方程式から加速度，そして速度を更新すれば拘束条件を解くことができる．
         ただし，上の式はあくまで円状に運動するように拘束された剛体の場合の式であるので，より一般化してみよう．
-        <img src="eq/physics4.eq7.gif" />は拘束条件Cの空間微分になっている(<img src="eq/physics4.eq23.gif" />)ので，
-        Cの空間微分をJacobianを使って<img src="eq/physics4.eq24.gif" />と表すと，
+        <img src="../eq/physics4.eq7.gif" />は拘束条件Cの空間微分になっている(<img src="../eq/physics4.eq23.gif" />)ので，
+        Cの空間微分をJacobianを使って<img src="../eq/physics4.eq24.gif" />と表すと，
         他の拘束条件も含めた一般化した式が得られる．
       </p>
-      <p align="center"><img src="eq/physics4.eq25.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq25.gif" /></p>
       <p>
-        この式は拘束条件を解消するための力は拘束条件Cを空間微分した方向に<img src="eq/physics4.eq26.gif" />倍したものになるということを意味する．
+        この式は拘束条件を解消するための力は拘束条件Cを空間微分した方向に<img src="../eq/physics4.eq26.gif" />倍したものになるということを意味する．
         さて，今，単位時間あたりの仕事量(ワット)を考える．仕事(ジュール)は力と距離をかけたものであり，
-        これを時間あたりで考えると仕事量は力と速度をかけたものになる．拘束点における単位時間あたりの仕事量を<img src="eq/physics4.eq27.gif" />とすると，
+        これを時間あたりで考えると仕事量は力と速度をかけたものになる．拘束点における単位時間あたりの仕事量を<img src="../eq/physics4.eq27.gif" />とすると，
       </p>
-      <p align="center"><img src="eq/physics4.eq28.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq28.gif" /></p>
       <p>
-        いまエネルギー保存の法則により衝突前後では物体のエネルギーは増減しないはずなので<img src="eq/physics4.eq29.gif" />となる．
-        <img src="eq/physics4.eq30.gif" />なので，
+        いまエネルギー保存の法則により衝突前後では物体のエネルギーは増減しないはずなので<img src="../eq/physics4.eq29.gif" />となる．
+        <img src="../eq/physics4.eq30.gif" />なので，
       </p>
-      <p align="center"><img src="eq/physics4.eq31.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq31.gif" /></p>
       <p>
-        これが拘束方程式である．なお，<img src="eq/physics4.eq32.gif" />でもある(上記の<img src="eq/physics4.eq33.gif" />も満たしているということに注意)．
+        これが拘束方程式である．なお，<img src="../eq/physics4.eq32.gif" />でもある(上記の<img src="../eq/physics4.eq33.gif" />も満たしているということに注意)．
         Bulletでは複数の拘束条件が存在した場合にも対応できるソルバとして，
         PGS(Projected Gauss Seidel constraint solver)を用いて，
         上記の拘束方程式を解くことで拘束条件を満足するための力を各剛体に付加している．
@@ -131,7 +131,7 @@
       <a name="soft" id="soft"></a>
       <h2>Soft Constraint</h2>
       <p>
-        拘束条件を厳密に満たすようにするならば，拘束方程式<img src="eq/physics4.eq34.gif" />をそのまま満たすような<img src="eq/physics4.eq16.gif" />を使えばよいが，
+        拘束条件を厳密に満たすようにするならば，拘束方程式<img src="../eq/physics4.eq34.gif" />をそのまま満たすような<img src="../eq/physics4.eq16.gif" />を使えばよいが，
         多くのオブジェクトが存在するシーンではこれは難しい．
         厳密に解こうとすると巨大な行列の逆行列を計算したり，多くの反復計算が必要になる．
         そこで，多くの物理エンジンではある程度のずれを許すことで，
@@ -142,16 +142,16 @@
         Soft Constraintを実現している．
         具体的には，拘束方程式を以下のように書き換える．
       </p>
-      <p align="center"><img src="eq/physics4.eq35.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq35.gif" /></p>
       <p>
-        ここでhはタイムステップ幅である(ODEでの説明に合わせて<img src="eq/physics4.eq36.gif" />ではなくhにしてある)．
-        <img src="eq/physics4.eq37.gif" />を含む項がCFM，<img src="eq/physics4.eq38.gif" />を含む項がERPであり，
-        CFM(<img src="eq/physics4.eq37.gif" />)は先ほどの拘束を満たすための力の大きさ<img src="eq/physics4.eq26.gif" />に対して係数をかけることで柔らかい拘束を実現している．
-        一方，ERP(<img src="eq/physics4.eq38.gif" />)については，拘束条件Cからのずれ(誤差)を修正するような力をかけるためのパラメータである
+        ここでhはタイムステップ幅である(ODEでの説明に合わせて<img src="../eq/physics4.eq36.gif" />ではなくhにしてある)．
+        <img src="../eq/physics4.eq37.gif" />を含む項がCFM，<img src="../eq/physics4.eq38.gif" />を含む項がERPであり，
+        CFM(<img src="../eq/physics4.eq37.gif" />)は先ほどの拘束を満たすための力の大きさ<img src="../eq/physics4.eq26.gif" />に対して係数をかけることで柔らかい拘束を実現している．
+        一方，ERP(<img src="../eq/physics4.eq38.gif" />)については，拘束条件Cからのずれ(誤差)を修正するような力をかけるためのパラメータである
         (誤差(error)を減少させる(reduction))．
-        それぞれ，ばね定数<img src="eq/physics4.eq39.gif" />と減衰係数<img src="eq/physics4.eq40.gif" />を使って，
+        それぞれ，ばね定数<img src="../eq/physics4.eq39.gif" />と減衰係数<img src="../eq/physics4.eq40.gif" />を使って，
       </p>
-      <p align="center"><img src="eq/physics4.eq41.gif" /></p>
+      <p align="center"><img src="../eq/physics4.eq41.gif" /></p>
       <p>
         と表される．この定義はODEのものであるが，Bulletでも同様のものが使われている．
       </p>
@@ -187,7 +187,7 @@ BT_CONSTRAINT_STOP_CFM</pre>
       </p>
       <pre class="code">
 btPoint2PointConstraint *constraint = new btPoint2PointConstraint(*body, pos);
-g_pDynamicsWorld->addConstraint(constraint, true);</pre>
+g_dynamicsworld->addConstraint(constraint, true);</pre>
       <p>
       bodyは拘束条件を追加する剛体(btRigidBody)，posは拘束点(ジョイント)の位置である．
       このようにして拘束条件を追加したら，CleanBullet関数などでConstraintを破棄するのも忘れずに．
@@ -195,9 +195,9 @@ g_pDynamicsWorld->addConstraint(constraint, true);</pre>
       </p>
       <pre class="code">
 // 拘束条件の破棄
-for(int i = g_pDynamicsWorld->getNumConstraints()-1; i>=0 ;i--){
-  btTypedConstraint* constraint = g_pDynamicsWorld->getConstraint(i);
-  g_pDynamicsWorld->removeConstraint(constraint);
+for(int i = g_dynamicsworld->getNumConstraints()-1; i>=0 ;i--){
+  btTypedConstraint* constraint = g_dynamicsworld->getConstraint(i);
+  g_dynamicsworld->removeConstraint(constraint);
   delete constraint;
 }</pre>
       <p>
@@ -213,7 +213,7 @@ for(int i = g_pDynamicsWorld->getNumConstraints()-1; i>=0 ;i--){
       自分で実装する際には参考にしよう．
       </p>
       <p align="center">
-        <img src="fig/constraint_demo.jpg" alt="Constraint Demo" /><br />
+        <img width="480" src="../fig/constraint_demo.jpg" alt="Constraint Demo" /><br />
         Constraintsの実行画面
       </p>
 
@@ -228,16 +228,16 @@ for(int i = g_pDynamicsWorld->getNumConstraints()-1; i>=0 ;i--){
 // body1を空間上にPoint to Point Constraintで固定
 btVector3 pivot0(-HALF_EXTENT, -HALF_EXTENT, -HALF_EXTENT);	// body1の接続点(相対座標)
 btTypedConstraint *joint01 = new btPoint2PointConstraint(*body1, pivot0);
-g_pDynamicsWorld->addConstraint(joint01);
+g_dynamicsworld->addConstraint(joint01);
 
 // body1とbody2をPoint to Point Constraintで接続
 btVector3 pivot1( HALF_EXTENT, HALF_EXTENT, HALF_EXTENT);	// body1の接続点(相対座標)
 btVector3 pivot2(-HALF_EXTENT, HALF_EXTENT, HALF_EXTENT);	// body2の接続点(相対座標)
 btTypedConstraint *joint12 = new btPoint2PointConstraint(*body1, *body2, pivot1, pivot2);
-g_pDynamicsWorld->addConstraint(joint12);</pre>
+g_dynamicsworld->addConstraint(joint12);</pre>
       </p>
       <p align="center">
-        <img src="fig/constraint_point2point.jpg" alt="2 Rigid Bodies with btPoint2PointConstraint" /><br />
+        <img src="../fig/constraint_point2point.jpg" alt="2 Rigid Bodies with btPoint2PointConstraint" /><br />
         2つの剛体にPoint to Point Constraintを設定した例<br />
       </p>
     </div>
@@ -255,10 +255,11 @@ g_pDynamicsWorld->addConstraint(joint12);</pre>
 joint12->enableFeedback(true);
 btJointFeedback *feedback = new btJointFeedback();
 joint12->setJointFeedback(feedback);
-g_pConstraint = joint12;</pre>
+g_constraint = joint12;</pre>
       <p>
         ここでjoint12は練習問題1で設定したConstraintであり，
-        g_pConstraintは他の関数でこのConstraintの情報を得るために定義したbtTypedConstraint*型のグローバル変数である．
+        g_constraintは他の関数でこのConstraintの情報を得るために定義したbtTypedConstraint*型のグローバル変数である
+        (main.cppの最初の方で定義しておこう)．
       </p>
       <p>
         これでConstraintにかかる力の取得のための準備ができたので，あとはTimer関数などで，
@@ -266,8 +267,8 @@ g_pConstraint = joint12;</pre>
         力の取得のコード例を以下に示す．
       </p>
       <pre class = "code">
-if(g_pConstraint){
-    btJointFeedback *f = g_pConstraint->getJointFeedback();
+if(g_constraint){
+    btJointFeedback *f = g_constraint->getJointFeedback();
     // Constraintを構成する2つのオブジェクトにそれぞれConstraintから働いている力を取得する
     btVector3 force1 = f->m_appliedForceBodyA;
     btVector3 force2 = f->m_appliedForceBodyB;
@@ -520,7 +521,7 @@ if(button == GLUT_LEFT_BUTTON){
               クリック位置ベクトルの取得にはGetRayTo関数を用いる．
               <pre class = "code">
 double ray_to[3];
-g_tbView.GetRayTo(x, y, RX_FOV, ray_to);</pre>
+g_view.GetRayTo(x, y, RX_FOV, ray_to);</pre>
               (もしもGetRayTo関数がないというエラーが出たら<a href="../sample/iml_physics_2.zip">サンプルプログラム2</a>をもう一度ダウンロードして，
               その中のrx_trackball.hとrx_trackball.cppを更新)．
               <br />
@@ -533,7 +534,7 @@ g_tbView.GetRayTo(x, y, RX_FOV, ray_to);</pre>
               この関数は以下のようにして用いる．
               <pre class = "code">
 btCollisionWorld::ClosestRayResultCallback ray_callback(ray_from, ray_to);
-g_pDynamicsWorld->rayTest(ray_from, ray_to, ray_callback);</pre>
+g_dynamicsworld->rayTest(ray_from, ray_to, ray_callback);</pre>
               ここでray_fromとray_toはそれぞれ光線の原点とターゲット位置(btVector3)である．
               衝突が検出されたかどうかは，ClosestRayResultCallbackクラスのhasHitメンバ関数で確かめることができる．
               また，m_collisionObjectメンバ変数(publicメンバ変数)に衝突オブジェクト(btCollisionObject)，
@@ -568,14 +569,14 @@ body->setActivationState(DISABLE_DEACTIVATION);</pre>
               衝突点ローカル座標を求めたら，その点をpivotInAとして1つのオブジェクトを空間中に拘束するようにbtPoint2PointConstraintを追加する
               (6DOF Constraintでもよい)．
               <pre class = "code">
-if(g_pPickConstraint){
-    g_pDynamicsWorld->removeConstraint(g_pPickConstraint);
-    delete g_pPickConstraint;
+if(g_pickconstraint){
+    g_dynamicsworld->removeConstraint(g_pickconstraint);
+    delete g_pickconstraint;
 }
-g_pPickConstraint = new btPoint2PointConstraint(*body, local_pos);
-g_pDynamicsWorld->addConstraint(g_pPickConstraint, true);</pre>
+g_pickconstraint = new btPoint2PointConstraint(*body, local_pos);
+g_dynamicsworld->addConstraint(g_pickconstraint, true);</pre>
               あとでMotion関数でも用いるのでConstraintは
-              btPoint2PointConstraint*型のグローバル変数g_pPickConstraintに格納してある．
+              btPoint2PointConstraint*型のグローバル変数g_pickconstraintに格納してある．
               <br /><br />
             </li>
             <li><a name="task2" id="task2"></a>
@@ -586,20 +587,20 @@ g_pDynamicsWorld->addConstraint(g_pPickConstraint, true);</pre>
               この場合，視点と最初の衝突点の間の距離が常に保たれるようにすればよい．
               Mouse関数内で衝突が検出されたときに
               <pre class = "code">
-g_fPickDist = (picked_pos-ray_from).length();</pre>
-              のようにして衝突点までの距離を保存しておく．g_fPickDistは衝突点までの距離を保存するグローバル変数である．
+g_pickdist = (picked_pos-ray_from).length();</pre>
+              のようにして衝突点までの距離を保存しておく．g_pickdistは衝突点までの距離を保存するグローバル変数である．
               そして，マウスドラッグ時の処理を行うMotion関数内でray_fromとray_toを前と同じ手順で求めた後，
               <pre class = "code">
 btVector3 dir = ray_to-ray_from;
 dir.normalize();
-btVector3 new_pivot = ray_from+dir*g_fPickDist;</pre>
+btVector3 new_pivot = ray_from+dir*g_pickdist;</pre>
               とすると新しいジョイント位置(ワールド座標)が求まる．
               ジョイントは2つのオブジェクトを接続するものであるが，
               今回は1つのオブジェクト(pivotInA)とワールド座標(pivotInB)を接続しているので，
               btPoint2PointConstraintのsetPivotBメンバ関数を使ってnew_pivotを直接指定してやればよい(ローカル座標への変換は必要ない)．
             </li>
             <li>
-              最後にマウスボタンを放したときに設定していた拘束条件を破棄する．このとき，g_pPickConstraint = 0と再初期化することを忘れないように．
+              最後にマウスボタンを放したときに設定していた拘束条件を破棄する．このとき，g_pickconstraint = 0と再初期化することを忘れないように．
             </li>
           </ol>
           これらの手順によりマウスによる物体の選択，移動が可能となる．
@@ -608,7 +609,7 @@ btVector3 new_pivot = ray_from+dir*g_fPickDist;</pre>
           m_setting.m_tauを使うか，6DOF Constraintを使ってみるとよい)．
       </p>
       <p align="center">
-        <img src="fig/mouse_pick_cube.jpg" alt="Mouse Pick" /><br />
+        <img src="../fig/mouse_pick_cube.jpg" alt="Mouse Pick" /><br />
         マウスによるオブジェクト選択，移動<br />
       </p>
   </div>-->
@@ -662,7 +663,7 @@ joint1->->setMotorTargetVelocity(btRadians(g_fTargetVelocity));</pre>
           </ul>
       </p>
       <p align="center">
-        <img src="fig/constraint_vehicle1.jpg" alt="Vehicle1" /><br />
+        <img src="../fig/constraint_vehicle1.jpg" alt="Vehicle1" /><br />
         4つの車輪を持つ車の例1<br />
       </p>
     </div>
@@ -737,7 +738,7 @@ g_pSteerMotorL->m_targetVelocity = gain*(btRadians(g_fTargetSteerAngle)-g_pJoint
           </ul>
       </p>
       <p align="center">
-        <img src="fig/constraint_vehicle.jpg" alt="Vehicle" /><br />
+        <img src="../fig/constraint_vehicle.jpg" alt="Vehicle" /><br />
         4つの車輪を持つ車の例2<br />
       </p>
     </div>
@@ -750,9 +751,9 @@ g_pSteerMotorL->m_targetVelocity = gain*(btRadians(g_fTargetSteerAngle)-g_pJoint
         試してみるとよい．また，間接の可動角度を変更してみるとどうなるのかも試してみよう．
       </p>
       <p align="center">
-        <img src="fig/ragdoll000.jpg" alt="Ragdoll1" height="220px" />　
-        <img src="fig/ragdoll001.jpg" alt="Ragdoll2" height="220px" />　
-        <img src="fig/ragdoll002.jpg" alt="Ragdoll3" height="220px" /><br />
+        <img src="../fig/ragdoll000.jpg" alt="Ragdoll1" height="220px" />　
+        <img src="../fig/ragdoll001.jpg" alt="Ragdoll2" height="220px" />　
+        <img src="../fig/ragdoll002.jpg" alt="Ragdoll3" height="220px" /><br />
         5関節のラグドールの例<br />
       </p>
     </div>
