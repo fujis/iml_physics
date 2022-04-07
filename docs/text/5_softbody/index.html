@@ -94,9 +94,9 @@
       <strong>ライブラリの準備</strong><br />
       btSoftBodyを扱うためにはインクルード，ライブラリファイルを追加する必要がある．
       Bulletを最低限動かすのに必要なのは， BulletCollision, BulletDynamics, LinearMathの3つであると
-      <a href="2_bullet.html">以前</a>に説明した．
+      <a href="../2_bullet/">以前</a>に説明した．
       剛体だけの場合には必要ないのだが，btSoftBodyを使う場合にはもう一つ，BulletSoftBodyを追加する．
-      ビルドしていない人は<a href="2_bullet.html">Bulletのビルド方法</a>を再度参照して，
+      ビルドしていない人は<a href="../2_bullet/">Bulletのビルド方法</a>を再度参照して，
       BulletSoftBodyをビルドしよう．shared/libにBulletSoftBody_*.libがすでにある場合はビルドする必要は無い．
     </p>
     <p>
@@ -611,59 +611,7 @@ sphere-&#x3e;m_cfg.collisions |= btSoftBody::fCollision::VF_SS;</pre>
         上記の実装を実際にやってみよう．また，kVCの値や全体の質量，密度(setTotalDensity関数で設定)を変えて試してみよう．
       </p>
     </div>
-    <!--<div class="task">
-      <h4>練習問題2</h4>
-      <p>
-        <a href="4_constraint.html#task">拘束条件のページ</a>の練習問題で行ったマウスピックはまだbtSoftBodyには対応していない．
-        以下の修正を行ってbtSoftBodyにも対応させてみよう．<br />
-        まず，光線と衝突した剛体が static or kinematicでないかを判断していたif文のところを以下のように書き換える．
-      </p>
-      <pre class="code">
-if(body && !(body-&#x3e;isStaticObject() || body->isKinematicObject())){
-    // 元々の剛体に対するマウスピック処理
-}
-else{
-    // ここにbtSoftBodyに対する処理を追加する
-}</pre>
-      <p>
-        if文の最初に条件を追加して，剛体かどうかを判別している(Soft Bodyならbody==0となる)．<br />
-        剛体でなかった場合はbtSoftBodyに変換して，再度光線との衝突判定を行い，もっとも衝突点に近いノードを検索する．
-      </p>
-      <pre class="code">
-// btSoftBodyへのキャスト
-btSoftBody* body = const_cast&#x3c;btSoftBody*&#x3e;(btSoftBody::upcast(obj));
-btSoftBody::sRayCast res;
 
-// btSoftBodyとの衝突判定
-body-&#x3e;rayTest(ray_from, ray_to, res);
-if(res.fraction &#x3c; 1.0){// ray_fromからray_toの間に衝突点があった場合
-    btVector3 intersect = ray_from+(ray_to-ray_from)*res.fraction; // 衝突点座標
-    if(res.feature == btSoftBody::eFeature::Face){ // 面の場合(四面体メッシュを使った場合はTetra)
-        btSoftBody::Face& face = res.body-&#x3e;m_faces[res.index]; // 衝突のあった面
-
-        // 面を構成するノード(頂点)から衝突点に最も近いノードを探索
-        btSoftBody::Node* node = face.m_n[0];
-        for(int i = 1; i &#x3c; 3; ++i){
-            if((node-&#x3e;m_x-intersect).length2() > (face.m_n[i]->m_x-intersect).length2()){
-                node = face.m_n[i];
-            }
-        }
-        g_pPickNode = node; // マウスピックされたノードをグローバル変数に確保しておく
-        g_fPickDist = (g_pPickNode-&#x3e;m_x - ray_from).length(); // 衝突点までの距離
-    }
-}</pre>
-      <p>
-        注意として，g_pPickNodeは0で初期化しておき，マウスボタンを放したとき(GLUT_UP)にもg_pPickNode=0としておくこと．<br />
-        最後にMotion関数でマウスドラッグ時に選択されたノードに力を加える．
-        衝突点までの距離(g_fPickDist)から新しい頂点座標値を求める方法は<a href="4_constraint.html#task2">以前</a>と同じなので省略する．
-        新しい頂点位置(目標座標)が計算できたら，現在の位置から目標座標へ向かうベクトル方向の力をノードに加える．
-      </p>
-      <pre class="code">
-if(g_pPickNode){
-    g_pPickNode-&#x3e;m_f += (new_pivot-g_pPickNode->m_x)*10.0;
-}</pre>
-      </p>
-  </div>-->
     <p></br /></p>
     <p>
       <strong>3Dモデルの設定</strong><br />

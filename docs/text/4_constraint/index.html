@@ -313,6 +313,10 @@ btPoint2PointConstraint(
       <p>
         この場合のpivotInAもオブジェクト(rbA)のローカル座標における点の座標値を用いることに注意．
       </p>
+      <p>
+        なお，実験のサンプルプログラム(btcube)のマウスドラッグによる物体移動でもbtPoint2PointConstraintを用いている．
+        そちらについて詳しく知りたい場合は，<a href="../mousepick/">こちらのページ</a>を参照してほしい．
+      </p>
 
 
       <strong>Hinge Constraint</strong><br />
@@ -492,127 +496,6 @@ btContactConstraint(
 
 
 
-<!--    <div class="task">
-      <h4>練習問題2</h4>
-      <p>
-          Bulletのデモではマウスドラッグで剛体をつかんで動かすような動作ができるようになっている．
-          これはデモ用のプログラム内部で，(1)マウスクリックした点との交差判定(光線(Ray)と剛体の衝突判定)，
-          (2)交差点にConstraintを設定，を行うことで実現している．
-          以下の手順を順番に実装していき，マウスによる選択，移動を実装してみよう．
-          <ol class="brackets">
-            <li>
-              Mouse関数に処理を追加し，クリックしたときに視点座標とクリックした位置ベクトルを取得できるようにする．
-              まず，サンプルプログラムでは左ドラッグで視点移動になっているので(if(button == GLUT_LEFT_BUTTON)のところ)，
-              そこを例えば以下のように変更する．
-              <pre class = "code">
-if(button == GLUT_LEFT_BUTTON){
-    if(mod == GLUT_ACTIVE_SHIFT){
-        if(state == GLUT_DOWN){
-            // 視点，クリック位置の取得処理をここに記述
-        }
-    }
-    else{
-        // 元々あった視点移動の処理をここに移動
-    }
-}</pre>
-              ここではShiftキーを押しながらクリックしたときに処理をするようにした(GLUT_ACTIVE_SHIFT)が，
-              別の修飾キー(AltやCtrl)でもよい．<br />
-              視点座標の取得方法は<a href="3_collision.html#task">衝突判定の説明ページの課題6</a>と同じ．
-              クリック位置ベクトルの取得にはGetRayTo関数を用いる．
-              <pre class = "code">
-double ray_to[3];
-g_view.GetRayTo(x, y, RX_FOV, ray_to);</pre>
-              (もしもGetRayTo関数がないというエラーが出たら<a href="../sample/iml_physics_2.zip">サンプルプログラム2</a>をもう一度ダウンロードして，
-              その中のrx_trackball.hとrx_trackball.cppを更新)．
-              <br />
-              得られた視点座標，クリック位置ベクトルはbtVector3型の変数に代入しておこう．
-              視点座標が光線の原点，クリックした位置が光線のターゲット位置(光線方向=ターゲット位置-原点)となる．
-              <br /><br />
-            </li>
-            <li>
-              BulletワールドのrayTest関数を用いるとこちらが指定した光線とワールド内のオブジェクトとの衝突判定を行ってくれる．
-              この関数は以下のようにして用いる．
-              <pre class = "code">
-btCollisionWorld::ClosestRayResultCallback ray_callback(ray_from, ray_to);
-g_dynamicsworld->rayTest(ray_from, ray_to, ray_callback);</pre>
-              ここでray_fromとray_toはそれぞれ光線の原点とターゲット位置(btVector3)である．
-              衝突が検出されたかどうかは，ClosestRayResultCallbackクラスのhasHitメンバ関数で確かめることができる．
-              また，m_collisionObjectメンバ変数(publicメンバ変数)に衝突オブジェクト(btCollisionObject)，
-              m_hitPointWorldメンバ変数に衝突点(btVector3)がそれぞれ格納されている．
-              さらに衝突オブジェクトが床などのstatic rigidbodyやkinematic rigidbodyの場合は動かす必要は無いので，
-              btRigidBodyのisStaticObjectメンバ関数やisKinematicObjectメンバ関数を使って除外するようにする．
-              これらの処理を行うコードを以下に示す．
-              <pre class = "code">
-if(ray_callback.hasHit()){
-    // 光線と衝突した剛体
-    const btCollisionObject* obj = ray_callback.m_collisionObject;
-    btRigidBody* body = const_cast&#x3c;btRigidBody*&#x3e;(btRigidBody::upcast(obj));
-
-    // 衝突点座標(ジョイントになる位置座標)
-    btVector3 picked_pos = ray_callback.m_hitPointWorld;
-
-    if(!(body->isStaticObject() || body->isKinematicObject())){
-        // ここに拘束条件を追加するコードを記述する
-    }
-}</pre>
-              実際に選択したオブジェクトとマウスクリックした位置を取得してみよう．
-              <br /><br />
-            </li>
-            <li>
-              光線との衝突点座標をジョイントとして"Point to Point Constraint"(btPoint2PointConstraint)を設定する．
-              設定するためにはまず，以下のようにして衝突点の剛体ローカル座標における位置を求める必要がある．
-              <pre class = "code">
-btVector3 local_pos = body->getCenterOfMassTransform().inverse()*picked_pos;
-body->setActivationState(DISABLE_DEACTIVATION);</pre>
-              2行目は前回勉強した静止状態(getActivationStateで状態を取得)にしないようにピックしたオブジェクトを設定している．
-              これは静止状態(Deactivate)では拘束条件がうまく働かないことがあるためである．<br />
-              衝突点ローカル座標を求めたら，その点をpivotInAとして1つのオブジェクトを空間中に拘束するようにbtPoint2PointConstraintを追加する
-              (6DOF Constraintでもよい)．
-              <pre class = "code">
-if(g_pickconstraint){
-    g_dynamicsworld->removeConstraint(g_pickconstraint);
-    delete g_pickconstraint;
-}
-g_pickconstraint = new btPoint2PointConstraint(*body, local_pos);
-g_dynamicsworld->addConstraint(g_pickconstraint, true);</pre>
-              あとでMotion関数でも用いるのでConstraintは
-              btPoint2PointConstraint*型のグローバル変数g_pickconstraintに格納してある．
-              <br /><br />
-            </li>
-            <li><a name="task2" id="task2"></a>
-              マウスをドラッグしたときにジョイントの位置を変更する．
-              まず，クリックしたときと同様にして光線の情報(ray_fromとray_toとする)を計算する．
-              マウスの動きは2次元であるのでこれを3次元空間での動きに変換しなければならない．
-              ここでは視点を中心とした球状に動かすとする．
-              この場合，視点と最初の衝突点の間の距離が常に保たれるようにすればよい．
-              Mouse関数内で衝突が検出されたときに
-              <pre class = "code">
-g_pickdist = (picked_pos-ray_from).length();</pre>
-              のようにして衝突点までの距離を保存しておく．g_pickdistは衝突点までの距離を保存するグローバル変数である．
-              そして，マウスドラッグ時の処理を行うMotion関数内でray_fromとray_toを前と同じ手順で求めた後，
-              <pre class = "code">
-btVector3 dir = ray_to-ray_from;
-dir.normalize();
-btVector3 new_pivot = ray_from+dir*g_pickdist;</pre>
-              とすると新しいジョイント位置(ワールド座標)が求まる．
-              ジョイントは2つのオブジェクトを接続するものであるが，
-              今回は1つのオブジェクト(pivotInA)とワールド座標(pivotInB)を接続しているので，
-              btPoint2PointConstraintのsetPivotBメンバ関数を使ってnew_pivotを直接指定してやればよい(ローカル座標への変換は必要ない)．
-            </li>
-            <li>
-              最後にマウスボタンを放したときに設定していた拘束条件を破棄する．このとき，g_pickconstraint = 0と再初期化することを忘れないように．
-            </li>
-          </ol>
-          これらの手順によりマウスによる物体の選択，移動が可能となる．
-          また，Soft Constraintを使うとバネで引っ張るような効果も可能なので試してみよう
-          (ただし，btPoint2PointConstraintにsetParamでCFMやERPを設定するとうまくいかないことがあるので，
-          m_setting.m_tauを使うか，6DOF Constraintを使ってみるとよい)．
-      </p>
-      <p align="center">
-        <img src="../fig/mouse_pick_cube.jpg" alt="Mouse Pick" /><br />
-        マウスによるオブジェクト選択，移動<br />
-      </p>
-  </div>-->
 
     <div class="task">
       <a name="task_car" id="task_car"></a>
@@ -630,7 +513,7 @@ btVector3 new_pivot = ray_from+dir*g_pickdist;</pre>
             </li>
             <li>
               矢印キーをGLUTで扱う場合は，glutSpecialFuncでKeyboard関数とは別の特殊キー用関数を設定する必要がある
-              (<a href="3_collision.html#kadai35">衝突判定の課題3.5</a>ですでに追加済みの場合はSpecialKey関数の中身を下記のように変更するだけでよい)．
+              (<a href="../3_collision/index.html#kadai35">衝突判定の課題3.5</a>ですでに追加済みの場合はSpecialKey関数の中身を下記のように変更するだけでよい)．
               例えば，SpecialKeyという名前の関数を定義し，
               <pre class = "code">
 void SpecialKey(int key, int x, int y)
@@ -729,11 +612,11 @@ g_pSteerMotorL->m_targetVelocity = gain*(btRadians(g_fTargetSteerAngle)-g_pJoint
             </li>
             <li>
               前輪を左右に傾けたとき，車体と接していると衝突判定が働き，うまく回らないことがある．
-              この場合は，<a href="3_collision.html#task">衝突判定のページの課題</a>でもやった衝突フィルタリングを用いて，
+              この場合は，<a href="../3_collision/index.html#task">衝突判定のページの課題</a>でもやった衝突フィルタリングを用いて，
               車体と車輪の間の衝突判定を行わないようにすればよい．
             </li>
             <li>
-              レースゲームのように車の後ろに視点を追従させたい場合は<a href="viewpoint.html">このページ</a>を参考にしてほしい．
+              レースゲームのように車の後ろに視点を追従させたい場合は<a href="../viewpoint/">このページ</a>を参考にしてほしい．
             </li>
           </ul>
       </p>
