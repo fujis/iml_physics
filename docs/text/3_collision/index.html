@@ -44,7 +44,7 @@
       を行う．
       物体同士が衝突すると作用・反作用の法則により，衝突位置・姿勢，速度に応じた反力が発生する．
       この反力を計算し，衝突後の位置，速度を計算するのが衝突応答処理である．
-      このページでは衝突検出(or 衝突判定)処理について説明する(衝突応答については<a href="3_collision2.html">こちら</a>を参照)．
+      このページでは衝突検出(or 衝突判定)処理について説明する(衝突応答については<a href="../3_collision2/">こちら</a>を参照)．
     </p>
 
 
@@ -105,7 +105,7 @@
     <div class="task">
       <h4>練習問題1</h4>
       <p>
-        <a href="../sample/iml_physics_2.zip">サンプルプログラム2</a>をダウンロードして，
+        <a href="https://github.com/fujis/iml_physics/blob/master/zip/btcube.zip">サンプルプログラム2</a>をダウンロードして，
         解凍したできたフォルダbtcubeをsrcフォルダに置いて，プログラムをビルド，実行してみよう．
         また，ソースコードを見て中身を理解しておこう．
         なお，サンプルプログラムでは，マウスの左ドラッグで視点を原点中心で回転，Shift+左ドラッグで視点の平行移動，
@@ -129,7 +129,7 @@
       <p>
         用いるキーを変えて立方体だけでなく球や円筒形状も追加できるようにしてみよう．
         また，物体が落下する途中に固定された立方体を追加できるようにしてみよ．<br />
-        (ヒント) 固定されたオブジェクトを追加するには，<a href="2_bullet.html">前回の資料</a>で勉強したKinematic rigidbodyかStatic rigidbodyとして登録すればよい．
+        (ヒント) 固定されたオブジェクトを追加するには，<a href="../2_bullet/">前回の資料</a>で勉強したKinematic rigidbodyかStatic rigidbodyとして登録すればよい．
         Kinematicの場合はCreateRigidBody関数で登録するときに質量を0に設定すればよい．
       </p>
       <a name="kadai35" id="kadai35"></a>
@@ -367,7 +367,7 @@ g_dynamicsworld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, co
     <p>
       衝突の可能性がペアが分かったら後は実際のオブジェクト同士で衝突判定を行えばよい．
       衝突判定にはその形状ペア(球と球，球とボックス，三角形ポリゴンと三角形ポリゴンなど)により様々なアルゴリズムがある
-      (例えば<a href="gjk.html">GJKアルゴリズム</a>)．
+      (例えば<a href="../gjk/">GJKアルゴリズム</a>)．
       Bulletでは衝突ディスパッチャというものが各ペアに対して，オブジェクトの種類に応じて衝突アルゴリズムを決定する．
       前回のプログラムのInitBullet関数で，
     </p>
@@ -464,7 +464,7 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
     </p>
     <p>
       これを解決するためにBulletでは，CCD(Continuous Collision Detection)という方法が採用されている．
-      <a href="1_basis.html">最初の回</a>で説明したとおり，
+      <a href="../1_basis/">最初の回</a>で説明したとおり，
       タイムステップ間の物体の動きは直線運動で近似される．
       あるタイムステップにおける位置から次のタイムステップへの位置へと物体形状をスイープさせると，
       ちょうどその物体が通った軌跡が立体形状で表される．スイープされた形状と衝突検出すれば，
