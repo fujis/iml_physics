@@ -7,7 +7,7 @@
     - [VS2019で "RuntimeLibrary" の不一致が検出されました とエラーが出る](#vs2019で-runtimelibrary-の不一致が検出されました-とエラーが出る)
     - [[mac] xcodeでのlibファイル生成場所？](#mac-xcodeでのlibファイル生成場所？)
     - [[mac] shared\incへコピーするファイルについて](#mac-sharedincへコピーするファイルについて)
-    - [VS2017で include ファイルを開けません。 などのエラーが多発する](#vs2017で-include-ファイルを開けません。-などのエラーが多発する)
+    - [VS2017で include ファイルを開けません。 などのエラーが多発する](#vs2017で-include-ファイルを開けません-などのエラーが多発する)
     - [btQuaternionのメンバーではありませんというエラーが出る](#btquaternionのメンバーではありませんというエラーが出る)
     - [[mac] ld: library not found for -lBulletDynamics というエラーが出る](#mac-ld-library-not-found-for--lbulletdynamics-というエラーが出る)
     - [[mac] xcodeでThread 1: signal SIGABRTというエラーが出る](#mac-xcodeでthread-1-signal-sigabrtというエラーが出る)
