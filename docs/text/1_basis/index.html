@@ -215,9 +215,28 @@
           </li>
         </ol>
       </p>
-      <p class="supplement">
-        mac環境の場合は付属のreadme.md参照(g++用のMakefileを同封している)．
-      </p>
+        <details  class="supplement">
+          <summary>Makefileとg++を用いたMac環境でのビルド方法についてはここをクリック</summary>
+
+          <ol>
+            <li>パッケージマネージャ Homebrew をインストール(参考:<a href="https://qiita.com/zaburo/items/29fe23c1ceb6056109fd">https://qiita.com/zaburo/items/29fe23c1ceb6056109fd</a> )</li>
+            <li>ターミナルからHomebrewで必要なパッケージをインストール<br />
+              <pre class="prompt">$ brew install glfw
+$ brew install glew</pre>
+            </li>
+            <li>
+              ターミナルでMakefileがあるフォルダに移動し，
+              <pre class="prompt">$ make</pre>
+              でビルド(ビルド済みのファイルを削除してリセットする場合は`$ make clean`)
+            </li>
+            <li>
+              ビルドに成功したら(特にエラーメッセージが出なければ)，              
+              <pre class="prompt">$ make run</pre>
+              で実行
+            </li>
+          </ol>
+          <p>1,2の手順はそれぞれインストール済みならばスキップしても良い(2回目以降のビルドにおいても)．</p>
+        </details>        
       <p class="supplement">
         全学計算機システムのリモートデスクトップ環境で実行している場合など，3のビルドにおいて，Windows SDKのバージョン違いによって，
         「ソースファイルを開けません～」というエラーがたくさん出るかもしれない．
