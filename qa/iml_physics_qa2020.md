@@ -5,7 +5,7 @@
     - [VS2017で"～が開けません"というエラーが大量に出る](#vs2017でが開けませんというエラーが大量に出る)
     - [quaternionの式におけるθはradianですか?](#quaternionの式におけるθはradianですか)
     - [VS2019で "RuntimeLibrary" の不一致が検出されました とエラーが出る](#vs2019で-runtimelibrary-の不一致が検出されました-とエラーが出る)
-    - [[mac] xcodeでのlibファイル生成場所？](#mac-xcodeでのlibファイル生成場所？)
+    - [[mac] xcodeでのlibファイル生成場所？](#mac-xcodeでのlibファイル生成場所)
     - [[mac] shared\incへコピーするファイルについて](#mac-sharedincへコピーするファイルについて)
     - [VS2017で include ファイルを開けません。 などのエラーが多発する](#vs2017で-include-ファイルを開けません-などのエラーが多発する)
     - [btQuaternionのメンバーではありませんというエラーが出る](#btquaternionのメンバーではありませんというエラーが出る)
