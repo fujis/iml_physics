@@ -2,7 +2,7 @@
     - [[mac] cmakeで*.xcodeprojが生成されない](#mac-cmakeでxcodeprojが生成されない)
     - [[mac] ”argument value 10880 is outside the valid range [0, 255]&quot;というエラーが出る](#mac-”argument-value-10880-is-outside-the-valid-range-0-255quotというエラーが出る)
     - [[mac] mac環境でサンプルプログラムの日本語コメントが文字化けする](#mac-mac環境でサンプルプログラムの日本語コメントが文字化けする)
-    - [VS2017で"～が開けません"というエラーが大量に出る](#vs2017で～が開けませんというエラーが大量に出る)
+    - [VS2017で"～が開けません"というエラーが大量に出る](#vs2017でが開けませんというエラーが大量に出る)
     - [quaternionの式におけるθはradianですか?](#quaternionの式におけるθはradianですか)
     - [VS2019で "RuntimeLibrary" の不一致が検出されました とエラーが出る](#vs2019で-runtimelibrary-の不一致が検出されました-とエラーが出る)
     - [[mac] xcodeでのlibファイル生成場所？](#mac-xcodeでのlibファイル生成場所？)
