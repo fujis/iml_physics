@@ -1,5 +1,5 @@
 # iml_physics
-筑波大学情報学群情報目ディ創成学類の授業「情報メディア実験A」の
+筑波大学情報学群情報メディア創成学類の授業「情報メディア実験A」の
 実験テーマ「物理エンジンを用いたアプリケーション開発」の
 受講生向け説明ページ(HTML)，過去のQ&A，サンプルコードのためのGitリポジトリです．
 This is a git repository for lecture : information media laboratory - development of application based on physics engine. 
@@ -13,6 +13,18 @@ It is including htmls for explanation of the experiments, Q&A in past years and 
 - sample : 実験で用いるサンプルソースです．これをベースに課題に応じてコードを追加/修正していく形になります．
 - zip : サンプルソースをzipで固めたものです．中身はsampleフォルダと同じですが，実験の進行に合わせて2つのzipファイルに分かれています．
 
+
+## 実験におけるTIPS
+### MacでTeamsの画面共有を使うには？
+Macの「環境設定」の「セキュリティとプライバシー」で
+「画面収録」についてMicrosoft Teamsを許可してください
+(Teamsで一度画面共有を試みないと一覧にTeamsがでないかも)．
+- 参考 : [MacOSでTeamsに画面収録の許可を出せず画面共有できない](https://answers.microsoft.com/ja-jp/msteams/forum/msteams_other-msteams_topother/macos%E3%81%A7teams%E3%81%AB%E7%94%BB%E9%9D%A2/eac9e6f8-b194-4b25-ba4c-2731bda72ce1)
+
+### 自分のPCにVisual Studioをインストールするには？
+無償版のVisual Studio Communityで実験用サンプルコードが動作することは確認してあります．
+pptフォルダに[「Visual Studio Community インストール方法」](https://github.com/fujis/iml_physics/blob/master/ppt/Visual%20Studio%20Community%20%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95.pdf)というPDFを用意してあるので，
+そちらを参考にしてください．
 
 
 
