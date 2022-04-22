@@ -358,7 +358,6 @@ int main(int argc, char *argv[])
 	ImGui_ImplOpenGL2_Init();
 
 	// Settings for timer to display FPS on ImGUI window
-	float dt = g_dt;	// 1.0/FPS
 	float cur_time = 0.0f, last_time = 0.0f, elapsed_time = 0.0f;
 	glfwSetTime(0.0);	// Initialize the glfw timer
 
@@ -374,7 +373,7 @@ int main(int argc, char *argv[])
 		// Timer
 		cur_time = glfwGetTime();
 		elapsed_time = cur_time-last_time;
-		if(elapsed_time >= dt){
+		if(elapsed_time >= g_dt){
 			Timer();
 			last_time = glfwGetTime();
 		}
