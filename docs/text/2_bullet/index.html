@@ -544,10 +544,11 @@ glPopMatrix();</pre>
       <p>
         bt***Shapeを様々に変えてボールの形状を変更してみよう．どのような形状があるのかはBullet User Manualの第4章を参照．<br />
         ただし，bulletに登録した形状を変えたらそれに合わせて描画の方も変更する必要がある．
-        例えばbtBoxShapeを使った場合は，2で示したようにglutSolidCubeを使う．
+        例えばbtBoxShapeを使った場合は，2で示したようにDrawCubeVBOを使う．
         また，この場合，球形状と異なり回転に関する情報も取得する必要があるので，
         <a href="../1_basis/">前回のページ</a>の回転に関する課題1でも用いたglMultMatrixfに姿勢行列を渡すことで回転を描画に反映させる．
-        BulletはOpenGLと親和性が高く，OpenGLの変換行列を出力する関数が用意されている．例えば，btBoxShapeクラスのオブジェクトとしてg_pBoxBodyを定義したとすると，
+        BulletはOpenGLと親和性が高く，OpenGLの変換行列を出力する関数が用意されている．
+        例えば，btBoxShapeクラスのオブジェクトとしてg_pBoxBodyを定義したとすると，
         <pre class="code">
 GLfloat m[16];
 btDefaultMotionState *motion = static_cast&#x3c;btDefaultMotionState*&#x3e;(g_pBoxBody->getMotionState());
@@ -555,6 +556,13 @@ motion->m_graphicsWorldTrans.getOpenGLMatrix(m);</pre>
         とするとglMultMatrixfに渡すための行列m[16]が取得できる．なおこの行列には平行移動成分も含まれているので，
         中心座標を取得してglTranslatefで移動させていた部分は必要なくなる．
       </p>
+      <p class="supplement">
+        DrawCubeVBO関数の他にも，円筒形状を描画するDrawCylinderVBO関数(半径0.5(直径1)/長さ1/中心軸はz軸)，
+        円錐形状を描画するDrawConeVBO関数(底面半径0.5(直径1)/高さ1/中心軸はz軸)，
+        円筒の両端面に半球がついたカプセル形状を描画するDrawCapsuleVBO関数(こちらは半径と長さを引数で指定する/中心軸はz軸)，
+        平面を描画するDrawPlaneVBO関数(法線ベクトル(0,1,0)/y方向の高さ及び大きさは引数で指定)，
+        などを用意してあるので有効活用してほしい．
+      </p>      
       <h4>練習問題5</h4>
       <p>
         球体以外の形状にしたら，初期トルクをbtRigidBody::applyTorqueImpulse関数を使って与えてみよう．
