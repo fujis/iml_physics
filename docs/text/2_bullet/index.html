@@ -360,7 +360,7 @@ void InitBullet(void)
     g_dynamicsworld->setGravity(btVector3(0, -9.8, 0));
 
     // 球体形状を設定
-    btCollisionShape *sphere_shape = new btSphereShape(g_fRad);
+    btCollisionShape *sphere_shape = new btSphereShape(g_ballrad);
 
     // 球体の初期位置・姿勢
     btQuaternion qrot(0, 0, 0, 1);
