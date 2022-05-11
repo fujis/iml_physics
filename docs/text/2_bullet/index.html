@@ -554,11 +554,18 @@ glPopMatrix();</pre>
         例えば，btBoxShapeクラスのオブジェクトとしてg_pBoxBodyを定義したとすると，
       </p>
       <pre class="code">
-GLfloat m[16];
-btDefaultMotionState *motion = static_cast&#x3c;btDefaultMotionState*&#x3e;(g_pBoxBody->getMotionState());
-motion->m_graphicsWorldTrans.getOpenGLMatrix(m);</pre>
+    btScalar m[16];
+    btDefaultMotionState *motion = static_cast&#x3c;btDefaultMotionState*&#x3e;(g_pBoxBody->getMotionState());
+    motion->m_graphicsWorldTrans.getOpenGLMatrix(m);
+#ifdef BT_USE_DOUBLE_PRECISION
+		glMultMatrixd(m);
+#else
+		glMultMatrixf(m);
+#endif
+</pre>
       <p>
-        とするとglMultMatrixfに渡すための行列m[16]が取得できる．なおこの行列には平行移動成分も含まれているので，
+        とすると変換行列m[16]が取得でき，glMultMatrix*に渡すことで姿勢や位置変化を描画に反映することができる．
+        なお行列mには平行移動成分も含まれているので，
         中心座標を取得してglTranslatefで移動させていた部分は必要なくなる．
       </p>
       <p class="supplement">
