@@ -520,7 +520,7 @@ void Timer(void)
         そうすると，タイムステップが進んだり，衝突が発生しても運動せずにその場に静止する(静的剛体)．
         地面の形状定義にはbtStaticPlaneShapeかbtBoxShapeがよい．
         これらの形状を新しいbtRigidBodyに設定してやることで剛体を追加できる．剛体の細かな追加方法はInitBullet関数を参照すること．<br />
-        btStaticPlaneShape は法線方向と平面定数(平面がax+by+cz+d=0で定義されるとき，法線はbtVector3型で(a,b,c),定数部はd)を引数として取る．
+        btStaticPlaneShape は法線方向と平面定数を引数として取る(平面がax+by+cz+d=0で定義されるとき，法線はbtVector3型で(a,b,c),定数部はd)．
         例えば，鉛直上向きの平面を作る場合は法線(0,1,0)を設定し，dを0とすると(0,0,0)を通る平面となる．
         btBoxShapeは引数としてbtVector3をとり，各辺の長さの半分(half extents)を指定する．
         以下にOpenGLを使ってbtBoxShapeを描画するプログラムの例を示す．
@@ -537,6 +537,7 @@ DrawCubeVBO();
 glPopMatrix();</pre>
       <p>
           DrawCubeVBO関数はutils.hにこちらの方で定義している立方体描画用関数である(原点中心で辺の長さ1の立方体を描画する)．
+          また，上記では地面を定義した変数(btRigidBody型)をg_groundbodyとしているが，これは自分の定義した変数名に合わせて適宜変えること．
       </p>
       <h4>練習問題3</h4>
       <p>
