@@ -558,9 +558,9 @@ glPopMatrix();</pre>
     btDefaultMotionState *motion = static_cast&#x3c;btDefaultMotionState*&#x3e;(g_pBoxBody->getMotionState());
     motion->m_graphicsWorldTrans.getOpenGLMatrix(m);
 #ifdef BT_USE_DOUBLE_PRECISION
-		glMultMatrixd(m);
+    glMultMatrixd(m);
 #else
-		glMultMatrixf(m);
+    glMultMatrixf(m);
 #endif
 </pre>
       <p>
