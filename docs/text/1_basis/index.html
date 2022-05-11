@@ -215,7 +215,7 @@
           </li>
         </ol>
       </p>
-        <details  class="supplement">
+        <details class="supplement">
           <summary>Makefileとg++を用いたMac環境でのビルド方法についてはここをクリック</summary>
 
           <ol>
@@ -247,6 +247,60 @@ $ brew install glew</pre>
       <p>
         サンプルプログラムに球の軌跡を線で描画する機能を追加せよ．
       </p>
+      <p class="supplement">
+        [ヒント] 軌跡は各タイムステップでの球の座標(g_ballpos)を配列に格納していき，
+        その配列の内容を描画関数(Display関数)内でOpenGLで線分の集合として描画するようにすれば良い．
+        なお，サンプルプログラムでは配列の定義はすでにしてあるので(71行目あたりで定義されているg_trajectories)，
+        これを用いてもよい．
+        また，座標格納場所や描画場所についてもサンプルプログラムにコメントでヒントを与えているのでよく確認してみてほしい．
+        OpenGLでの描画については以下参照．
+      </p>
+      <details class="supplement">
+        <summary>OpenGLによる軌跡の描画方法について</summary>
+        <p>
+          軌跡となる各タイムステップでの球の座標(btVector3型)がグローバル変数g_trajectoriesに格納されており，
+          格納数が変数g_num_trajectoryでカウントされているとする．<br />
+          OpenGLでは様々な図形を描画することができるが，ここでは線分の集合として，軌跡を描くことにする
+          (軌跡は曲線にすべきかもしれないが，タイムステップ幅が小さいならば，折れ線グラフのような区分線形近似でも
+          視覚的にはほとんど問題ない)．
+        </p>
+        <p>
+          OpenGLのver2まででは以下のようにすることで線分を描くことができる．
+        </p>
+        <pre class="code">
+    glColor3f(0.0, 0.0, 1.0);
+    glLineWidth(2.0);
+    glBegin(GL_LINE_STRIP);
+    for(int i = 0; i < g_num_trajectory; ++i){
+        glVertex3f(g_trajectories[i][0], g_trajectories[i][1]], g_trajectories[i][2]);
+    }
+    glEnd();
+        </pre>
+        <p>
+          glColor3fが描画色指定で，ここでは緑色を設定している．ちなみに3fというのは，3がRGB指定，fが単精度浮動小数点型で色を指定すると言うことを表している．
+          この3fとかの指定はglColorに限らず他のOpenGLの関数でもよく用いるので覚えておこう．ちなみに4だとRGBA指定，dだと倍精度，iだと整数で値を設定，さらにvがつくと配列で値を設定するということを表す
+          (このため，同じ色指定の関数でもglColor3fとかglColor4dvとか色々バリエーションがある)．<br />
+          glLineWidthは描画する線分の幅を指定している．
+          なお，これらの色や幅の指定は，glBeginの前に描いておくこと．<br />
+          glBegin(GL_LINE_STRIP)はこれから線分の集合を描きますよという命令で，
+          glBeginからglEndまでの間で線分の頂点を指定していく．<br />
+          glVertex3fが線分の頂点を指定している．ここではglBeginにGL_LINE_STRIPを指定しているので，
+          頂点を複数指定したら，それらを結ぶ線分の集合を記述してくれる．
+          他にもGL_LINESとかGL_POLYGONとかがあるが，
+          それぞれどのような図形を描画してくれるのかは，
+          <a href="http://glprogramming.com/red/chapter02.html">こちら(OpenGL Programming GuideのChapter2)のページ</a>の
+          Figure 2-7あたりをみると分かりやすい．<br />
+          glVertex3fの3fの部分はglColorの時と同じ．ここでは3次元座標を単精度浮動小数点型で指定すると言うことを表している．
+        </p>
+        <p>
+          その他OpenGL全般については，<a href="https://tokoik.github.io/opengl/libglut.html">和歌山大の床井先生が公開してくださっている資料</a>などが参考になる
+          なお，こちらのページはGLUTを用いているが，実験ではGLFWを使っているので注意．
+          床井先生は<a href="https://tokoik.github.io/GLFWdraft.pdf">GLFWを用いた場合の説明資料(PDF)</a>)も公開してくださっていますが，
+          こちらはOpenGL ver3以降を使っているので，上記線分の描画方法とは異なる方法になっているので注意．
+        </p>
+
+      </details>        
+
       <h4>練習問題3</h4>
       <p>
         球がある一定の高さ以下になったら，そのy方向速度を反転させることで，床での反発をシミュレーションしてみよ．
