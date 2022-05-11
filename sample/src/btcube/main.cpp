@@ -473,7 +473,7 @@ void Timer(void)
 void Keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if(ImGui::GetIO().WantCaptureKeyboard) return;	// ImGUIウィンドウ上でのキーボードイベント時
-	if(action == GLFW_PRESS){
+	if(action == GLFW_PRESS || action == GLFW_REPEAT){
 		switch(key){
 		case GLFW_KEY_ESCAPE:	// ESC,Qキーでアプリケーション終了
 		case GLFW_KEY_Q:
