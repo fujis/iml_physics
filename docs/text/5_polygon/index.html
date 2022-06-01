@@ -43,7 +43,7 @@
       ここではbtGImpactMeshShapeを用いた方法について説明する．
     </p>
 
-    <h4>3Dモデルファイルライブラリのダウンロード</h4>
+    <h4>3Dモデルファイルの読み込み</h4>
     <p>
       3Dモデルファイルとは，
       Mayaや3D Studio Max，Rhinocerosなどの3Dモデリングソフトで3次元形状を作成し，
@@ -54,64 +54,43 @@
       代表的なものだけでも，OBJ, 3DS, VRML, DXF, STLなどである
       (参考:<a href="http://www.slis.tsukuba.ac.jp/~fujisawa.makoto.fu/cgi-bin/wiki/index.php?3D%A5%D5%A5%A1%A5%A4%A5%EB%A5%D5%A5%A9%A1%BC%A5%DE%A5%C3%A5%C8%A4%CE%BC%EF%CE%E0">3Dモデルファイルの種類</a>)．
       BulletはOBJ形式(正確にはWavefrontOBJ)の入力には対応しているが，
-      機能としてはかなり限定的なので，ここでは私の方で作成した3Dモデルファイル入出力ライブラリを用いる．
-      まず，以下よりライブラリをダウンロードしよう．
+      機能としてはかなり限定的なので，ここでは私の方で作成したOBJファイル入出力ヘッダを用いる．
     </p>
-    <ul>
-      <li><a href="../sample/rx_model.zip">rx_model.zip</a>
-      <li><a href="../sample/rx_obj_sa.h">rx_obj_sa.h</a> (こちらはOBJファイル限定になるがライブラリ(*.libや*.a)が必要ないヘッダーオンリー版)
-    </ul>
     <p>
-      ダウンロードして解凍すると，
-      sharedとsrcフォルダがあるので，sharedフォルダをプロジェクトのsharedフォルダに上書きコピーする
-      (いくつかのファイルはすでに入れてあったので上書き確認が出るが，すべて上書きしてOK)．
-      srcフォルダの中のrx_model_libフォルダにはライブラリのソースコードが入っているので，
-      興味のある人は見てみるとよい．
+      サンプルプログラムのshared/incフォルダには rx_obj.h というファイルがすでに含まれているので，
+      これをインクルードすることでOBJ形式のファイルを読むことができる．
     </p>
-
-    <h4>3Dモデルファイルライブラリの設定</h4>
     <p>
-      ライブラリを使用するにはまず，
+      OBJ形式を読み込むためにはまず，rx_obj.h をインクルードする
     </p>
-    <pre class="code">#include "rx_model.h"</pre>
+    <pre class="code">#include "rx_obj.h"</pre>
     <p>
-      とし，入力ライブラリにrx_model.lib(Debugの場合はrx_modeld.lib)を設定する．
-      Visual C++なら，
+      rx_obj.h はヘッダファイル内に全ての実装を書いているヘッダオンリーのライブラリなので，
+      libファイルのリンクは必要ない．
+      なお，OBJ以外の3DS,VRML,DXF,STLなどを読み込みたい場合は，
+      <a href="http://www.slis.tsukuba.ac.jp/~fujisawa.makoto.fu/cgi-bin/wiki/index.php?3D%A5%E2%A5%C7%A5%EB%A5%D5%A5%A1%A5%A4%A5%EB%A4%CE%C6%FE%BD%D0%CE%CF">こちらのページ</a>
+      に私の方で作成したライブラリがあるのでそれを使ってみてほしい
+      (サンプルプログラムに含まれている rx_obj.h と違ってヘッダオンリーではないので，
+      Bullet Physicsをビルドしたように，自分の環境でビルドしてlibファイルを作成する必要があるので注意)
     </p>
-    <pre class="code">
-#ifdef _DEBUG
- #pragma comment (lib, "rx_modeld.lib")
-#else
- #pragma comment (lib, "rx_model.lib")
-#endif</pre>
-    <p>
-      でもよい．
-    </p>
-
-    <h4>3Dモデルファイルの読み込み</h4>
     <p>
       3Dモデルファイルを読み込む場合は以下のように設定する．
     </p>
     <pre class="code">
 // 3Dファイル読み込み
-rxPolygons poly;
-RxModel::Read(filename, poly);</pre>
+rxMTL mats;
+vector&#x3c;glm::vec3&#x3e; vrts, nrms;
+vector&#x3c;rxFace&#x3e; tris;
+rxOBJ obj;
+obj.Read(filename, vrts, nrms, tris, mats);</pre>
     <p>
       filename(string型)に3Dモデルファイルのパスを設定する．
-      polyにはポリゴンの頂点(poly.vertices)とその接続情報(poly.faces)が分けて格納される．
-      ライブラリは拡張子からファイルの種類を判別する．
-      ライブラリが対応している3Dモデルファイルの種類は，
+      rxOBJ::Read関数ではfilenameで示されたOBJファイルを読み込み，
+      vrtsにポリゴンの頂点座標情報，nrmsに頂点法線の情報，
+      trisに接続情報，matsに質感(表面色など)の情報を格納して返す．
     </p>
-    <ul>
-      <li>OBJファイルの入出力</li>
-      <li>DXFファイルの入出力(3DFACEエンティティのみ)</li>
-      <li>VRMLファイルの入力(IndexedFaceSetのみ)</li>
-      <li>3DSファイルの入力(EDITチャンクのみ,KEYFRAMEチャンクには未対応)</li>
-      <li>STLファイルの入出力(ASCII,バイナリ両方に対応)</li>
-      <li>OFFファイルの入力</li>
-    </ul>
     <p>
-      である．テスト用に3Dモデルファイルをいくつか置いておく．
+      テスト用に3Dモデルファイルをいくつか置いておく．
     </p>
     <ul>
       <li><a href="../sample/bunny.obj">bunny.obj</a> (Stanford bunny)</li>
@@ -119,7 +98,8 @@ RxModel::Read(filename, poly);</pre>
       <li><a href="../sample/torus.obj">torus.obj</a> (トーラス(ドーナッツ型))</li>
     </ul>
     <p>
-      テキストファイルとしてブラウザ上で表示されてしまう場合は，リンクを右クリック→リンク先を名前を付けて保存 すること．
+      テキストファイルとしてブラウザ上で表示されてしまう場合は，
+      リンクを右クリック→リンク先を名前を付けて保存 すること．
     </p>
 
 
@@ -127,26 +107,28 @@ RxModel::Read(filename, poly);</pre>
     <p>
       btRigidBodyの場合はbtTriangleIndexVertexArrayクラス，btSoftBodyの場合はbtSoftBodyHelpers::CreateFromTriMesh関数
       を用いてメッシュを形状として設定する．
-      これらにrxPolygons型のままメッシュを渡すことはできないので，
-      polyから配列を取り出す．
+      上記のOBJファイル読み込みでは，glm::vec3型の配列に頂点情報，rxFace型に接続情報を入れていたが，
+      これらをそのままCreateFromTriMesh関数に渡すことはできないので，
+      データを変換する必要がある(頂点法線情報はここでは必要なし)．
     </p>
     <pre class="code">
-int vertex_count = (int)poly.vertices.size(); // 総頂点数
-int index_count = (int)poly.faces.size(); // 総ポリゴン数
+// メッシュデータから頂点とポリゴン(三角形メッシュ)情報を取得して配列に格納
+int vertex_count = (int)vrts.size(); // 総頂点数
+int index_count = (int)tris.size(); // 総ポリゴン数
 btScalar *vertices = new btScalar[vertex_count*3]; // 頂点座標を格納する配列
 int *indices = new int[index_count*3]; // ポリゴンを構成する頂点番号を格納する配列
 
 // 頂点座標の取り出し
-for(int i = 0; i &#x3c; vertex_count; ++i){
-    vertices[3*i] =   poly.vertices[i][0];
-    vertices[3*i+1] = poly.vertices[i][1];
-    vertices[3*i+2] = poly.vertices[i][2];
+for(int i = 0; i < vertex_count; ++i){
+  vertices[3*i] =   vrts[i][0];
+  vertices[3*i+1] = vrts[i][1];
+  vertices[3*i+2] = vrts[i][2];
 }
 // ポリゴンを構成する頂点番号の取り出し
-for(int i = 0; i &#x3c; index_count; ++i){
-    indices[3*i]   = poly.faces[i][0];
-    indices[3*i+1] = poly.faces[i][1];
-    indices[3*i+2] = poly.faces[i][2];
+for(int i = 0; i < index_count; ++i){
+  indices[3*i]   = tris[i][0];
+  indices[3*i+1] = tris[i][1];
+  indices[3*i+2] = tris[i][2];
 }</pre>
     <p>
       verticesに頂点の座標情報，indicesにポリゴンを構成する頂点番号が格納されている．
@@ -190,7 +172,8 @@ shape-&#x3e;updateBound();</pre>
     <p>
       なお，セットし終わった後のindicesとverticesはdeleteせずにそのまま残しておくこと．
       内部的にポインタ参照しているのでこれをdeleteすると参照ミスでプログラムが落ちることがある．
-      ただし，これはbtGImpactMeshShapeの場合で，次の説明ページで使うbtSoftBodyの場合はデータをコピーしているので逆にdeleteする必要があることに注意．
+      ただし，これはbtGImpactMeshShapeの場合で，
+      次の説明ページで使うbtSoftBodyの場合はデータをコピーしているので逆にdeleteする必要があることに注意．
     </p>
 
     <p>
@@ -272,8 +255,8 @@ else if(shapetype == GIMPACT_SHAPE_PROXYTYPE){
       <p>
         検索すると様々なサイトでフリーの3Dモデルファイルが提供されているので，
         これらのサイトから対応する3Dモデルファイル(obj,wrl,dxf,3df,offなど)をダウンロードして読み込ませてみよう．
-        (<a href="http://www.slis.tsukuba.ac.jp/~fujisawa.makoto.fu/cgi-bin/wiki/index.php?3D%20File%20Format">こちらのページ</a>
-        にもいくつかのサイトへのリンクを載せてあるので参照してほしい)．
+        <a href="http://www.slis.tsukuba.ac.jp/~fujisawa.makoto.fu/cgi-bin/wiki/index.php?3D%20File%20Format">こちらのページ</a>
+        にもいくつかのサイトへのリンクを載せてあるので参照してほしい(一部リンク切れがあるかも)．
       </p>
       <p>
         もし読めないファイル or 対応していない形式だったならば，3Dモデリングソフトでインポートして，他の形式(objなど)でエクスポートしてみよう．

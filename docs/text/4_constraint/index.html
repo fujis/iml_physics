@@ -280,8 +280,8 @@ if(g_constraint){
 }</pre>
       <p>
         Constraintの削除は上記説明「BulletでのConstraint設定方法」を参照してほしい．
-        この例では変数g_pContraintが0かどうかで破棄するためのチェックをするかどうかを判断しているので，
-        変数の定義時および削除した後にg_pContraint = 0と初期化しておいた方が安全(環境によっては自動的に0で初期化してくれる場合もあるけど)．
+        この例では変数g_contraintが0かどうかで破棄するためのチェックをするかどうかを判断しているので，
+        変数の定義時および削除した後にg_contraint = 0と初期化しておいた方が安全(環境によっては自動的に0で初期化してくれる場合もあるけど)．
       </p>
 
     </div>
@@ -525,10 +525,10 @@ void Keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
         ・・・
 
         case GLFW_KEY_UP: // 上矢印キーが押されたときの処理
-            g_fTargetVelocity += 10.0; // 目標角速度の増減[deg/s]
+            g_targetvelocity += 10.0; // 目標角速度の増減[deg/s]
             break;
         case GLFW_KEY_DOWN: // 下矢印キーが押されたときの処理
-            g_fTargetVelocity -= 10.0; // 目標角速度の増減[deg/s]
+            g_targetvelocity -= 10.0; // 目標角速度の増減[deg/s]
             break;
         }
     }
@@ -543,9 +543,9 @@ joint1->enableAngularMotor(true, btRadians(90.0), 1.0);</pre>
               三つ目の引数は最大インパルスでこれが0だと動かなくなるので0より大きい数を設定する．<br />
               モータの角速度を途中で変更するには，
               <pre class = "code">
-joint1->->setMotorTargetVelocity(btRadians(g_fTargetVelocity));</pre>
+joint1->->setMotorTargetVelocity(btRadians(g_targetvelocity));</pre>
               とすればよい．
-              joint1をグローバル変数として，Keyboard関数でg_fTargetVelocityの値を増減すれば前進/後退をシミュレーションできる．
+              joint1をグローバル変数として，Keyboard関数でg_targetvelocityの値を増減すれば前進/後退をシミュレーションできる．
             </li>
           </ul>
       </p>
@@ -586,12 +586,12 @@ motor1->m_targetVelocity = btRadians(90.0);</pre>
               motor1をグローバル変数として，Keyboard関数でm_targetVelocityの値を増減すれば前進/後退をシミュレーションできる．
               また，getRotationalLimitMotor関数の引数を2にするとステアリングの方向についても同様に設定できる．
               ただし，ステアリングの方向も角度ではなく角速度を用いて設定しなければならない．
-              この場合はキーボードでは目標となる角度(g_fTargetSteerAngle)を設定し，その角度との差に比例するような角速度を設定する．
+              この場合はキーボードでは目標となる角度(g_targetsteerangle)を設定し，その角度との差に比例するような角速度を設定する．
               例えば，Timer関数内で，
               <pre class = "code">
 double gain = 0.4;
-g_pSteerMotorR->m_targetVelocity = gain*(btRadians(g_fTargetSteerAngle)-g_pJointFR->getAngle1());
-g_pSteerMotorL->m_targetVelocity = gain*(btRadians(g_fTargetSteerAngle)-g_pJointFL->getAngle1());</pre>
+g_pSteerMotorR->m_targetVelocity = gain*(btRadians(g_targetsteerangle)-g_pJointFR->getAngle1());
+g_pSteerMotorL->m_targetVelocity = gain*(btRadians(g_targetsteerangle)-g_pJointFL->getAngle1());</pre>
               の計算する．ここで，gainは比例定数(ゲイン)，g_pSteerMotorR,g_pSteerMotorLはgetRotationalLimitMotor(2)で取得したモータ，
               g_pJointFR,g_pJointFLは前輪のジョイント(btHinge2Constraint)である．
             </li>
