@@ -128,6 +128,7 @@
 #pragma comment (lib, "BulletSoftBody.lib")</pre>
     <p>
       と記述することでもライブラリをリンクできる(Visual C++の場合)．
+      なお，macの場合，サンプルプログラムに含まれるMakefileのLDFLAGSにすでに追加済みである．
     </p>
 
     <p>
@@ -505,7 +506,7 @@ cloth-&#x3e;setWindVelocity(btVector3(4.0, 0.0, 0.0));</pre>
         その場合は第三引数をfalseにしてみよう．
       </p>
     </div>
-    <!--<div class="task">
+    <div class="task">
       <h4>練習問題7(option)</h4>
       <p>
         たくさんの小さなパッチを作成し，それぞれに風を設定することで紙吹雪を再現してみよう．
@@ -514,7 +515,7 @@ cloth-&#x3e;setWindVelocity(btVector3(4.0, 0.0, 0.0));</pre>
         <img src="../fig/confetti.jpg" alt="紙吹雪" height="240px" /><br />
         紙吹雪をシミュレーションした例
       </p>
-    </div>-->
+    </div>
 
     <a name="3d" id="3d"></a>
     <h2>3次元弾性体</h2>
@@ -606,7 +607,7 @@ sphere-&#x3e;m_cfg.collisions |= btSoftBody::fCollision::VF_SS;</pre>
 
 
     <div class="task">
-      <h4>練習問題7</h4>
+      <h4>練習問題8</h4>
       <p>
         上記の実装を実際にやってみよう．また，kVCの値や全体の質量，密度(setTotalDensity関数で設定)を変えて試してみよう．
       </p>
@@ -641,13 +642,13 @@ soft_body->transform(trans);</pre>
     </p>
 
     <div class="task">
-      <h4>練習問題8</h4>
+      <h4>練習問題9</h4>
       <p>
         btSoftBodyとして三角形ポリゴンを登録して，任意形状の弾性体シミュレーションを実行してみよう．
       </p>
     </div>
     <div class="task">
-      <h4>練習問題9(option)</h4>
+      <h4>練習問題10(option)</h4>
       <p>
         btSoftBodyではこれまで照会したパラメータ以外に様々なものがある．例えば，
       </p>
