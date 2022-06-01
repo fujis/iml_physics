@@ -505,15 +505,15 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
         [視点情報の取得について] <br />
         サンプルプログラムではマウスによる視点移動のためにrxTrackballというクラス(rxTrackball.h, rxTrackball.cpp)を使っている．
         このクラスは四元数を使った回転，ベクトルによる平行移動を内部で行っている．
-        main.cppではg_tbViewグローバル変数を介してこのrxTrackballクラスにアクセスしており，
+        main.cppではg_viewグローバル変数を介してこのrxTrackballクラスにアクセスしており，
         視点位置，視線方向を取得するには，
         <pre class="code">
 // 視点位置，視線方向
 double eye_pos[3], eye_dir[3];
 double init_pos[3] = {0, 0, 0};
 double init_dir[3] = {0, 0, -1};
-g_tbView.CalLocalPos(eye_pos, init_pos);
-g_tbView.CalLocalRot(eye_dir, init_dir);</pre>
+g_view.CalLocalPos(eye_pos, init_pos);
+g_view.CalLocalRot(eye_dir, init_dir);</pre>
         とする．変数eye_posに現在の視点位置，eye_dirに視線方向が代入される．eye_posとeye_dirは配列なので，
         Bullet側に渡すときにはbtVector3にするのを忘れないように．
       </p>
