@@ -27,7 +27,10 @@
       画面上に文字列を描画することはアプリケーション作成の際に必要となるテクニックのひとつである．
       ここではOpenGLを使って画面上に文字列を描画する方法として，<a href="#ftgl">FTGLを用いた方法</a>について述べる．
     </p>
-
+    <p align="center">
+      <img src="../fig/screen_text.png" alt="FTGLで文字列を描画した例" width="70%" /><br />
+      FTGLで文字列を描画した例
+    </p>
     <a name="ftgl" id="ftgl"></a>
     <h2>FTGLを使った方法</h2>
     <p>
@@ -141,7 +144,7 @@
     <pre class="code">
 #define FONT_FILE "C:\\Windows\\Fonts\\msgothic.ttc"
 static FTPixmapFont* g_font;
-unsigned long g_fontsize = 14;  //!< フォントサイズ</pre>
+unsigned long g_fontsize = 18;  // フォントサイズ</pre>
     <p>
       ここではフォントファイルとしてMSゴシックを指定してある．
       そのほかにもWindowsならメイリオ("C:\\Windows\\Fonts\\meiryo.ttc")や
@@ -206,7 +209,7 @@ void DrawStrings(vector&#x3c;string&#x3e; &strs, int w, int h, int x0, int y0)
     glMatrixMode(GL_MODELVIEW);
 }</pre>
 
-    <h4>日本語とワイド文字列</h4>
+    <!--<h4>日本語とワイド文字列</h4>
     <p>
       FTGLで日本語を描画するためには<strong>ワイド文字列</strong>を使う必要がある．
       ワイド文字列はC/C++において固定長でマルチバイト文字を扱うために規定されたもので，
@@ -238,7 +241,7 @@ void DrawStrings(vector&#x3c;string&#x3e; &strs, int w, int h, int x0, int y0)
     <p align="center">
       <img src="../fig/screen_char2.jpg" alt="FTGLで日本語文字列を描画した例" width="70%" /><br />
       FTGLで日本語文字列を描画した例
-    </p>
+    </p>-->
 
 
     <p align="right">
