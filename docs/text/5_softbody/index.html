@@ -92,7 +92,7 @@
 
     <p>
       <strong>ライブラリの準備</strong><br />
-      btSoftBodyを扱うためにはインクルード，ライブラリファイルを追加する必要がある．
+      <del>btSoftBodyを扱うためにはインクルード，ライブラリファイルを追加する必要がある．
       Bulletを最低限動かすのに必要なのは， BulletCollision, BulletDynamics, LinearMathの3つであると
       <a href="../2_bullet/">以前</a>に説明した．
       剛体だけの場合には必要ないのだが，btSoftBodyを使う場合にはもう一つ，BulletSoftBodyを追加する．
@@ -102,8 +102,34 @@
     <p>
       ビルドすると，
       BulletSoftBody.lib
-      がlibフォルダ内にできるので，これらをshared/libにコピーする．
+      がlibフォルダ内にできるので，これらをshared/libにコピーする．</del>
+      2022年度から<a href="../2_bullet/">Bulletのビルド方法</a>のところで，
+      BulletSoftBodyもコピーするようにしているため，この作業および下記のプログラムへのlibファイル追加作業は特に必要ない．
+      ただし，以下のようにReleaseモードでないとAssertでプログラムが止まってしまう現象を確認しているので注意．
     </p>
+    <div class="notation">
+    <h4>Bullet3.17においてDebugモードでbtSoftBodyを使おうとするとプログラムが止まってしまうことについて</h4>
+      <p>
+        Bullet ver3.17において，Visual StudioのDebugモードでbtSoftBodyを使おうとすると以下のAssertが出てプログラムが落ちることを
+        こちらで確認しています．
+      </p>
+      <pre class="prompt">Assert ・・・\btsequentialimpulseconstraintsolver.cpp:743 (body.isStaticOrKinematicObject())</pre>
+      <p>
+        Bullet付属のサンプルでも同様の現象を確認しているため，ライブラリ側の問題かと思います(もしくは何らかの仕様変更があり，それがサンプルに反映されていない)．
+        Releaseモードでは問題なく動く(ReleaseモードだとそもそもAssertが無視されるため)のところで，
+        この実験でbtSoftBodyを扱う場合はReleaseモードに変えるようにしてください．
+        Visual StudioでDebug/Releaseモードを切り替えるには，上部のツールバーにあるDebug/Releaseのプルダウンメニューで切り替えられます(下図参照)
+      </p>
+      <p align="center">
+        <img width="360" src="../fig/bullet_project_debug_release.png" /><br />
+        Debugモード/Releaseモードの切り替え<br />
+      </p> 
+      <p>
+        なお，Releaseモードでビルドするためには，BulletのライブラリもReleaseモードでビルドしたものが必要です．
+        shared/libにBulletSoftBody_vs2010_x64_release.libなどの*_release.libがなく，*_debug.libしかない場合は，
+        <a href="../2_bullet/">Bulletのビルド方法</a>を参考に，Bulletをもう一度Releaseモードでビルドする用意してください．
+      </p>
+    </div>
     <p>
       <strong>インクルードファイルとライブラリファイル</strong><br />
       ソースコードを変更する前に，以前と同じようにこれまで作成したコードをフォルダごとコピーして，
@@ -179,11 +205,11 @@ g_softBodyWorldInfo.m_sparsesdf.Reset();</pre>
     <p>
       などとして，SoftBodyのための各種設定を行っておく．
     </p>
-    <div class="notation">
+    <!--<div class="notation">
       <h4>Bullet Physics ver3.09でのbtSoftBodyのマウスピックについて</h4>
       <p>
         サンプルプログラム2ではbtSoftBodyについてもこれまでのbtRigidBodyと同様にマウス左ドラッグで移動させるようにしていますが，
-        Bullet Physicsの現バージョン(こちらで確認したのはver3.09)において，
+        Bullet Physicsの新しめのバージョン(こちらで確認したのはver3.09)において，
         マウスクリックした位置に対応するノードを得るために使っているrayTest関数が上手く働かず，プログラムが落ちてしまう現象を確認しています．
         そのため，代わりとなるMouse関数を<strong><a href="../sample/mouse_softbody.cpp">このファイル</a></strong>に載せたので，
         main.cppのMouse関数部分をこちらで置き換えるようにしてください(intersectRaySphereという関数も一緒にコピペするように)．
@@ -194,7 +220,7 @@ g_softBodyWorldInfo.m_sparsesdf.Reset();</pre>
         そのため，ノード数が多いモデルを読み込むと計算に時間がかかり遅くなる可能性があります．
         注意してください．
       </p>
-    </div>
+    </div>-->
 
     <p>
       <strong>1次元弾性体の追加</strong><br />
