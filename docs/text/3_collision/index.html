@@ -509,11 +509,9 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
         視点位置，視線方向を取得するには，
         <pre class="code">
 // 視点位置，視線方向
-double eye_pos[3], eye_dir[3];
-double init_pos[3] = {0, 0, 0};
-double init_dir[3] = {0, 0, -1};
-g_view.CalLocalPos(eye_pos, init_pos);
-g_view.CalLocalRot(eye_dir, init_dir);</pre>
+glm::vec3 eye_pos(0.0), eye_dir(0.0);
+g_view.CalLocalPos(eye_pos, glm::vec3(0.0));
+g_view.CalLocalRot(eye_dir, glm::vec3(0.0, 0.0, -1.0));</pre>
         とする．変数eye_posに現在の視点位置，eye_dirに視線方向が代入される．eye_posとeye_dirは配列なので，
         Bullet側に渡すときにはbtVector3にするのを忘れないように．
       </p>
