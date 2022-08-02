@@ -184,6 +184,9 @@ void Display(void)
 	glScalef(2*g_ballrad, 2*g_ballrad, 2*g_ballrad);
 	DrawSphereVBO();	// VBOによる球体メッシュ描画
 
+	glTranslatef(0.5, 0.0, 0.0);
+	DrawSphereVBO();	// VBOによる球体メッシュ描画
+
 	glPopMatrix();
 
 
