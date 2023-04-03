@@ -35,7 +35,7 @@
     <p>
   	<a href="https://github.com/bulletphysics/bullet3/releases">Bullet3 Releases</a>のページから
     最新版をダウンロードする．
-    この実験ではC/C++版を使うので，「PyBullet 3.1.7 / Bullet Physics 3.17」という項目の「Assets」をクリックして，
+    「PyBullet 3.*.*」という項目の「Assets」をクリックして(3.*.*の部分はバージョン番号でダウンロードした時期で異なる)，
     Source code (zip) もしくはSource code (tar.gz)をクリックしてダウンロードする．
     <!--もしくは，
     <a href="http://bulletphysics.org/wordpress/">Bullet PhysicsのWebページ</a>(http://bulletphysics.org/wordpress/)
@@ -77,14 +77,16 @@
     </p>
     <p>
       ダブルクリックの実行でvs2010がないといったメッセージが出る場合やダブルクリックしても反応がない場合は，
-      スタートメニューのVisual Studio 2017(もしくはVisual Studio 2019/Visual Studio 2022)フォルダの中にある，
-      「開発用コマンドプロンプト for VS2017」(もしくは "Developer Command Prompt for VS2019"/"Developer Command Prompt for VS2022")を開き，
+      スタートメニューのVisual Studio 2022フォルダの中にある，"Developer Command Prompt for VS2022"を開き，
       cdコマンドでBULLETフォルダまで移動してbatファイルを実行する．
       以下は全学計算機システムでBULLETフォルダをデスクトップに置いている場合のコマンドの例．
     </p>
     <pre class="prompt">Z:
-cd Desktop\bullet3-3.17
+cd Desktop\bullet3-3.25
 build_visual_studio_vr_pybullet_double_dynamic.bat</pre>
+    <p>
+      (3.25の部分は自分がダウンロードしたバージョンに合わせて変えること)
+    </p>
 	<!--<p>
 	  bulletに同梱されているpremake5のバージョンの問題か，エラーが出て上手くいかない場合がある．
 	  その場合は，以前のバージョンの <a href="../data/premake5.exe"> premake5.exe </a> を BULLET/build3 フォルダに上書きコピーしてから，
@@ -98,20 +100,19 @@ build_visual_studio_vr_pybullet_double_dynamic.bat</pre>
   	<p>
       BULLET/build3/vs2010フォルダ中の
     </p>
-    <pre class="code">BULLET\build3\vs2010\0Bullet3Solution.sln</pre>
+    <pre class="code">BULLET\build3\vs2010\0_Bullet3Solution.sln</pre>
     <p>
-      をVisual Studio 2017/2019/2022で開く．「プロジェクトの再ターゲット」というウィンドウが出たら，
+      をVisual Studio 2022(以下VS2022)で開く．「プロジェクトの再ターゲット」というウィンドウが出たら，
       %「Windows SDK バージョン」が「10.0（最新のインストールされているバージョン）」，
-      「プラットフォームツールセット」がVS2017なら「v141へのアップグレード」
-      (VS2019なら「v142へのアップグレード」/VS2022なら「v143へのアップグレード」)
-      になっていることを確認の上，OKボタンをクリックするとVS2017/2019/2022用のプロジェクトへの変換が始まる．
+      「プラットフォームツールセット」がVS2022なら「v143へのアップグレード」)
+      になっていることを確認の上，OKボタンをクリックするとVS2022用のプロジェクトへの変換が始まる．
     </p>
     <p align="center">
       <img width="480" src="../fig/project_retarget_vs2022.png" /><br />
       プロジェクトの再ターゲット．Windows SDKバージョンのところの数値は環境によって多少変わる可能性もあるので注意<br />
     </p>
     <p>
-      0Bullet3Solution.slnにはたくさんのプロジェクトが含まれているが，
+      0_Bullet3Solution.slnにはたくさんのプロジェクトが含まれているが，
       Bulletライブラリは，
       Bulletから始まるものとLinearMathである．
       (Bullet3から始まるものはbullet3のライブラリ，
@@ -148,12 +149,12 @@ build_visual_studio_vr_pybullet_double_dynamic.bat</pre>
       実験のサンプルプログラムを動かすのに最低限必要なのは，
       BulletCollision_vs2010_x64_*.lib, BulletDynamics_vs2010_x64_*.lib, BulletSoftBody_vs2010_x64_*.lib, LinearMath_vs2010_x64_*.libの4つである
       (*の部分はRelaseモードだとrelease, Debugモードだとdebugとなっている)．
-      なお，ファイル名にvs2010とあるがちゃんと実行環境(VS2017/2019/2022)に合わせたものになっている(気になる人はリネームしてもOK)．
+      なお，ファイル名にvs2010とあるがちゃんと実行環境(VS2022)に合わせたものになっている(気になる人はリネームしてもOK)．
     </p>
-    <p class="supplement">
+    <!--<p class="supplement">
       全学計算機リモートデスクトップ環境のVisual Studio 2017 Professionalでビルドした場合，BulletSoftBody_vs2010_x64.libの生成に失敗する可能性がある．
       その場合はTeamsの一般チャネル→ファイルにこちらでビルドしたBulletSoftBody_vs2010_x64.libを入れてあるのでそれを使ってほしい．
-    </p>
+    </p>-->
     <br />
 
 

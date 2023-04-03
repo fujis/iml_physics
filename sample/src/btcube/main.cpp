@@ -137,19 +137,20 @@ void SetRigidBodies(void)
 
 	// ----- 地面(質量0のx-z平面上で平べったい直方体で表現)の追加 -----
 	btCollisionShape *ground_shape = new btBoxShape(btVector3(20, CUBE_HALF_EXTENTS, 20));	// 形状
+	g_collisionshapes.push_back(ground_shape); // 最後に破棄(delete)するために形状データを格納しておく
+
 	ground_shape->setUserIndex(99); // 99とした場合のみ描画時にテクスチャ付き平面として描画．床を傾けたい等の場合は99にしないこと．
 	trans.setOrigin(btVector3(0, GROUND_HEIGHT-CUBE_HALF_EXTENTS, 0));	// 上の面がy=0になるように設定
 	
 	// 剛体オブジェクト(Static)生成
 	btRigidBody* body0 = CreateRigidBody(0.0, trans, ground_shape, g_dynamicsworld, 99);
-	
-	g_collisionshapes.push_back(ground_shape); // 最後に破棄(delete)するために形状データを格納しておく
 	// ----- ここまで (地面の追加) -----
 
 
 	// ----- 立方体オブジェクト追加 -----
 	// 形状設定
 	btCollisionShape *box_shape = new btBoxShape(btVector3(CUBE_HALF_EXTENTS, CUBE_HALF_EXTENTS, CUBE_HALF_EXTENTS));
+	g_collisionshapes.push_back(box_shape); // 最後に破棄(delete)するために形状データを格納しておく
 
 	// 初期位置・姿勢
 	btQuaternion qrot(0, 0, 0, 1);
@@ -159,8 +160,6 @@ void SetRigidBodies(void)
 
 	// 剛体オブジェクト生成
 	btRigidBody* body1 = CreateRigidBody(1.0, trans, box_shape, g_dynamicsworld, 0);
-	
-	g_collisionshapes.push_back(box_shape); // 最後に破棄(delete)するために形状データを格納しておく
 	// ----- ここまで (立方体オブジェクト追加) -----
 
 
@@ -679,6 +678,7 @@ void SetImGUI(GLFWwindow* window)
 	if(ImGui::Button("reset viewpos")){ resetview(); } 
 	if(ImGui::Button("save screenshot")){ savedisplay(-1); }
 	if(ImGui::Button("quit")){ glfwSetWindowShouldClose(window, GL_TRUE); }
+	ImGui::TextColored(ImVec4(1.0f,0.0f,0.0f,1.0f), "Goal");
 }
 
 void Clean()

@@ -146,8 +146,6 @@ void Init(void)
 
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
-
-
 }
 
 
@@ -182,9 +180,6 @@ void Display(void)
 	glEnable(GL_LIGHTING);
 	glColor3f(0.1, 0.5, 1.0);
 	glScalef(2*g_ballrad, 2*g_ballrad, 2*g_ballrad);
-	DrawSphereVBO();	// VBOによる球体メッシュ描画
-
-	glTranslatef(0.5, 0.0, 0.0);
 	DrawSphereVBO();	// VBOによる球体メッシュ描画
 
 	glPopMatrix();
