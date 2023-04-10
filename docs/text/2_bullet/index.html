@@ -121,14 +121,14 @@ build_visual_studio_vr_pybullet_double_dynamic.bat</pre>
     <p>
       Release,x64もしくはDebug,x64で，ビルド → ソリューションのビルド を実行する
       (<strong>サンプルプログラムはx64のみなのでRelease/Debugの右のところがWin32になっていたらx64に変えること！</strong>)．
-      ただし，すべてのプロジェクトをビルドすると約600MBにもなるので，
+      ただし，すべてのプロジェクトをビルドすると数百MBになるので，
       ディスクスペースに余裕がない場合は，上であげた必要なものと実行したいデモプロジェクトのみビルドする，
       もしくは，ディスク容量を確保してからビルドすること．
       すべて正常終了したらビルド成功である．
       ビルドに失敗した場合はエラーをチェックし，必要に応じて修正しよう．
       ただし，全てのプロジェクトが正常終了していなくても，
       BulletCollision,BulletDynamics,BulletSoftBody,LinearMathの4つが成功していれば実験上は問題ない
-      (実際にこちらの環境でVS2022Communityでビルドしたら12プロジェクトほど失敗してました...)
+      (実際にこちらの環境(VS2022)でビルドしたら10プロジェクトぐらい失敗してました...)
     </p>
     <p align="center">
       <img width="480" src="../fig/bullet_project_2022.png" /><br />
@@ -137,7 +137,7 @@ build_visual_studio_vr_pybullet_double_dynamic.bat</pre>
     <p>
       実習室のPCではダウンロードのところでも書いたようにネットワークドライブを使っている関係上，
       そのままだとビルドに非常に時間がかかる．
-      もしビルド時間を短くしたいならば，CドライブもしくはUSBメモリ(USB3.0推奨)上に一時的なフォルダを作成し，
+      もしビルド時間を短くしたいならば，CドライブもしくはUSBメモリ(USB3.0以上推奨)上に一時的なフォルダを作成し，
       その中にBULLETフォルダごとコピーしてビルドすると速くなる．
       ただし，Cドライブは再起動するとリセットされるので，PCをシャットダウンする前に，
       必要なファイルを自分のフォルダにコピーしておくこと．
@@ -149,7 +149,7 @@ build_visual_studio_vr_pybullet_double_dynamic.bat</pre>
       実験のサンプルプログラムを動かすのに最低限必要なのは，
       BulletCollision_vs2010_x64_*.lib, BulletDynamics_vs2010_x64_*.lib, BulletSoftBody_vs2010_x64_*.lib, LinearMath_vs2010_x64_*.libの4つである
       (*の部分はRelaseモードだとrelease, Debugモードだとdebugとなっている)．
-      なお，ファイル名にvs2010とあるがちゃんと実行環境(VS2022)に合わせたものになっている(気になる人はリネームしてもOK)．
+      なお，ファイル名にvs2010とあるがちゃんと実行環境(VS2022)に合わせたものになっている．
     </p>
     <!--<p class="supplement">
       全学計算機リモートデスクトップ環境のVisual Studio 2017 Professionalでビルドした場合，BulletSoftBody_vs2010_x64.libの生成に失敗する可能性がある．
@@ -166,7 +166,7 @@ build_visual_studio_vr_pybullet_double_dynamic.bat</pre>
         ターミナルを開いて，cdコマンドでBULLETフォルダに移動し，premakeでMakefileを生成した後，makeコマンドでライブラリをビルドする．
         以下はホームフォルダ直下にbulletのファイルを解凍したときのコマンド例である．
       </p>
-      <pre class="prompt">cd ~/bullet3-3.17/build3
+      <pre class="prompt">cd ~/bullet3-3.25/build3
 ./premake_osx gmake</pre>
       <p>
         ここで，「"premake4_osx"は，開発元を検証できないため開けません」といったダイアログが出た場合は，一旦「キャンセル」をクリックし，
