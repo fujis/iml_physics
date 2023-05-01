@@ -120,8 +120,9 @@
         その場合は，メニューからプロジェクト→プロパティでbtcubeプロパティページというウィンドウを開き，<br />
         　　構成プロパティ → ビルド イベント → ビルド後イベント<br />
         の「コマンドライン」の部分を以下のように書き換えてください．
-      </p>-->
+      </p>
       <pre class="code">copy "$(ProjectDir)\..\..\bin\*.dll" "$(ProjectDir)\$(OutDir)" /V /Y</pre>
+      -->
       <h4>練習問題2</h4>
       <p>
         任意のキーを押すとさらに立方体を追加するように改良してみよう．
@@ -160,7 +161,7 @@ if(g_movebody){
 }</pre>
               上記の例では剛体オブジェクトをx軸方向に+0.02だけ動かしている．
               もし，キーボードで位置を変えたときに描画だけが変わって，衝突判定位置が変わっていないような場合は，
-              Kinematic rigidbodyを追加→g_movebodyにインスタンスを代入の後とかに以下のコードを追加してみてください．
+              Kinematic rigidbodyを追加→g_movebodyにインスタンスを代入の後とかに以下のコードを追加してみてほしい．
 	            <pre class = "code">
 g_movebody->setCollisionFlags(g_movebody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
 g_movebody->setActivationState(DISABLE_DEACTIVATION);</pre>
@@ -356,7 +357,7 @@ g_dynamicsworld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, co
       <p>
         ブロードフェーズの計算方法をスイープ＆プルーンに変更してみよ．なお，BulletのbtAxisSweep3とbt32BitAxisSweep3では，
         定義時に計算空間の大きさ(AABBの最小，最大座標)を指定する必要がある．
-        特に問題なければ十分大きな範囲(ex. btVector3(-100, -100, -100), btVector3(100, 100, 100)など)を渡しておけばよい(余りに大きすぎると精度は落ちるので注意)．
+        特に問題なければ十分大きな範囲(ex. btVector3(-100, -100, -100), btVector3(100, 100, 100)など)を渡しておけばよい(あまりに大きすぎると精度は落ちるので注意)．
         <br />
         <strong>補足</strong> : btAxisSweep3は16ビット整数を使っているので登録できるオブジェクト数が16384までに制限される．
         一方，bt32BitAxisSweep3はより多くのメモリを必要とするがもっと多くのオブジェクト(デフォルトでは1500000個)を扱える．
@@ -404,7 +405,7 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
 	  btCollisionObject* obA = const_cast&#x3c;btCollisionObject*&#x3e;(manifold->getBody0()); // 衝突ペアのうちのオブジェクトA
 	  btCollisionObject* obB = const_cast&#x3c;btCollisionObject*&#x3e;(manifold->getBody1()); // 衝突ペアのうちのオブジェクトB
 
-	  // 各オブジェクトのユーザーインデックス(練習問題6で使います)
+	  // 各オブジェクトのユーザーインデックス(練習問題7で使います)
 	  int user_idx0 = obA->getUserIndex();
 	  int user_idx1 = obB->getUserIndex();
 
