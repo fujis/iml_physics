@@ -580,7 +580,15 @@ glPopMatrix();</pre>
         円錐形状を描画するDrawConeVBO関数(底面半径0.5(直径1)/高さ1/中心軸はz軸)，
         円筒の両端面に半球がついたカプセル形状を描画するDrawCapsuleVBO関数(こちらは半径と長さを引数で指定する/中心軸はz軸)，
         平面を描画するDrawPlaneVBO関数(法線ベクトル(0,1,0)/y方向の高さ及び大きさは引数で指定)，
-        などを用意してあるので有効活用してほしい．
+        などを用意してあるので有効活用してほしい．<br />
+        <strong>(2023/5/12追記) サンプルプログラム1に同梱のutils.hにDrawCylinderVBO/DrawCapsuleVBO/DrawConeVBOが定義されていませんでした．
+          これらの描画用関数を用いる場合は，
+          <a href="https://github.com/fujis/iml_physics/blob/5cf503b3eb5330e2cadd919f73aa8b2362a27e93/sample/src/sphere/utils.h">
+            githubのこちらのページ
+          </a>
+          からutils.hをダウンロードして，src/sphere (もしくはsrc/btsphere)に上書きコピーしてください
+          (もし自分でutils.hに何かコードを追加している場合はバックアップを取ってからコピーするように)．
+        </strong> 
       </p>      
       <h4>練習問題5</h4>
       <p>
