@@ -394,7 +394,7 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
         衝突ディスパッチャを使うと衝突点座標を取得できる．衝突点を取得し，点(GL_POINTS)などで描画するようにしてみよう．<br />
       </p>
 	  <p>
-		衝突点は以下のようなコードで取得できるので，これを描画関数(DrawBulletObjects)内に書く or
+		衝突点は以下のようなコードで取得できるので，これを描画関数(Display)内に書く or
 		Timer関数などに書いて衝突点情報をグローバル配列に格納/描画する．
 	  </p>
 	  <pre class="code">
@@ -425,6 +425,12 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
 		  }
 	  }
   }</pre>
+      <p class="supplement">
+        補足: 衝突点の描画処理をDisplay関数内に書く場合は，コードの場所に注意しよう．
+        Display関数ではマウスによる視点移動のコードも含まれており，これを衝突点描画にも反映させないと，
+        視点移動した場合でも衝突点位置が固定して描画されてしまうので，
+        関数の最後の方のglPopMatrix();の前あたりに書くようにしましょう．
+      </p>
       <p align="center">
         <img src="../fig/dispatcher.jpg" alt="Collision points" /><br />
         衝突点を赤点で描画した例<br />
