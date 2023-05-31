@@ -34,8 +34,12 @@
     <a name="ftgl" id="ftgl"></a>
     <h2>FTGLを使った方法</h2>
     <p>
-      GLUTで文字列を簡単に描画することはできるものの，使えるフォントが限られていたり，日本語が扱えないなど制限も多い．
+      GLUTなどOpenGLのためのGUIライブラリの中には文字列を簡単に描画する機能がある場合もあるが，使えるフォントが限られていたり，日本語が扱えないなど制限も多い．
       これらを解決する方法としてここではFTGL(とfreetype)を用いた方法について述べる．
+      <p class="supplement">
+        本実験で使っているglfwには文字列描画機能はなさそう．ImGUIの方はGUIウィンドウ上に文字列を描画できる(ImGui::Text("test");とするとGUIウィンドウ上にtestという文字列が書かれる)
+        のでそちらの機能を使うのでもよい．
+      </p>
     </p>
     <p>
       <a href="http://sourceforge.net/projects/ftgl/">FLGL</a>は
@@ -209,40 +213,49 @@ void DrawStrings(vector&#x3c;string&#x3e; &strs, int w, int h, int x0, int y0)
     glMatrixMode(GL_MODELVIEW);
 }</pre>
 
-    <!--<h4>日本語とワイド文字列</h4>
-    <p>
-      FTGLで日本語を描画するためには<strong>ワイド文字列</strong>を使う必要がある．
-      ワイド文字列はC/C++において固定長でマルチバイト文字を扱うために規定されたもので，
-      1つの文字を1つの整数値で扱えるようになっている
-      (Unicodeなどのマルチバイト文字だと文字の種類(アルファベット，日本語，etc)で必要なバイト数が変わる)．
-      C++ではマルチバイト文字列はcharやstring型に格納され，
-      ワイド文字列はwchar_tやwstringという文字型，文字列型に格納する
-      (C++11ではさらにUTF-16とUTF-32を内部表現とするchar16_tとchar32_tが追加された)．
-    </p>
-    <p>
-      上記の文字列描画関数DrawStringsを日本語に対応させるには，
-      第1引数の型を変えて，
-    </p>
-    <pre class="code">void DrawStrings(vector&#x3c;wstring&#x3e; &strs, int w, int h, int x0, int y0)</pre>
-    <p>
-      とすればよいだけである．この関数を呼び出すときにはwstring型のvectorを指定する必要がある．
-      wstringに文字列を格納する場合は，文字列リテラルLを使用して，「L"文字列"」のようにする．
-    </p>
-    <p>
-      以下に例を示す．
-    </p>
-    <pre class="code">
-    vector&#x3c;wstring&#x3e; strs;
-    strs.push_back(L"Bulletアプリケーション ver 1.0");
-    strs.push_back(L" sキー : シミュレーションの開始/停止");
-    strs.push_back(L" rキー : シーンリセット");
-    glColor3d(0.0, 0.0, 1.0);
-    DrawStrings(strs, g_winw, g_winh, 10, 18);</pre>
-    <p align="center">
-      <img src="../fig/screen_char2.jpg" alt="FTGLで日本語文字列を描画した例" width="70%" /><br />
-      FTGLで日本語文字列を描画した例
-    </p>-->
 
+<h4>日本語(マルチバイト文字列)描画</h4>
+  <p>
+    日本語を文字列として指定すると，一部描画される文字がおかしくなる等の問題が発生することを確認している(VS2022環境)．
+    glfwではなくGLUTを用いて実験を行っていた際にはワイド文字列を使うことで解決できていたが，
+    現環境では文字化けが発生している(環境やVSの設定によっては解決するかもしれない)．
+    一応，以下にワイド文字列を用いる場合のDrawStrings関数についての説明を残しておく．
+  </p>
+    <details class="supplement">
+      <summary>日本語(マルチバイト文字列)描画について(ここをクリックで開く)</summary>
+        <p>
+          FTGLで日本語を描画するためには<strong>ワイド文字列</strong>を使う必要がある．
+          ワイド文字列はC/C++において固定長でマルチバイト文字を扱うために規定されたもので，
+          1つの文字を1つの整数値で扱えるようになっている
+          (Unicodeなどのマルチバイト文字だと文字の種類(アルファベット，日本語，etc)で必要なバイト数が変わる)．
+          C++ではマルチバイト文字列はcharやstring型に格納され，
+          ワイド文字列はwchar_tやwstringという文字型，文字列型に格納する
+          (C++11ではさらにUTF-16とUTF-32を内部表現とするchar16_tとchar32_tが追加された)．
+        </p>
+        <p>
+          上記の文字列描画関数DrawStringsを日本語に対応させるには，
+          第1引数の型を変えて，
+        </p>
+        <pre class="code">void DrawStrings(vector&#x3c;wstring&#x3e; &strs, int w, int h, int x0, int y0)</pre>
+        <p>
+          とすればよいだけである．この関数を呼び出すときにはwstring型のvectorを指定する必要がある．
+          wstringに文字列を格納する場合は，文字列リテラルLを使用して，「L"文字列"」のようにする．
+        </p>
+        <p>
+          以下に例を示す．
+        </p>
+        <pre class="code">
+        vector&#x3c;wstring&#x3e; strs;
+        strs.push_back(L"Bulletアプリケーション ver 1.0");
+        strs.push_back(L" sキー : シミュレーションの開始/停止");
+        strs.push_back(L" rキー : シーンリセット");
+        glColor3d(0.0, 0.0, 1.0);
+        DrawStrings(strs, g_winw, g_winh, 10, 18);</pre>
+        <p align="center">
+          <img src="../fig/screen_char2.jpg" alt="FTGLで日本語文字列を描画した例" width="70%" /><br />
+          FTGLで日本語文字列を描画した例
+        </p>
+    </details> 
 
     <p align="right">
       <a href="https://fujis.github.io/iml_physics/">戻る</a>
