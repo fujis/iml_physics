@@ -543,7 +543,7 @@ joint1->enableAngularMotor(true, btRadians(90.0), 1.0);</pre>
               三つ目の引数は最大インパルスでこれが0だと動かなくなるので0より大きい数を設定する．<br />
               モータの角速度を途中で変更するには，
               <pre class = "code">
-joint1->->setMotorTargetVelocity(btRadians(g_targetvelocity));</pre>
+joint1->setMotorTargetVelocity(btRadians(g_targetvelocity));</pre>
               とすればよい．
               joint1をグローバル変数として，Keyboard関数でg_targetvelocityの値を増減すれば前進/後退をシミュレーションできる．
             </li>
