@@ -27,6 +27,7 @@
 *.VC.db
 *.ini
 *.opendb
+*.pptx
 
 bmc/
 vc_msw/
