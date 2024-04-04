@@ -2,8 +2,8 @@
 筑波大学情報学群情報メディア創成学類の授業「情報メディア実験A」の
 実験テーマ「物理エンジンを用いたアプリケーション開発」の
 受講生向け説明ページ(HTML)，過去のQ&A，サンプルコードのためのGitリポジトリです．
-This is a git repository for lecture : information media laboratory - development of application based on physics engine. 
-It is including htmls for explanation of the experiments, Q&A in past years and sample code written by C++. 
+This is a git repository for the lecture "Information Media Laboratory A (thema: Development of Application with Physics Engine)" at the University of Tsukuba, School of Informatics, College of Media Arts, Science and Technology. 
+It includes the explanation pages (HTML) of the experiments, Q&A in past years, and sample code written in C++. 
 
 
 ## 各フォルダについて
