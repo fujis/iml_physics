@@ -216,11 +216,11 @@ void Timer(void)
 		//  (g_num_trajectory >= MAX_TRAJとなったときのエラー処理も忘れずに)
 
 
-		// 速度の更新
-		g_vel += btVector3(0, -9.8, 0)*g_dt;
-
 		// 位置の更新
 		g_ballpos += g_vel*g_dt;
+
+		// 速度の更新
+		g_vel += btVector3(0, -9.8, 0)*g_dt;
 
 
 		// 床面でのバウンド
