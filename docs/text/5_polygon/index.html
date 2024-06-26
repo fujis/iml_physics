@@ -132,6 +132,29 @@ for(int i = 0; i < index_count; ++i){
 }</pre>
     <p>
       verticesに頂点の座標情報，indicesにポリゴンを構成する頂点番号が格納されている．
+    </p>
+    <p>
+      なお，ここまでの設定は 形状の重心=頂点の座標系原点 であることを想定している．
+      もし原点がずれている場合，btRigidBodyにおける動き/回転の中心が形状ローカル座標系の原点となるため，
+      意図しない動きになってしまうことがある．その場合は，上記の"頂点座標の取り出し"のところを以下のように変更して，
+      重心=原点となるようにすれば良い．ただし，このままだとすべての追加した物体がグローバル座標の原点に集まってしまうので，
+      btRigidBodyに追加するときに．trans.setOrigin(mc); のように剛体を重心位置に移動させるのを忘れずに．
+    </p>
+    <pre class="code">
+// 形状の重心を求める
+btVector3 mc(0, 0, 0);
+for(int i = 0; i < vertex_count; ++i){
+  mc += btVector3(vrts[i][0], vrts[i][1], vrts[i][2]);
+}
+mc /= (double)(vertex_count);
+
+// 重心を原点とした座標系に変換しながら頂点座標を取り出し
+for(int i = 0; i < vertex_count; ++i){
+  mqo_vertices[3*i] =   vrts[i][0]-mc[0];
+  mqo_vertices[3*i+1] = vrts[i][1]-mc[1];
+  mqo_vertices[3*i+2] = vrts[i][2]-mc[2];
+}</pre>
+    <p>
       以下でこれらの情報からbtRigidBody, btSoftBodyそれぞれどのようにして設定するかを説明する．
     </p>
 
@@ -185,7 +208,7 @@ shape-&#x3e;updateBound();</pre>
 btGImpactCollisionAlgorithm::registerAlgorithm(dispatcher);</pre>
   
     <p>
-      <strong>3Dモデルの描画(興味がある場合のみ読むように)</strong><br />
+      <strong>3Dモデルの描画(興味がある人向け)</strong><br />
       btGImpactMeshShapeをOpenGLで描画するためのコードはすでにサンプルプログラム2には含まれているので，
       描画するために新たに実装は必要ない．ただ，どのようにして描画しているのかを知りたい場合のためにOpenGLでの描画方法を説明する．
     </p>
