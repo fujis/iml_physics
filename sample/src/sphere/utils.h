@@ -6,7 +6,7 @@
   @author Makoto Fujisawa
   @date 2020-07
 */
-// FILE --utils.h--
+// FILE --rx_utils.h--
 
 #ifndef _RX_UTILS_H_
 #define _RX_UTILS_H_
@@ -71,17 +71,6 @@
 //#include "rx_shadow_gl.h"	
 #include "rx_shadow_glsl.h"
 
-// Bullet
-#include <btBulletDynamicsCommon.h>  
-
-#include <BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h>
-#include <BulletCollision/Gimpact/btGImpactShape.h>
-
-#include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
-#include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
-#include <BulletSoftBody/btSoftBodyHelpers.h>
-#include <BulletSoftBody/btSoftBody.h>
-
 
 using namespace std;
 
@@ -118,15 +107,6 @@ inline T RX_MIN3(const T &a, const T &b, const T &c){ return ( (a < b) ? ( (a < 
 template<class T>
 inline void RX_SWAP(T &a, T &b){ T c; c = a; a = b; b = c; }
 
-//! btVector3用のストリーム入出力の定義
-inline std::ostream &operator<<(std::ostream &out, const btVector3 &a)
-{
-	return out << "(" << a[0] << ", " << a[1] << ", " << a[2] << ")";
-}
-inline std::istream &operator>>(std::istream &in, btVector3& a)
-{
-	return in >> a[0] >> a[1] >> a[2];
-}
 
 /*!
  * GLFWのエラーコールバック関数
@@ -333,46 +313,26 @@ static inline int MakeSphere(int &nvrts, vector<glm::vec3> &vrts, vector<glm::ve
 * 円筒形状のポリゴンメッシュを生成してVAOとして登録
 * - 円筒の中心は原点(0,0,0)
 * - 円筒の軸方向はz軸方向(0,0,1) - gluCylinderに合わせている
-* - 法線を別にするために側面と端面の頂点を別にしている
 * @param[out] nvrts,ntris 生成したメッシュの頂点数とポリゴン数を返す
 * @param[in] rad,len 円筒の半径と長さ
 * @param[in] slices 円筒の円に沿ったポリゴン分割数
 */
 static inline int MakeCylinder(int &nvrts, vector<glm::vec3> &vrts, vector<glm::vec3> &nrms, int &ntris, vector<int> &tris,
-	float rad1, float rad2, float len, int slices = 16, bool disk = true)
+	float rad, float len, int slices = 16, int stacks = 8)
 {
 	const float pi = glm::pi<float>();
 
-	// 側面用頂点
 	for(int i = 0; i <= slices; ++i){
 		float t = float(i)/float(slices);
-		float x1 = rad1*cos(2*pi*t);
-		float y1 = rad1*sin(2*pi*t);
-		float x2 = rad2*cos(2*pi*t);
-		float y2 = rad2*sin(2*pi*t);
-		vrts.push_back(glm::vec3(x1, y1, -0.5*len));
-		vrts.push_back(glm::vec3(x2, y2, 0.5*len));
-		glm::vec3 n = glm::vec3(x1, y1, 0.0);
-		if(rad1 < 1e-6) n = glm::vec3(x2, y2, 0.0);
-		if(rad1 > rad2){
-			float l = glm::length(n);
-			n += l*(rad1-rad2)/len*glm::vec3(0, 0, 1);
-		}
-		else if(rad1 < rad2){
-			float l = glm::length(n);
-			n += l*(rad2-rad1)/len*glm::vec3(0, 0, -1);
-		}
-		if(glm::length2(n) > 1e-6) n = glm::normalize(n);
-		nrms.push_back(n); nrms.push_back(n);
+		float x = rad*cos(2*pi*t);
+		float y = rad*sin(2*pi*t);
+		vrts.push_back(glm::vec3(x, y, -0.5*len));
+		nrms.push_back(glm::normalize(glm::vec3(x, y, 0.0)));
+		vrts.push_back(glm::vec3(x, y, 0.5*len));
+		nrms.push_back(glm::normalize(glm::vec3(x, y, 0.0)));
+
 	}
-	// 端面用頂点(座標値は↑と同じだが法線が異なる)
-	int voffset = vrts.size();
-	for(int i = 0; i <= slices; ++i){
-		vrts.push_back(vrts[2*i]);
-		nrms.push_back(glm::vec3(0.0, 0.0, -1.0));
-		vrts.push_back(vrts[2*i+1]);
-		nrms.push_back(glm::vec3(0.0, 0.0, 1.0));
-	}
+	nvrts = static_cast<int>(vrts.size());
 
 	// メッシュ作成
 	for(int i = 0; i < 2*slices; i += 2){
@@ -384,29 +344,6 @@ static inline int MakeCylinder(int &nvrts, vector<glm::vec3> &vrts, vector<glm::
 		tris.push_back((i+2 >= 2*slices ? 0 : i+2));
 		tris.push_back((i+2 >= 2*slices ? 1 : i+3));
 	}
-
-	// 両端面にポリゴンを貼る
-	if(disk){
-		// 端面中心頂点
-		vrts.push_back(glm::vec3(0, 0, -0.5*len));
-		nrms.push_back(glm::normalize(glm::vec3(0, 0, -1)));
-		int c1 = vrts.size()-1;
-		vrts.push_back(glm::vec3(0, 0,  0.5*len));
-		nrms.push_back(glm::normalize(glm::vec3(0, 0,  1)));
-		int c2 = vrts.size()-1;
-
-		for(int i = 0; i < slices; ++i){
-			tris.push_back(c1);
-			tris.push_back(2*i+voffset);
-			tris.push_back((i == slices-1 ? 0 : 2*i+2)+voffset);
-
-			tris.push_back(c2);
-			tris.push_back(2*i+1+voffset);
-			tris.push_back((i == slices-1 ? 1 : 2*i+3)+voffset);
-		}
-	}
-
-	nvrts = static_cast<int>(vrts.size());
 	ntris = static_cast<int>(tris.size()/3);
 
 	return 1;
@@ -1485,6 +1422,104 @@ static inline bool saveFrameBuffer(string fn, int w, int h)
 //-----------------------------------------------------------------------------
 // 各種オブジェクト描画関数
 //-----------------------------------------------------------------------------
+
+/*!
+* 円筒描画
+* @param[in] rad 半径
+* @param[in] len 長さ
+* @param[in] slices ポリゴン分割数
+*/
+inline void DrawCylinder(float rad, float len, int slices)
+{
+	GLUquadricObj *qobj;
+	qobj = gluNewQuadric();
+
+	glPushMatrix();
+	//glTranslatef(0.0, 0.0, -0.5*len);
+
+	gluQuadricDrawStyle(qobj, GLU_FILL);
+	gluQuadricNormals(qobj, GLU_SMOOTH);
+	gluCylinder(qobj, rad, rad, len, slices, slices);
+
+	glPushMatrix();
+	glRotatef(180.0, 1.0, 0.0, 0.0);
+	gluDisk(qobj, 0.0, rad, slices, slices);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.0, 0.0, len);
+	gluDisk(qobj, 0.0, rad, slices, slices);
+	glPopMatrix();
+
+	glPopMatrix();
+}
+
+/*!
+* 円錐描画
+* @param[in] rad 半径
+* @param[in] len 長さ
+* @param[in] slices ポリゴン分割数
+*/
+inline void DrawCone(float rad, float len, int slices)
+{
+	GLUquadricObj *qobj;
+	qobj = gluNewQuadric();
+
+	glPushMatrix();
+	//glTranslatef(0.0, 0.0, -0.5*len);
+
+	gluQuadricDrawStyle(qobj, GLU_FILL);
+	gluQuadricNormals(qobj, GLU_SMOOTH);
+	gluCylinder(qobj, rad, 0.0, len, slices, slices);
+
+	glPushMatrix();
+	glRotatef(180.0, 1.0, 0.0, 0.0);
+	gluDisk(qobj, 0.0, rad, slices, slices);
+	glPopMatrix();
+
+	glPopMatrix();
+}
+
+
+/*!
+* ベクトルを矢印で描画
+* @param[in] pos 原点座標
+* @param[in] vec ベクトル
+* @param[in] r   軸の半径
+* @param[in] dr  矢印の傘部分の半径(軸の半径を1としたときの割合)
+* @param[in] dl  矢印の傘部分の長さ(全体の長さを1としたときの割合) [0,1]
+*/
+inline void DrawArrow(glm::vec3 pos, glm::vec3 vec, float r, float dr = 2.5, float dl = 0.1)
+{
+	float vlen = glm::length(vec);
+	glm::vec3 pos1 = pos+vec*(1.0f-dl*0.5f);
+
+	glm::vec3 init(0.0, 0.0, 1.0);    // 円筒と円錐描画はデフォルトでz軸平行
+
+									  // vecとz軸の間の回転角度と回転軸
+	float rot_ang = acos(glm::dot(init, glm::normalize(vec)))*57.295779513082320876798154814114;
+	glm::vec3 rot_axis = glm::normalize(glm::cross(init, glm::normalize(vec)));
+
+	glPushMatrix();
+
+	glTranslatef(pos[0], pos[1], pos[2]);    // 原点に移動
+	glRotatef(rot_ang, rot_axis[0], rot_axis[1], rot_axis[2]);    // vec方向に座標系を回転
+
+																  // ベクトルの軸部分
+	DrawCylinder(r, vlen*(1.0-dl*0.5), 16);
+
+	// ベクトルの傘部分
+	float alen = dl*vlen;    // 円錐の高さ
+	float arad = dr*r;        // 円錐の半径
+
+	pos1 = pos+vec;
+
+	glTranslatef(0.0, 0.0, vlen-alen);
+	DrawCone(arad, alen, 16);
+
+	glPopMatrix();
+}
+
 /*!
  * xyz軸描画(x軸:赤,y軸:緑,z軸:青)
  * @param[in] len 軸の長さ
@@ -1749,161 +1784,6 @@ static inline void DrawSphereVBO(void)
 }
 
 /*!
-* 原点中心の円筒形状描画
-* - 中心は原点(0,0,0)
-* - 半径0.5(直径1)/長さ1で固定 (glScaleで調整する)
-* - VBO使用バージョン
-*/
-static inline void DrawCylinderVBO(void)
-{
-	static MeshVBO vbo;
-	if(vbo.vrts == 0){
-		// ポリゴンデータ作成
-		int nvrts, ntris;
-		vector<glm::vec3> vrts, nrms;
-		vector<int> tris;
-		MakeCylinder(nvrts, vrts, nrms, ntris, tris, 0.5, 0.5, 1.0, 16, true);
-
-		// VBOの作成
-		CreateVBO(vbo, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
-	}
-	glShadeModel(GL_SMOOTH);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo.vrts);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo.nrms);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glNormalPointer(GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.tris);
-	glDrawElements(GL_TRIANGLES, vbo.ntris*3, GL_UNSIGNED_INT, 0);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-/*!
-* 原点中心のカプセル形状描画
-* - 中心は原点(0,0,0)
-* - 円筒の両端面に半球が付いた形状
-* - VBO使用バージョン
-*/
-static inline void DrawCapsuleVBO(float rad, float len)
-{
-	static MeshVBO vbo_c, vbo_s;
-	if(vbo_c.vrts == 0){
-		// 円筒部分ポリゴンデータ/VBO作成
-		int nvrts, ntris;
-		vector<glm::vec3> vrts, nrms;
-		vector<int> tris;
-		MakeCylinder(nvrts, vrts, nrms, ntris, tris, 0.5, 0.5, 1.0, 16, 8);
-		CreateVBO(vbo_c, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
-
-		// 球部分ポリゴンデータ/VBO作成
-		vrts.clear(), nrms.clear(); tris.clear();
-		MakeSphere(nvrts, vrts, nrms, ntris, tris, 0.5, 16, 8);
-		CreateVBO(vbo_s, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
-	}
-	glShadeModel(GL_SMOOTH);
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-
-	// 円筒部分
-	glPushMatrix();
-	glScalef(2*rad, 2*rad, len-2*rad);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_c.vrts);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_c.nrms);
-	glNormalPointer(GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_c.tris);
-	glDrawElements(GL_TRIANGLES, vbo_c.ntris*3, GL_UNSIGNED_INT, 0);
-	glPopMatrix();
-
-	// 端面球1(z-)
-	glPushMatrix();
-	glTranslatef(0, 0, -0.5*len+rad);
-	glScalef(2*rad, 2*rad, 2*rad);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.vrts);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.nrms);
-	glNormalPointer(GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_s.tris);
-	glDrawElements(GL_TRIANGLES, vbo_s.ntris*3, GL_UNSIGNED_INT, 0);
-	glPopMatrix();
-
-	// 端面球2(z+)
-	glPushMatrix();
-	glTranslatef(0, 0, 0.5*len-rad);
-	glScalef(2*rad, 2*rad, 2*rad);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.vrts);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.nrms);
-	glNormalPointer(GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_s.tris);
-	glDrawElements(GL_TRIANGLES, vbo_s.ntris*3, GL_UNSIGNED_INT, 0);
-	glPopMatrix();
-
-
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-/*!
-* 原点中心の円錐形状描画
-* - 中心は原点(0,0,0)
-* - 半径0.5(直径1)/長さ1で固定 (glScaleで調整する)
-* - 基本的にCylinderと同じ，片方の端面の半径が0の円筒と考える
-* - VBO使用バージョン
-*/
-static inline void DrawConeVBO(void)
-{
-	static MeshVBO vbo;
-	if(vbo.vrts == 0){
-		// ポリゴンデータ作成
-		int nvrts, ntris;
-		vector<glm::vec3> vrts, nrms;
-		vector<int> tris;
-		MakeCylinder(nvrts, vrts, nrms, ntris, tris, 0.0, 0.5, 1.0, 16, true);
-
-		// VBOの作成
-		CreateVBO(vbo, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo.vrts);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo.nrms);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glNormalPointer(GL_FLOAT, 0, 0);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.tris);
-	glDrawElements(GL_TRIANGLES, vbo.ntris*3, GL_UNSIGNED_INT, 0);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-/*!
 * y方向を法線とする平面ポリゴン描画
 * @param[in] y,s 床の高さと水平方向の長さ
 * @param[in] use_tex テクスチャON/OFF
@@ -1922,6 +1802,7 @@ static void DrawPlaneVBO(double y = 0.0, double s = 20.0, bool use_tex = true)
 		// VBOの作成
 		CreateVBO(vbo, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 4, (GLfloat*)&nrms[0], nvrts, 0, 0, (GLfloat*)&texcoords[0], nvrts);
 	}
+	glShadeModel(GL_FLAT);
 
 	static GLuint texFloor = 0;				//!< 床のテクスチャ
 	if(use_tex && texFloor == 0){
@@ -2015,182 +1896,6 @@ static void DrawStaticPlane(double y = 0.0, double s = 20.0, bool use_tex = true
 }
 
 
-/*!
- * Bulletの三角形メッシュ描画時に必要なコールバック関数定義用のクラス
- */
-class TriangleDrawCallback : public btTriangleCallback
-{
-public:
-	TriangleDrawCallback(){}
-	virtual void processTriangle(btVector3* triangle, int partId, int triangleIndex)
-	{
-		btVector3 n = ((triangle[0]-triangle[1]).cross(triangle[0]-triangle[2])).normalize();
-		glNormal3f(n[0], n[1], n[2]);
-
-		glBegin(GL_TRIANGLES);
-		glVertex3d(triangle[0][0], triangle[0][1], triangle[0][2]);
-		glVertex3d(triangle[1][0], triangle[1][1], triangle[1][2]);
-		glVertex3d(triangle[2][0], triangle[2][1], triangle[2][2]);
-		glEnd();
-	}
-};
-
-
-/*!
-* Bulletの衝突形状を描画
-* @param[in] shape 衝突形状
-* @param[in] world_min,world_max Bulletワールドの大きさ(ポリゴン描画時に必要)
-*/
-static void DrawBulletShape(const btCollisionShape *shape, btVector3 &world_min, btVector3 &world_max)
-{
-	int shapetype = shape->getShapeType();
-
-	glPushMatrix();
-	bool use_tex = false;
-
-#ifdef USE_GLSL_SHADOW
-	use_tex = true;
-	BindPlainTexture(glm::vec3(0.0));
-#endif
-
-	// 形状の種類ごとに描画
-	if(shapetype == STATIC_PLANE_PROXYTYPE){
-		// 平面
-		const btStaticPlaneShape* plane = static_cast<const btStaticPlaneShape*>(shape);
-		DrawPlaneVBO(plane->getPlaneConstant(), 40.0, use_tex);
-	}
-	else if(shapetype == BOX_SHAPE_PROXYTYPE){
-		// ボックス形状
-		const btBoxShape* box = static_cast<const btBoxShape*>(shape);
-		btVector3 half_extent = box->getHalfExtentsWithMargin();
-		if(box->getUserIndex() == 99){
-			DrawPlaneVBO(half_extent[1], 40.0, use_tex);
-		}
-		else{
-			glScaled(2*half_extent[0], 2*half_extent[1], 2*half_extent[2]);
-			DrawCubeVBO();
-		}
-	}
-	else if(shapetype == SPHERE_SHAPE_PROXYTYPE){
-		// 球形状
-		const btSphereShape* sphere = static_cast<const btSphereShape*>(shape);
-		double rad = sphere->getRadius();
-		glScalef(2*rad, 2*rad, 2*rad);
-		DrawSphereVBO();
-	}
-	else if(shapetype == CYLINDER_SHAPE_PROXYTYPE){
-		// 円筒形状
-		const btCylinderShape* cylinder = static_cast<const btCylinderShape*>(shape);
-		double rad = cylinder->getRadius();
-		int up_axis = cylinder->getUpAxis();
-		double len = cylinder->getHalfExtentsWithMargin()[up_axis]*2;
-		if(up_axis == 0){ // x軸方向
-			glRotatef(90.0f, 0, 1, 0);
-		}
-		else if(up_axis == 1){ // y軸方向
-			glRotatef(90.0f, 1, 0, 0);
-		}
-		glScalef(2*rad, 2*rad, len);
-		DrawCylinderVBO();
-	}
-	else if(shapetype == CAPSULE_SHAPE_PROXYTYPE){
-		// カプセル形状
-		const btCapsuleShape* capsule = static_cast<const btCapsuleShape*>(shape);
-		double rad = capsule->getRadius();
-		int up_axis = capsule->getUpAxis();
-		double len = capsule->getHalfHeight()*2;
-		if(up_axis == 0){ // x軸方向
-			glRotatef(90.0f, 0, 1, 0);
-		}
-		else if(up_axis == 1){ // y軸方向
-			glRotatef(90.0f, 1, 0, 0);
-		}
-		DrawCapsuleVBO(rad, len);
-	}
-	else if(shapetype == CONE_SHAPE_PROXYTYPE){
-		// 円錐形状
-		const btConeShape* cone = static_cast<const btConeShape*>(shape);
-		double rad = cone->getRadius();
-		int up_axis = cone->getConeUpIndex();
-		double len = cone->getHeight();
-		if(up_axis == 0){ // x軸方向
-			glRotatef(90.0f, 0, 1, 0);
-		}
-		else if(up_axis == 1){ // y軸方向
-			glRotatef(90.0f, 1, 0, 0);
-		}
-		glScalef(2*rad, 2*rad, len);
-		DrawConeVBO();
-	}
-	else if(shapetype == TRIANGLE_MESH_SHAPE_PROXYTYPE){
-		// 三角形メッシュ
-		const btBvhTriangleMeshShape* mesh = static_cast<const btBvhTriangleMeshShape*>(shape);
-		TriangleDrawCallback draw_callback;
-		mesh->processAllTriangles(&draw_callback, world_min, world_max);
-	}
-	else if(shapetype == GIMPACT_SHAPE_PROXYTYPE){
-		// 三角形メッシュ(GIMPACT)
-		const btGImpactMeshShape* mesh = static_cast<const btGImpactMeshShape*>(shape);
-		TriangleDrawCallback draw_callback;
-		mesh->processAllTriangles(&draw_callback, world_min, world_max);
-	}
-	else if(shapetype == COMPOUND_SHAPE_PROXYTYPE){
-		// 複合形状
-		const btCompoundShape* compound = static_cast<const btCompoundShape*>(shape);
-		int num_child = compound->getNumChildShapes();
-		btScalar mc[16];
-		for(int j = 0; j < num_child; ++j){
-			// Compound Shapeを構成するchild shapeを再帰的にDrawBulletShapeに渡す
-			compound->getChildTransform(j).getOpenGLMatrix(mc);
-			glPushMatrix();
-#ifdef BT_USE_DOUBLE_PRECISION
-			glMultMatrixd(mc);
-#else
-			glMultMatrixf(mc);
-#endif
-			DrawBulletShape(compound->getChildShape(j), world_min, world_max);
-			glPopMatrix();
-		}
-	}
-	else{
-		DrawSphereVBO();
-	}
-
-	glPopMatrix();
-}
-
-
-static inline void DrawBulletSoftBody(btSoftBody* sbody)
-{
-#ifdef USE_GLSL_SHADOW
-	BindPlainTexture(glm::vec3(0.0));
-#endif
-
-	if(sbody->m_faces.size() == 0){
-		glBegin(GL_LINE_STRIP);
-		for(int i = 0; i < sbody->m_nodes.size(); ++i){
-			const btSoftBody::Node &node = sbody->m_nodes[i];
-			btVector3 p = node.m_x;
-			glVertex3f(p.x(), p.y(), p.z());
-		}
-		glEnd();
-		return;
-	}
-
-	for(int i = 0; i < sbody->m_faces.size(); ++i){
-		const btSoftBody::Face &face = sbody->m_faces[i];
-
-		glBegin(GL_TRIANGLES);
-		for(int j = 0; j < 3; ++j){
-			const btSoftBody::Node* node = face.m_n[j];
-			btVector3 n = node->m_n;
-			btVector3 p = node->m_x;
-			glNormal3d(n.x(), n.y(), n.z());
-			glVertex3d(p.x(), p.y(), p.z());
-		}
-		glEnd();
-	}
-}
 
 
 #endif // #ifndef _UTILS_H_
