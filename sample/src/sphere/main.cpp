@@ -293,6 +293,7 @@ void SetImGUI(GLFWwindow* window)
 	if(ImGui::Button("start/stop")){ switchanimation(-1); } ImGui::SameLine();
 	if(ImGui::Button("run a step")){ g_animation_on = true; Timer(); g_animation_on = false; }
 	if(ImGui::Button("reset")){ reset(); }
+	if(ImGui::Button("test")){ cout << "test" << endl; }
 	ImGui::Separator();
 #ifdef BT_USE_DOUBLE_PRECISION
 	ImGui::InputDouble("force", &(g_frc[0]), 0.1f, 1.0f, "%.1f");
