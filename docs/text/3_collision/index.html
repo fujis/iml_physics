@@ -430,6 +430,9 @@ btCollisionDispatcher::registerCollisionAlgorithm</pre>
         Display関数ではマウスによる視点移動のコードも含まれており，これを衝突点描画にも反映させないと，
         視点移動した場合でも衝突点位置が固定して描画されてしまうので，
         関数の最後の方のglPopMatrix();の前あたりに書くようにしましょう．
+        また，衝突点が他の物体に隠れて見えない場合は，glDisable(GL_DEPTH_TEST);を描画部分の前に書くと後ろにあっても描画されるようになる(物体描画の後に衝突点描画した場合)．
+        ただし，この場合，衝突点描画した後に，glEnable(GL_DEPTH_TEST);で設定を元に戻すこと．
+        さらに見やすくしたい場合は，glDisable(GL_LIGHTING);で陰影計算を衝突点描画の時だけOFFにするという方法もある．
       </p>
       <p align="center">
         <img src="../fig/dispatcher.jpg" alt="Collision points" /><br />
