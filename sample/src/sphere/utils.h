@@ -313,26 +313,46 @@ static inline int MakeSphere(int &nvrts, vector<glm::vec3> &vrts, vector<glm::ve
 * 円筒形状のポリゴンメッシュを生成してVAOとして登録
 * - 円筒の中心は原点(0,0,0)
 * - 円筒の軸方向はz軸方向(0,0,1) - gluCylinderに合わせている
+* - 法線を別にするために側面と端面の頂点を別にしている
 * @param[out] nvrts,ntris 生成したメッシュの頂点数とポリゴン数を返す
 * @param[in] rad,len 円筒の半径と長さ
 * @param[in] slices 円筒の円に沿ったポリゴン分割数
 */
 static inline int MakeCylinder(int &nvrts, vector<glm::vec3> &vrts, vector<glm::vec3> &nrms, int &ntris, vector<int> &tris,
-	float rad, float len, int slices = 16, int stacks = 8)
+							   float rad1, float rad2, float len, int slices = 16, bool disk = true)
 {
 	const float pi = glm::pi<float>();
 
+	// 側面用頂点
 	for(int i = 0; i <= slices; ++i){
 		float t = float(i)/float(slices);
-		float x = rad*cos(2*pi*t);
-		float y = rad*sin(2*pi*t);
-		vrts.push_back(glm::vec3(x, y, -0.5*len));
-		nrms.push_back(glm::normalize(glm::vec3(x, y, 0.0)));
-		vrts.push_back(glm::vec3(x, y, 0.5*len));
-		nrms.push_back(glm::normalize(glm::vec3(x, y, 0.0)));
-
+		float x1 = rad1*cos(2*pi*t);
+		float y1 = rad1*sin(2*pi*t);
+		float x2 = rad2*cos(2*pi*t);
+		float y2 = rad2*sin(2*pi*t);
+		vrts.push_back(glm::vec3(x1, y1, -0.5*len));
+		vrts.push_back(glm::vec3(x2, y2, 0.5*len));
+		glm::vec3 n = glm::vec3(x1, y1, 0.0);
+		if(rad1 < 1e-6) n = glm::vec3(x2, y2, 0.0);
+		if(rad1 > rad2){
+			float l = glm::length(n);
+			n += l*(rad1-rad2)/len*glm::vec3(0, 0, 1);
+		}
+		else if(rad1 < rad2){
+			float l = glm::length(n);
+			n += l*(rad2-rad1)/len*glm::vec3(0, 0, -1);
+		}
+		if(glm::length2(n) > 1e-6) n = glm::normalize(n);
+		nrms.push_back(n); nrms.push_back(n);
 	}
-	nvrts = static_cast<int>(vrts.size());
+	// 端面用頂点(座標値は↑と同じだが法線が異なる)
+	int voffset = vrts.size();
+	for(int i = 0; i <= slices; ++i){
+		vrts.push_back(vrts[2*i]);
+		nrms.push_back(glm::vec3(0.0, 0.0, -1.0));
+		vrts.push_back(vrts[2*i+1]);
+		nrms.push_back(glm::vec3(0.0, 0.0, 1.0));
+	}
 
 	// メッシュ作成
 	for(int i = 0; i < 2*slices; i += 2){
@@ -344,6 +364,29 @@ static inline int MakeCylinder(int &nvrts, vector<glm::vec3> &vrts, vector<glm::
 		tris.push_back((i+2 >= 2*slices ? 0 : i+2));
 		tris.push_back((i+2 >= 2*slices ? 1 : i+3));
 	}
+
+	// 両端面にポリゴンを貼る
+	if(disk){
+		// 端面中心頂点
+		vrts.push_back(glm::vec3(0, 0, -0.5*len));
+		nrms.push_back(glm::normalize(glm::vec3(0, 0, -1)));
+		int c1 = vrts.size()-1;
+		vrts.push_back(glm::vec3(0, 0,  0.5*len));
+		nrms.push_back(glm::normalize(glm::vec3(0, 0,  1)));
+		int c2 = vrts.size()-1;
+
+		for(int i = 0; i < slices; ++i){
+			tris.push_back(c1);
+			tris.push_back(2*i+voffset);
+			tris.push_back((i == slices-1 ? 0 : 2*i+2)+voffset);
+
+			tris.push_back(c2);
+			tris.push_back(2*i+1+voffset);
+			tris.push_back((i == slices-1 ? 1 : 2*i+3)+voffset);
+		}
+	}
+
+	nvrts = static_cast<int>(vrts.size());
 	ntris = static_cast<int>(tris.size()/3);
 
 	return 1;
@@ -359,7 +402,7 @@ static inline int MakeCylinder(int &nvrts, vector<glm::vec3> &vrts, vector<glm::
 * @param[in] slices 円筒の円に沿ったポリゴン分割数
 */
 static inline int MakeCapsule(int &nvrts, vector<glm::vec3> &vrts, vector<glm::vec3> &nrms, int &ntris, vector<int> &tris,
-	float rad, float len, int slices = 16, int stacks = 8)
+							  float rad, float len, int slices = 16, int stacks = 8)
 {
 	const float pi = glm::pi<float>();
 	int offset = 0;
@@ -409,8 +452,6 @@ static inline int MakeCapsule(int &nvrts, vector<glm::vec3> &vrts, vector<glm::v
 
 	return 1;
 }
-
-
 
 
 //-----------------------------------------------------------------------------
@@ -1783,6 +1824,163 @@ static inline void DrawSphereVBO(void)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+
+
+/*!
+* 原点中心の円筒形状描画
+* - 中心は原点(0,0,0)
+* - 半径0.5(直径1)/長さ1で固定 (glScaleで調整する)
+* - VBO使用バージョン
+*/
+static inline void DrawCylinderVBO(void)
+{
+	static MeshVBO vbo;
+	if(vbo.vrts == 0){
+		// ポリゴンデータ作成
+		int nvrts, ntris;
+		vector<glm::vec3> vrts, nrms;
+		vector<int> tris;
+		MakeCylinder(nvrts, vrts, nrms, ntris, tris, 0.5, 0.5, 1.0, 16, true);
+
+		// VBOの作成
+		CreateVBO(vbo, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
+	}
+	glShadeModel(GL_SMOOTH);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo.vrts);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo.nrms);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glNormalPointer(GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.tris);
+	glDrawElements(GL_TRIANGLES, vbo.ntris*3, GL_UNSIGNED_INT, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+/*!
+* 原点中心のカプセル形状描画
+* - 中心は原点(0,0,0)
+* - 円筒の両端面に半球が付いた形状
+* - VBO使用バージョン
+*/
+static inline void DrawCapsuleVBO(float rad, float len)
+{
+	static MeshVBO vbo_c, vbo_s;
+	if(vbo_c.vrts == 0){
+		// 円筒部分ポリゴンデータ/VBO作成
+		int nvrts, ntris;
+		vector<glm::vec3> vrts, nrms;
+		vector<int> tris;
+		MakeCylinder(nvrts, vrts, nrms, ntris, tris, 0.5, 0.5, 1.0, 16, 8);
+		CreateVBO(vbo_c, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
+
+		// 球部分ポリゴンデータ/VBO作成
+		vrts.clear(), nrms.clear(); tris.clear();
+		MakeSphere(nvrts, vrts, nrms, ntris, tris, 0.5, 16, 8);
+		CreateVBO(vbo_s, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
+	}
+	glShadeModel(GL_SMOOTH);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+
+	// 円筒部分
+	glPushMatrix();
+	glScalef(2*rad, 2*rad, len-2*rad);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_c.vrts);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_c.nrms);
+	glNormalPointer(GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_c.tris);
+	glDrawElements(GL_TRIANGLES, vbo_c.ntris*3, GL_UNSIGNED_INT, 0);
+	glPopMatrix();
+
+	// 端面球1(z-)
+	glPushMatrix();
+	glTranslatef(0, 0, -0.5*len+rad);
+	glScalef(2*rad, 2*rad, 2*rad);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.vrts);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.nrms);
+	glNormalPointer(GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_s.tris);
+	glDrawElements(GL_TRIANGLES, vbo_s.ntris*3, GL_UNSIGNED_INT, 0);
+	glPopMatrix();
+
+	// 端面球2(z+)
+	glPushMatrix();
+	glTranslatef(0, 0, 0.5*len-rad);
+	glScalef(2*rad, 2*rad, 2*rad);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.vrts);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.nrms);
+	glNormalPointer(GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_s.tris);
+	glDrawElements(GL_TRIANGLES, vbo_s.ntris*3, GL_UNSIGNED_INT, 0);
+	glPopMatrix();
+
+
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+/*!
+* 原点中心の円錐形状描画
+* - 中心は原点(0,0,0)
+* - 半径0.5(直径1)/長さ1で固定 (glScaleで調整する)
+* - 基本的にCylinderと同じ，片方の端面の半径が0の円筒と考える
+* - VBO使用バージョン
+*/
+static inline void DrawConeVBO(void)
+{
+	static MeshVBO vbo;
+	if(vbo.vrts == 0){
+		// ポリゴンデータ作成
+		int nvrts, ntris;
+		vector<glm::vec3> vrts, nrms;
+		vector<int> tris;
+		MakeCylinder(nvrts, vrts, nrms, ntris, tris, 0.0, 0.5, 1.0, 16, true);
+
+		// VBOの作成
+		CreateVBO(vbo, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo.vrts);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo.nrms);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glNormalPointer(GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.tris);
+	glDrawElements(GL_TRIANGLES, vbo.ntris*3, GL_UNSIGNED_INT, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
 /*!
 * y方向を法線とする平面ポリゴン描画
 * @param[in] y,s 床の高さと水平方向の長さ
@@ -1854,6 +2052,7 @@ static void DrawPlaneVBO(double y = 0.0, double s = 20.0, bool use_tex = true)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
+
 
 /*!
 * y方向を法線とする平面ポリゴン描画

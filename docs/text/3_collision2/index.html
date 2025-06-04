@@ -190,12 +190,14 @@
         </del>
 		  </p>
       <p class="supplement">
-        2023年度のサンプルプログラム2について，床についてDISABLE_DEACTIVATIONの設定がされており，
-        それに接触している物体がスリープ状態にならないというバグが見つかりました．
-        2023年度の受講生でこの課題でスリープにならないという場合は，
+        サンプルプログラム2について，床についてDISABLE_DEACTIVATIONの設定がされていると，
+        それに接触している物体がスリープ状態になりません．
+        この課題でスリープにならないという場合は，
         サンプルプログラム中のCreateRigidBody関数内の以下の部分を削除orコメントアウトしてみてください(117行目あたり)．<br />
         　// 常にスリープ状態にする<br />
-        　body->setActivationState(DISABLE_DEACTIVATION);
+        　body->setActivationState(DISABLE_DEACTIVATION);<br />
+	なお，スリープになる条件が変わっていることもあるようですので，
+	この課題は思った通りに色が変わらなくてもこういう設定があるということを把握してくれればOKです．
       </p>
     </div>
 
