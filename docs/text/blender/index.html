@@ -31,36 +31,33 @@
     <ol>
       <li>
         スタートメニューからBlenderを起動する<br />
-        <img src="../fig/blender1.jpg" alt="blender1" width="60%" />
+        <img src="../fig/blender0.jpg" alt="blender0" width="60%" />
       </li>
       <li>
-        左上のメニュー File -> Import -> Wavefront(.obj) (自分の読み込ませたいファイル形式を選択)<br />
-        でファイルを選択後，右上のImport OBJで読み込む
-        (あらかじめ配置されているオブジェクトが必要ない場合は，そのオブジェクトを右クリックで選択，Deleteキーで削除しておく)
+        左上のメニュー ファイル -> インポート -> Wavefront(.obj) (自分の読み込ませたいファイル形式を選択) (自分の読み込ませたいファイル形式を選択)<br />
+        でファイルを選択後，右下の"Wavefront OBJをインポート"ボタンをクリックしてで読み込む (あらかじめ配置されているオブジェクトが必要ない場合は，そのオブジェクトを左クリックで選択，Deleteキーで削除しておく)
       </li>
       <li>
-        読み込んだオブジェクトだけを右クリックで選択し，右のパネルでアイコンが並んでいるところから，
-        Modifierを選択し，Add Modifier -> Decimate をクリック<br />
-        <img src="../fig/blender2.jpg" alt="blender1" width="60%" />
+        読み込んだオブジェクトだけを左クリックで選択し，右のパネルでアイコンが並んでいるところから， モディファイアー(Modifier)を選択し，
+        モディファイアーを追加 -> 生成 -> デシメート をクリック<br />
+        <img src="../fig/blender2.jpg" alt="blender2" width="60%" />
       </li>
       <li>
-        Ratioというところを左ドラッグで左右に動かして数値を変更するとメッシュが粗くなので
-        (Ratioの下に表示されているFace Countがポリゴン数なので参考にしつつ，適切なポリゴン数まで減らす)，
-        減らせたらApplyボタンをクリックして決定<br />
+        比率を左ドラッグで左右に動かして数値を変更するとメッシュが粗くなる．下に表示されている"面数"がポリゴン数なので参考にしつつ，適切なポリゴン数まで減らす<br />
         <img src="../fig/blender3.jpg" alt="blender3" width="60%" />
       </li>
       <li>
-        左上のメニュー File -> Export -> Wavefront(.obj) <br />
+        左上のメニュー ファイル -> エクスポート -> Wavefront(.obj)<br />
         で編集したデータをモデルファイルとして保存する．
       </li>
     </ol>
 
-
+<!--
     <a name="blender" id="blender"></a>
     <h2>Blenderの基本操作</h2>
     <h4>基本操作(マウス)</h4>
     <ul>
-      <li>右クリック : オブジェクト選択</li>
+      <li>左クリック : オブジェクト選択</li>
       <li>左ドラッグ : 操作選択(直線ジェスチャで平行移動，円形ジェスチャで回転など)</li>
       <li>右ドラッグ : 選択オブジェクト平行移動</li>
       <li>ホイール : 全体ズーム</li>
@@ -106,6 +103,7 @@
         「File」→「Save User Settings」
       </li>
     </ul>
+-->
 
 
     <p align="right">
