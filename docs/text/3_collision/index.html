@@ -135,6 +135,87 @@
         (ヒント) 固定されたオブジェクトを追加するには，<a href="../2_bullet/">前回の資料</a>で勉強したKinematic rigidbodyかStatic rigidbodyとして登録すればよい．
         Kinematicの場合はCreateRigidBody関数で登録するときに質量を0に設定すればよい．
       </p>
+      <details>
+        <summary>カプセル(Capsule)形状について</summary>
+        <p>
+          カプセル(Capsule)は円柱の両端に半球を付けた形状で，BulletではbtCapsuleShapeクラスで表される．
+          その描画用にutils.hにDrawCapsuleVBOという関数を用意してあるが，Bulletと高さlenの定義が異なっている(btCapsuleShapeは両端の半球を含まない円筒部分だけの高さ，DrawCapsuleVBOのlenは半球を含めている．以前は問題なかったのでバージョンの問題？)．
+          2026年5月29日にBulletに合わせてgithubのコードは修正してあるが，描画がおかしい場合は，utils.hのDrawCapsuleVBO関数を以下のコードで置き換えてほしい．
+        </p>
+        <pre class = "code">static inline void DrawCapsuleVBO(float rad, float len)
+{
+	static MeshVBO vbo_c, vbo_s;
+	if(vbo_c.vrts == 0){
+		// 円筒部分ポリゴンデータ/VBO作成
+		int nvrts, ntris;
+		vector<glm::vec3> vrts, nrms;
+		vector<int> tris;
+		MakeCylinder(nvrts, vrts, nrms, ntris, tris, 0.5, 0.5, 1.0, 16, 8);
+		CreateVBO(vbo_c, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
+
+		// 球部分ポリゴンデータ/VBO作成
+		vrts.clear(), nrms.clear(); tris.clear();
+		MakeSphere(nvrts, vrts, nrms, ntris, tris, 0.5, 16, 8);
+		CreateVBO(vbo_s, (GLfloat*)&vrts[0], nvrts, 3, &tris[0], ntris, 3, (GLfloat*)&nrms[0], nvrts);
+	}
+	glShadeModel(GL_SMOOTH);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+
+	// 円筒部分
+	glPushMatrix();
+	glScalef(2*rad, 2*rad, len);
+	//glScalef(2*rad, 2*rad, len-2*rad); // カプセル両端の半球含めて高さ(len)に設定する場合
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_c.vrts);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_c.nrms);
+	glNormalPointer(GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_c.tris);
+	glDrawElements(GL_TRIANGLES, vbo_c.ntris*3, GL_UNSIGNED_INT, 0);
+	glPopMatrix();
+
+	// 端面球1(z-)
+	glPushMatrix();
+	glTranslatef(0, 0, -0.5*len);
+	//glTranslatef(0, 0, -0.5*len+rad); // カプセル両端の半球含めて高さ(len)に設定する場合
+	glScalef(2*rad, 2*rad, 2*rad);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.vrts);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.nrms);
+	glNormalPointer(GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_s.tris);
+	glDrawElements(GL_TRIANGLES, vbo_s.ntris*3, GL_UNSIGNED_INT, 0);
+	glPopMatrix();
+
+	// 端面球2(z+)
+	glPushMatrix();
+	glTranslatef(0, 0, 0.5*len);
+	//glTranslatef(0, 0, 0.5*len-rad); // カプセル両端の半球含めて高さ(len)に設定する場合
+	glScalef(2*rad, 2*rad, 2*rad);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.vrts);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.nrms);
+	glNormalPointer(GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_s.tris);
+	glDrawElements(GL_TRIANGLES, vbo_s.ntris*3, GL_UNSIGNED_INT, 0);
+	glPopMatrix();
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+        </pre>
+      </details>
+
       <a name="kadai35" id="kadai35"></a>
       <h4>練習問題4</h4>
       <p>
