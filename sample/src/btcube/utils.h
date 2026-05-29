@@ -1816,7 +1816,8 @@ static inline void DrawCapsuleVBO(float rad, float len)
 
 	// 円筒部分
 	glPushMatrix();
-	glScalef(2*rad, 2*rad, len-2*rad);
+	glScalef(2*rad, 2*rad, len);
+	//glScalef(2*rad, 2*rad, len-2*rad); // カプセル両端の半球含めて高さ(len)に設定する場合
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_c.vrts);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 
@@ -1829,7 +1830,8 @@ static inline void DrawCapsuleVBO(float rad, float len)
 
 	// 端面球1(z-)
 	glPushMatrix();
-	glTranslatef(0, 0, -0.5*len+rad);
+	glTranslatef(0, 0, -0.5*len);
+	//glTranslatef(0, 0, -0.5*len+rad); // カプセル両端の半球含めて高さ(len)に設定する場合
 	glScalef(2*rad, 2*rad, 2*rad);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.vrts);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
@@ -1843,7 +1845,8 @@ static inline void DrawCapsuleVBO(float rad, float len)
 
 	// 端面球2(z+)
 	glPushMatrix();
-	glTranslatef(0, 0, 0.5*len-rad);
+	glTranslatef(0, 0, 0.5*len);
+	//glTranslatef(0, 0, 0.5*len-rad); // カプセル両端の半球含めて高さ(len)に設定する場合
 	glScalef(2*rad, 2*rad, 2*rad);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_s.vrts);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
