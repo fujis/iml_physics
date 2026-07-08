@@ -223,6 +223,20 @@ void DrawStrings(vector&#x3c;string&#x3e; &strs, int w, int h, int x0, int y0)
 
 <h4>日本語(マルチバイト文字列)描画</h4>
   <p>
+    <strong>(2026.7/8追記) 上記のDrawStrings関数のままでも，C++11以降のu8プリフェックスを付ければ日本語表示できそう(VS2022環境で確認)．</strong>
+    Visual Studioで，プロジェクト > ～のプロパティ > C/C++ > コマンドライン で追加のオプションのところに /utf-8 と入力し，コード中では
+  </p>
+  <pre class="code">
+  vector<string> strs;
+	strs.push_back(u8"Bulletアプリケーション ver 1.0");
+	strs.push_back(u8" sキー : スタート/ストップ");
+	strs.push_back(u8" rキー : リセット");
+	DrawStrings(strs, g_winw, g_winh, 10, 18);
+  </pre>
+  <p>
+    のように文字列指定のダブルクォーテーションの前にu8と付ければ良い．ただし，環境次第だとは思うのでうまくいかない場合は1バイト文字(英数字とか)で記述すると良い．
+  </p>
+  <p>
     日本語を文字列として指定すると，一部描画される文字がおかしくなる等の問題が発生することを確認している(VS2022環境)．
     glfwではなくGLUTを用いて実験を行っていた際にはワイド文字列を使うことで解決できていたが，
     現環境では文字化けが発生している(環境やVSの設定によっては解決するかもしれない)．
